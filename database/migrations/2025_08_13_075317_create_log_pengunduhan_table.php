@@ -21,8 +21,6 @@ class CreateLogPengunduhanTable extends Migration
             $table->string('telpon', 20)->nullable();
             $table->text('keperluan')->nullable();
             $table->timestamp('waktu_download')->useCurrent();
-            $table->string('format_file', 20);
-            $table->string('alamat_ip', 45);
             $table->timestamps();
         });
     }
