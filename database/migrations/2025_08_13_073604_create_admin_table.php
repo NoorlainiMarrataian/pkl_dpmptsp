@@ -6,24 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateAdminTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('admin', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id('admin_id'); // PK
+            $table->string('username', 15);
+            $table->string('password');
+            $table->timestamps(); // created_at & updated_at
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('admin');
