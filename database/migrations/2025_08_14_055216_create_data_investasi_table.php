@@ -23,7 +23,7 @@ class CreateDataInvestasiTable extends Migration
             $table->string('deskripsi_kbli_2digit', 255);
             $table->string('provinsi', 100);
             $table->unsignedBigInteger('kabupaten_kota')->nullable();
-            $table->string('wilayah_jawa', 50);
+            $table->string('wilayah_jawa', 40);
             $table->string('pulau', 50);
             $table->bigInteger('investasi_rp_juta')->nullable();
             $table->bigInteger('investasi_us_ribu')->nullable();
