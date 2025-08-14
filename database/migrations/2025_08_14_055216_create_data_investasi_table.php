@@ -14,7 +14,7 @@ class CreateDataInvestasiTable extends Migration
         Schema::create('data_investasi', function (Blueprint $table) {
             $table->id('id_data');
             $table->integer('tahun');
-            $table->string('periode', 40);
+            $table->string('periode', 50);
             $table->string('status_penanaman_modal', 10);
             $table->string('regional', 100);
             $table->unsignedBigInteger('negara')->nullable();
