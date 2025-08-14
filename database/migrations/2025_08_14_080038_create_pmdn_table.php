@@ -6,27 +6,37 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Jalankan migrasi.
+     */
     public function up(): void
     {
-        Schema::create('pma', function (Blueprint $table) {
-            $table->id(); 
-            $table->string('kabupaten_kota'); // atau bisa FK kalau ada tabel kabupaten_kota
+        Schema::create('pmdn', function (Blueprint $table) {
+            // Primary Key
+            $table->unsignedBigInteger('kabupaten_kota');
             $table->year('tahun');
-            $table->string('periode', 20);
-            $table->integer('proyek_pma');
-            $table->bigInteger('tambahan_investasi_dalam_ribu_usd');
-            $table->bigInteger('tambahan_investasi_dalam_juta');
+            $table->string('periode', 10);
             
-            // Relasi ke Data_Investasi
-            $table->unsignedBigInteger('id_data');
-            $table->foreign('id_data')->references('id_data')->on('data_investasi')->onDelete('cascade');
+            // Data kolom
+            $table->integer('proyek_pmdn')->nullable();
+            $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
 
-            $table->timestamps();
+            // Primary Key gabungan
+            $table->primary(['kabupaten_kota', 'tahun', 'periode']);
+
+            // Foreign Key
+            $table->foreign('kabupaten_kota')
+                  ->references('kabupaten_kota')
+                  ->on('lokasi')
+                  ->onDelete('cascade');
         });
     }
 
+    /**
+     * Reverse migrasi.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('pma');
+        Schema::dropIfExists('pmdn');
     }
 };
