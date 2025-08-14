@@ -4,28 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNegaraInvestorTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('negara_investor', function (Blueprint $table) {
-            $table->id();
+            $table->string('negara')->primary();
+            $table->year('tahun');
+            $table->string('periode', 20);
+            $table->string('proyek');
+            $table->decimal('tambahan_investasi_dalam_ribu_usd', 15, 2);
+            $table->decimal('tambahan_investasi_dalam_juta', 15, 2);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('negara_investor');
     }
-}
+};
