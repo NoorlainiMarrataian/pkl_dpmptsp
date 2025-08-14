@@ -15,7 +15,7 @@ class CreateDataInvestasiTable extends Migration
             $table->id('id_data');
             $table->integer('tahun');
             $table->string('periode', 50);
-            $table->string('status_penanaman_modal', 100);
+            $table->string('status_penanaman_modal', 10);
             $table->string('regional', 100);
             $table->unsignedBigInteger('negara')->nullable();
             $table->unsignedBigInteger('sektor_utama')->nullable();
