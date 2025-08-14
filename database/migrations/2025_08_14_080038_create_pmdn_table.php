@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pma', function (Blueprint $table) {
-            $table->id(); // PK
+            $table->id(); 
             $table->string('kabupaten_kota'); // atau bisa FK kalau ada tabel kabupaten_kota
             $table->year('tahun');
             $table->string('periode', 20);
