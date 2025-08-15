@@ -12,7 +12,6 @@ class CreateSektorTable extends Migration
     public function up(): void
     {
         Schema::create('sektor', function (Blueprint $table) {
-            $table->id('id_sektor'); // Primary key
             $table->string('nama_sektor', 150)->unique();
             $table->year('tahun');
             $table->string('periode', 20);
