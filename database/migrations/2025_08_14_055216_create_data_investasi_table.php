@@ -17,14 +17,12 @@ class CreateDataInvestasiTable extends Migration
             $table->string('periode', 50);
             $table->string('status_penanaman_modal', 10);
             $table->string('regional', 100)->nullable();
-
-            $table->string('negara', 100);
-            $table->string('nama_sektor', 150);
-            $table->string('kabupaten_kota', 100);
-
-            $table->string('sektor_utama', 100)->nullable();         
+            $table->string('negara', 100);        
+            $table->string('sektor_utama', 100)->nullable();
+            $table->string('nama_sektor', 150);       
             $table->string('deskripsi_kbli_2digit', 255);
             $table->string('provinsi', 100);
+            $table->string('kabupaten_kota', 100);  
             $table->string('wilayah_jawa', 40);
             $table->string('pulau', 50);
             $table->decimal('investasi_rp_juta', 15, 2)->nullable();
