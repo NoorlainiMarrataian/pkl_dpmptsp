@@ -12,7 +12,7 @@ return new class extends Migration
             $table->string('negara')->primary();
             $table->year('tahun');
             $table->string('periode', 20);
-            $table->string('proyek');
+            $table->integer('proyek');
             $table->decimal('tambahan_investasi_dalam_ribu_usd', 15, 2);
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2);
             $table->timestamps();
