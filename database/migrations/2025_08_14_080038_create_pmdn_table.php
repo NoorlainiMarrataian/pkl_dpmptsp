@@ -13,20 +13,18 @@ class CreatePmdnTable extends Migration
     {
         Schema::create('pmdn', function (Blueprint $table) {
             $table->id('id_pmdn');
-            $table->unsignedBigInteger('data_investasi_id'); // Foreign key ke data_investasi.id_data
+            $table->string('kabupaten_kota', 100);
             $table->year('tahun');
             $table->string('periode', 20);
-            $table->integer('proyek')->nullable();
+            $table->integer('proyek_pmdn')->nullable();
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
-            $table->integer('tki')->nullable();
-            $table->timestamps();
 
             // Relasi ke data_investasi
-            $table->foreign('data_investasi_id')
-                  ->references('id_data')
-                  ->on('data_investasi')
-                  ->onUpdate('cascade')
+            $table->foreign('kabupaten_kota')
+                  ->references('kabupaten_kota')
+                  ->on('lokasi')
                   ->onDelete('cascade');
+            $table->unique(['kabupaten_kota', 'tahun', 'periode'], 'pmdn_lok_periode_unique');
         });
     }
 
