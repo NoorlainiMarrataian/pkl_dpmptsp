@@ -20,10 +20,7 @@ class CreatePmdnTable extends Migration
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
 
             // Relasi ke data_investasi
-            $table->foreign('kabupaten_kota')
-                  ->references('kabupaten_kota')
-                  ->on('lokasi')
-                  ->onDelete('cascade');
+            
             $table->unique(['kabupaten_kota', 'tahun', 'periode'], 'pmdn_lok_periode_unique');
         });
     }
