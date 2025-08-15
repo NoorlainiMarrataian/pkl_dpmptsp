@@ -16,10 +16,6 @@ return new class extends Migration
             $table->integer('proyek_pma');
             $table->bigInteger('tambahan_investasi_dalam_ribu_usd');
             $table->bigInteger('tambahan_investasi_dalam_juta');
-            
-            // Relasi ke Data_Investasi
-            $table->unsignedBigInteger('id_data');
-            $table->foreign('id_data')->references('id_data')->on('data_investasi')->onDelete('cascade');
 
             $table->timestamps();
         });

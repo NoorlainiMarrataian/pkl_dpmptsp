@@ -6,15 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSektorTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('sektor', function (Blueprint $table) {
-            $table->string('nama_sektor', 150)->primary();//pk
+            $table->string('nama_sektor', 150)->primary(); // PK
             $table->year('tahun');
-            $table->integer('periode', 20);
+            $table->integer('periode'); // perbaikan: hapus parameter panjang
             $table->integer('proyek_pmdn')->nullable();
             $table->decimal('tambahan_investasi_dalam_juta_pmdn', 15, 2)->nullable();
             $table->integer('proyek_pma')->nullable();
@@ -24,13 +21,9 @@ class CreateSektorTable extends Migration
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
             
             $table->index(['tahun','periode']);
-
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('sektor');

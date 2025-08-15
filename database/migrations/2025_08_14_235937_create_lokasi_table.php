@@ -11,20 +11,22 @@ class CreateLokasiTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('lokasi', function (Blueprint $table) {            
-            $table->string('kabupaten_kota',100)->primary();
-            $table->year('tahun');
-            $table->string('periode', 20);
-            $table->integer('proyek_pmdn')->nullable();
-            $table->decimal('tambahan_investasi_dalam_juta_pmdn', 15, 2)->nullable();
-            $table->integer('proyek_pma')->nullable();
-            $table->decimal('tambahan_investasi_dalam_ribu_usd', 15, 2)->nullable();
-            $table->decimal('tambahan_investasi_dalam_juta_pma', 15, 2)->nullable();
-            $table->integer('proyek')->nullable();
-            $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
-            
-            $table->index(['tahun','periode']);
-        });
+        // lokasi migration
+Schema::create('lokasi', function (Blueprint $table) {            
+    $table->string('kabupaten_kota', 100)->collation('utf8mb4_unicode_ci')->primary();
+    $table->year('tahun');
+    $table->string('periode', 20);
+    $table->integer('proyek_pmdn')->nullable();
+    $table->decimal('tambahan_investasi_dalam_juta_pmdn', 15, 2)->nullable();
+    $table->integer('proyek_pma')->nullable();
+    $table->decimal('tambahan_investasi_dalam_ribu_usd', 15, 2)->nullable();
+    $table->decimal('tambahan_investasi_dalam_juta_pma', 15, 2)->nullable();
+    $table->integer('proyek')->nullable();
+    $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
+    
+    $table->index(['tahun','periode']);
+});
+
     }
 
     /**
