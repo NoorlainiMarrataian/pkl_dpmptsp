@@ -11,9 +11,8 @@ class CreateLokasiTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('lokasi', function (Blueprint $table) {
-            $table->id('id_lokasi');
-            $table->unsignedBigInteger('data_investasi_id'); // Foreign key ke data_investasi.id_data
+        Schema::create('lokasi', function (Blueprint $table) {            
+            $table->string('kabupaten_kota',100)->primary();
             $table->year('tahun');
             $table->string('periode', 20);
             $table->integer('proyek_pmdn')->nullable();
@@ -23,14 +22,8 @@ class CreateLokasiTable extends Migration
             $table->decimal('tambahan_investasi_dalam_juta_pma', 15, 2)->nullable();
             $table->integer('proyek')->nullable();
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
-            $table->timestamps();
-
-            // Relasi ke data_investasi
-            $table->foreign('data_investasi_id')
-                  ->references('id_data')
-                  ->on('data_investasi')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            
+            $table->index(['tahun','periode']);
         });
     }
 
