@@ -12,9 +12,9 @@ class CreateSektorTable extends Migration
     public function up(): void
     {
         Schema::create('sektor', function (Blueprint $table) {
-            $table->string('nama_sektor', 150)->unique();
+            $table->string('nama_sektor', 150)->primary();//pk
             $table->year('tahun');
-            $table->string('periode', 20);
+            $table->integer('periode', 20);
             $table->integer('proyek_pmdn')->nullable();
             $table->decimal('tambahan_investasi_dalam_juta_pmdn', 15, 2)->nullable();
             $table->integer('proyek_pma')->nullable();
