@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
+
         Schema::create('data_investasi', function (Blueprint $table) {
             $table->id('id_data');
             $table->year('tahun');
@@ -34,4 +35,5 @@ return new class extends Migration {
     {
         Schema::dropIfExists('data_investasi');
     }
+
 };

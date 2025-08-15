@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->year('tahun');
             $table->string('periode', 20);
             $table->integer('proyek');
+
             $table->decimal('tambahan_investasi_dalam_ribu_usd', 15, 2)->nullable();
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
 
