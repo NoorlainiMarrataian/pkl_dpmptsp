@@ -28,8 +28,22 @@ class CreateDataInvestasiTable extends Migration
             $table->decimal('investasi_rp_juta', 15, 2)->nullable();
             $table->decimal('investasi_us_ribu', 15, 2)->nullable();
             $table->integer('jumlah_tki')->nullable();
-            $table->timestamps();
+            
 
+            $table->foreign('negara')
+                  ->references('negara')->on('negara_investor')
+                  ->onDelete('cascade');
+
+            $table->foreign('nama_sektor')
+                  ->references('nama_sektor')->on('sektor')
+                  ->onDelete('cascade');
+
+            $table->foreign('kabupaten_kota')
+                  ->references('kabupaten_kota')->on('lokasi')
+                  ->onDelete('cascade');
+            
+            $table->index(['tahun', 'periode']);
+            $table->timestamps();
             // Contoh jika nanti ingin relasi foreign key
             // $table->foreign('negara')->references('id')->on('negara');
             // $table->foreign('sektor_utama')->references('id')->on('sektor_utama');
