@@ -12,7 +12,7 @@ class CreateLokasiTable extends Migration
     public function up(): void
     {
         Schema::create('lokasi', function (Blueprint $table) {            
-            $table->unsignedBigInteger('data_investasi_id'); // Foreign key ke data_investasi.id_data
+            $table->string('kabupaten_kota',100)->primary();
             $table->year('tahun');
             $table->string('periode', 20);
             $table->integer('proyek_pmdn')->nullable();
