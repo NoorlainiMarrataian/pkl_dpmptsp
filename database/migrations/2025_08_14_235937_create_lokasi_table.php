@@ -4,12 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateLokasiTable extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('lokasi', function (Blueprint $table) {
-            $table->string('kabupaten_kota'); // foreign key
+            $table->id('id_lokasi');
+            $table->unsignedBigInteger('data_investasi_id'); // Foreign key ke data_investasi.id_data
             $table->year('tahun');
             $table->string('periode', 20);
             $table->integer('proyek_pmdn')->nullable();
@@ -19,21 +23,22 @@ return new class extends Migration
             $table->decimal('tambahan_investasi_dalam_juta_pma', 15, 2)->nullable();
             $table->integer('proyek')->nullable();
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
+            $table->timestamps();
 
-            // Primary Key gabungan kalau mau unik per kabupaten & tahun
-            $table->primary(['kabupaten_kota', 'tahun']);
-
-            // Foreign key
-            $table->foreign('kabupaten_kota')
-                  ->references('kabupaten_kota')
+            // Relasi ke data_investasi
+            $table->foreign('data_investasi_id')
+                  ->references('id_data')
                   ->on('data_investasi')
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('lokasi');
     }
-};
+}
