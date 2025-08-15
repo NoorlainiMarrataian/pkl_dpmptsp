@@ -23,6 +23,7 @@ class CreateLokasiTable extends Migration
             $table->integer('proyek')->nullable();
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
             
+            $table->index(['tahun','periode']);
         });
     }
 
