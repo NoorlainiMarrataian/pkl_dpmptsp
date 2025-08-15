@@ -22,7 +22,9 @@ class CreateSektorTable extends Migration
             $table->decimal('tambahan_investasi_dalam_juta_pma', 15, 2)->nullable();
             $table->integer('proyek')->nullable();
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
-            $table->timestamps();
+            
+            $table->index(['tahun','periode']);
+
         });
     }
 
