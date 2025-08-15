@@ -44,10 +44,6 @@ class CreateDataInvestasiTable extends Migration
             
             $table->index(['tahun', 'periode']);
             $table->timestamps();
-            // Contoh jika nanti ingin relasi foreign key
-            // $table->foreign('negara')->references('id')->on('negara');
-            // $table->foreign('sektor_utama')->references('id')->on('sektor_utama');
-            // $table->foreign('kabupaten_kota')->references('id')->on('kabupaten_kota');
         });
     }
 
