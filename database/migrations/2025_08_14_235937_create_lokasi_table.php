@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lokasi', function (Blueprint $table) {
-            $table->string('kabupaten_kota')->primary();
+            $table->string('kabupaten_kota'); // foreign key
             $table->year('tahun');
             $table->string('periode', 20);
             $table->integer('proyek_pmdn')->nullable();
@@ -20,7 +20,10 @@ return new class extends Migration
             $table->integer('proyek')->nullable();
             $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
 
-            // Jika kabupaten_kota adalah foreign key ke data_investasi
+            // Primary Key gabungan kalau mau unik per kabupaten & tahun
+            $table->primary(['kabupaten_kota', 'tahun']);
+
+            // Foreign key
             $table->foreign('kabupaten_kota')
                   ->references('kabupaten_kota')
                   ->on('data_investasi')
