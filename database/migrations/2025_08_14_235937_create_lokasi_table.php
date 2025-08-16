@@ -23,8 +23,15 @@ Schema::create('lokasi', function (Blueprint $table) {
     $table->decimal('tambahan_investasi_dalam_juta_pma', 15, 2)->nullable();
     $table->integer('proyek')->nullable();
     $table->decimal('tambahan_investasi_dalam_juta', 15, 2)->nullable();
+    $table->unsignedBigInteger('id_pma')->nullable();
+    $table->unsignedBigInteger('id_pmdn')->nullable();
+    
+    
     
     $table->index(['tahun','periode']);
+    $table->foreign('id_pma')->references('id_pma')->on('pma')->onDelete('cascade');
+    $table->foreign('id_pmdn')->references('id_pmdn')->on('pmdn')->onDelete('cascade');
+           
 });
 
     }

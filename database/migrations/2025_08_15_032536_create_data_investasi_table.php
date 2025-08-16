@@ -28,6 +28,10 @@ return new class extends Migration {
             $table->integer('jumlah_tki')->nullable();
             
             $table->index(['tahun', 'periode']);
+
+            $table->foreign('negara')->references('negara')->on('negara_investor')->onDelete('cascade');
+            $table->foreign('nama_sektor')->references('nama_sektor')->on('sektor')->onDelete('cascade');
+            
         });
     }
 
