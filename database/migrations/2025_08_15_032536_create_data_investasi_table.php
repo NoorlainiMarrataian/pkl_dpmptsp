@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->decimal('investasi_rp_juta', 15, 2)->nullable();
             $table->decimal('investasi_us_ribu', 15, 2)->nullable();
             $table->integer('jumlah_tki')->nullable();
+            $table->timestamps();
             
             $table->index(['tahun', 'periode']);
 
