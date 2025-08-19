@@ -29,8 +29,6 @@ Schema::create('lokasi', function (Blueprint $table) {
     
     
     $table->index(['tahun','periode']);
-    $table->foreign('id_pma')->references('id_pma')->on('pma')->onDelete('cascade');
-    $table->foreign('id_pmdn')->references('id_pmdn')->on('pmdn')->onDelete('cascade');
            
 });
 
