@@ -29,7 +29,7 @@
               <h5 class="card-title">{{ $data->nama_sektor ?? 'No Sector' }}</h5>
             </div>
             <div class="card-body">
-              <p><strong>Tahun:</strong> {{ $data->tahun }}</p>
+              <p><strong>Tahun :</strong> {{ $data->tahun }}</p>
               <p><strong>Periode:</strong> {{ $data->periode }}</p>
               <p><strong>Status Penanaman Modal:</strong> {{ $data->status_penanaman_modal ?? '-' }}</p>
               <p><strong>Regional:</strong> {{ $data->regional ?? '-' }}</p>
