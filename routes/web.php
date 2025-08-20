@@ -27,7 +27,10 @@ Route::get('/data_investasi/{data_investasi}/edit', [DatainvestasiController::cl
 Route::put('/data_investasi/{data_investasi}', [DatainvestasiController::class, 'update'])->name('data_investasi.update');
 // deletes a post
 Route::delete('/data_investasi/{data_investasi}', [DatainvestasiController::class, 'destroy'])->name('data_investasi.destroy');
-
+//mengambil css admin
+Route::get('admin/login', function () {
+    return view('admin.login');
+});
 
 /*
 |--------------------------------------------------------------------------
