@@ -27,6 +27,10 @@ return new class extends Migration {
             $table->integer('jumlah_tki')->nullable();
 
             $table->timestamps();
+
+            $table->foreign('negara')->references('negara')->on('negara_investor')->onDelete('cascade');
+            $table->foreign('nama_sektor')->references('nama_sektor')->on('sektor')->onDelete('cascade');
+            $table->foreign('kabupaten_kota')->references('kabupaten_kota')->on('lokasi')->onDelete('cascade');
         });
     }
 
