@@ -31,6 +31,11 @@ Route::delete('/data_investasi/{data_investasi}', [DatainvestasiController::clas
 Route::get('admin/login', function () {
     return view('admin.login');
 });
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('admin/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
+    Route::post('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout');
+});
+
 
 /*
 |--------------------------------------------------------------------------
