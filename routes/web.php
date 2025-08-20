@@ -45,4 +45,9 @@ Route::prefix('admin')->group(function () {
         ->name('admin.dashboard')
         ->middleware('auth:admin');
     Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+     // ✅ Tambahan route untuk log pengunduhan
+    Route::get('/log-pengunduhan', [LogPengunduhanController::class, 'index'])
+        ->name('admin.log_pengunduhan.index')
+        ->middleware('auth:admin');
 });
