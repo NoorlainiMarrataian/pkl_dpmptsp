@@ -16,6 +16,7 @@
                     <input type="text" name="username" placeholder="Masukkan nama pengguna" required>
                 </div>
                 <div class="form-group">
+                    <p> Kata Sandi
                     <input type="password" name="password" placeholder="Masukkan kata anda" required>
                 </div>
                 <button type="submit" class="btn-login">MASUK</button>
