@@ -14,7 +14,7 @@
       <a class="navbar-brand h1" href="{{ route('data_investasi.index') }}">CRUD Data Realisasi Investasi</a>
       <div class="justify-end">
         <div class="col">
-          <a class="btn btn-sm btn-success" href="{{ route('data_investasi.create') }}">Add Data</a>
+          <a class="btn btn-sm btn-success" href="{{ route('data_investasi.create') }}">Tambah Data</a>
         </div>
       </div>
     </div>
