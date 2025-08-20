@@ -29,11 +29,21 @@
               <h5 class="card-title">Data Realisasi Investasi</h5>
             </div>
             <div class="card-body">
-              <p><strong>Tahun:</strong> {{ $data->tahun }}</p>
+              <p><strong>Tahun :</strong> {{ $data->tahun }}</p>
               <p><strong>Periode:</strong> {{ $data->periode }}</p>
+              <p><strong>Status Penanaman Modal:</strong> {{ $data->status_penanaman_modal ?? '-' }}</p>
+              <p><strong>Regional:</strong> {{ $data->regional ?? '-' }}</p>
               <p><strong>Negara:</strong> {{ $data->negara ?? '-' }}</p>
-              <p><strong>Investasi Rp:</strong> {{ number_format($data->investasi_rp_juta, 0, ',', '.') }}</p>
-              <p><strong>Jumlah TKI:</strong> {{ $data->jumlah_tki }}</p>
+              <p><strong>Sektor Utama:</strong> {{ $data->sektor_utama ?? '-' }}</p>
+              <p><strong>Nama Sektor:</strong> {{ $data->nama_sektor ?? '-' }}</p>
+              <p><strong>Deskripsi KBLI 2 Digit:</strong> {{ $data->deskripsi_kbli_2digit ?? '-' }}</p>
+              <p><strong>Provinsi:</strong> {{ $data->provinsi ?? '-' }}</p>
+              <p><strong>Kabupaten/Kota:</strong> {{ $data->kabupaten_kota ?? '-' }}</p>
+              <p><strong>Wilayah Jawa:</strong> {{ $data->wilayah_jawa ?? '-' }}</p>
+              <p><strong>Pulau:</strong> {{ $data->pulau ?? '-' }}</p>
+              <p><strong>Investasi Rp:</strong> {{ isset($data->investasi_rp_juta) ? number_format($data->investasi_rp_juta, 0, ',', '.') : '-' }}</p>
+              <p><strong>Investasi US:</strong> {{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 0, ',', '.') : '-' }}</p>
+              <p><strong>Jumlah TKI:</strong> {{ $data->jumlah_tki ?? '-' }}</p>
             </div>
             <div class="card-footer">
               <div class="row">
