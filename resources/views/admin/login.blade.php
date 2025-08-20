@@ -12,10 +12,11 @@
             <form method="POST" action="{{ url('admin/login') }}">
                 @csrf
                 <div class="form-group">
-                    <input type="text" name="username" placeholder="Masukkan username anda" required>
+                    <p> Nama Pengguna
+                    <input type="text" name="username" placeholder="Masukkan nama pengguna" required>
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" placeholder="Masukkan password anda" required>
+                    <input type="password" name="password" placeholder="Masukkan kata anda" required>
                 </div>
                 <button type="submit" class="btn-login">MASUK</button>
             </form>
