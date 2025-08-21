@@ -9,6 +9,8 @@
             
         </form>
         <a href="{{ route('data_investasi.create') }}" class="btn btn-success">Tambah Data</a>
+        <button type="button" class="btn btn-primary me-2" onclick="editData()">Edit Data</button>
+        <button type="button" class="btn btn-danger" onclick="deleteData()">Hapus Data</button>
     </div>
 
     <div class="table-responsive">
@@ -71,4 +73,40 @@
         </table>
     </div>
 </div>
+
+<script>
+    function editData() {
+        let id = prompt("Masukkan ID data yang ingin diedit:");
+        if (id) {
+            window.location.href = "/data_investasi/" + id + "/edit";
+        }
+    }
+
+    function deleteData() {
+        let id = prompt("Masukkan ID data yang ingin dihapus:");
+        if (id) {
+            if (confirm("Yakin ingin menghapus data dengan ID " + id + "?")) {
+                let form = document.createElement("form");
+                form.action = "/data_investasi/" + id;
+                form.method = "POST";
+
+                let csrf = document.createElement("input");
+                csrf.type = "hidden";
+                csrf.name = "_token";
+                csrf.value = "{{ csrf_token() }}";
+
+                let method = document.createElement("input");
+                method.type = "hidden";
+                method.name = "_method";
+                method.value = "DELETE";
+
+                form.appendChild(csrf);
+                form.appendChild(method);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    }
+</script>
 @endsection
