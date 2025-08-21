@@ -4,7 +4,7 @@
 <div class="container h-100 mt-5">
   <div class="row h-100 justify-content-center align-items-center">
     <div class="col-10 col-md-8 col-lg-6">
-      <h3 class="mb-4">Tambah Data Realisasi Investasi</h3>
+      <h4 class="mb-4">Tambah Data Realisasi Investasi</h4>
       
       <form action="{{ route('data_investasi.store') }}" method="post">
         @csrf
