@@ -83,7 +83,14 @@ class DatainvestasiController extends Controller
 
     public function create()
     {
-        return view('admin.data_investasi.create');
+        // ambil id terakhir dari tabel data_investasi
+        $lastId = \DB::table('data_investasi')->max('id'); 
+
+        // kalau kosong, mulai dari 1
+        $newId = $lastId ? $lastId + 1 : 1;
+
+        // kirim ke view
+        return view('admin.data_investasi.create', compact('newId'));
     }
 
     public function edit($id)

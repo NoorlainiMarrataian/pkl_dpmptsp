@@ -10,6 +10,12 @@
         @csrf
 
         <div class="form-group">
+          <label for="id">Nomor ID</label>
+          <input type="text" class="form-control" value="{{ $newId }}" disabled>
+          <input type="hidden" name="id" value="{{ $newId }}">
+        </div>
+
+        <div class="form-group">
           <label for="tahun">Tahun</label>
           <input type="text" class="form-control" id="tahun" name="tahun" required> 
         </div>
