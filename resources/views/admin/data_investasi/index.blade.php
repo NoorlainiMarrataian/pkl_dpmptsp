@@ -4,6 +4,10 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between mb-3">
         <h2>Data Realisasi Investasi</h2>
+        <form action="{{ route('data_investasi.index') }}" method="GET" class="d-flex me-2">
+            <input type="text" name="search" class="form-control" placeholder="Cari ID" value="{{ request('search') }}">
+            
+        </form>
         <a href="{{ route('data_investasi.create') }}" class="btn btn-success">Tambah Data</a>
     </div>
 

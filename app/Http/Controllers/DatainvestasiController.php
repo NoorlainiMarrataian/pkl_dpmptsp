@@ -7,11 +7,22 @@ use App\Models\Datainvestasi;
 
 class DatainvestasiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data_investasi = Datainvestasi::all();
+        $query = Datainvestasi::query();
+
+        // jika ada parameter search
+        if ($request->has('search') && $request->search != '') {
+            // filter berdasarkan kolom id
+            $query->where('id', $request->search);
+        }
+
+        // kalau mau pakai pagination biar rapi
+        $data_investasi = $query->paginate(10);
+
         return view('admin.data_investasi.index', compact('data_investasi'));
     }
+
 
     public function store(Request $request)
     {
