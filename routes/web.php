@@ -5,6 +5,7 @@ use App\Http\Controllers\DataInvestasiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogPengunduhanController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,14 @@ use App\Http\Controllers\LogPengunduhanController;
 // ✅ resource otomatis sudah berisi index, create, store, show, edit, update, destroy
 Route::resource('data_investasi', DataInvestasiController::class);
 
-// kalau ingin tetap menjadikan halaman utama (/) menuju index data_investasi:
-Route::get('/', [DataInvestasiController::class, 'index'])->name('home');
+// Halaman utama (/) diarahkan ke dashboard user, dan diberi nama "home"
+Route::get('/', function () {
+    return redirect()->route('user.dashboard');
+})->name('home');
+
+// Halaman dashboard user
+Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+
 
 /*
 |--------------------------------------------------------------------------

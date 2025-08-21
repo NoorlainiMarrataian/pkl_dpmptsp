@@ -1,0 +1,100 @@
+/* ===== DASHBOARD USER =====*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #004AAD, #00BFFF);
+    color: white;
+    padding: 15px 50px;
+}
+.navbar .logo {
+    display: flex;
+    align-items: center;
+}
+.navbar .logo img {
+    height: 50px;
+    margin-right: 10px;
+}
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+.navbar .search-box input {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: none;
+}
+
+/* Hero */
+.hero-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+/* Section */
+section {
+    padding: 50px;
+}
+.realisasi h2, .tentang h2 {
+    font-size: 28px;
+    font-weight: bold;
+}
+.btn-info {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+}
+.peta {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Tentang */
+.tentang-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.tentang-content img {
+    width: 200px;
+    border-radius: 10px;
+}
+.tentang-content .deskripsi h3 {
+    font-size: 22px;
+}
+
+/* Footer */
+.footer {
+    background: #002244;
+    color: white;
+    padding: 30px 50px;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+}
+.footer .copyright {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #555;
+    padding-top: 10px;
+}
