@@ -15,6 +15,11 @@
         @method('PUT')
 
         <div class="form-group">
+          <label for="id">Nomor ID</label>
+          <input type="text" class="form-control" value="{{ $data_investasi->id }}" readonly>
+        </div>
+
+        <div class="form-group">
           <label for="tahun">Tahun</label>
           <input type="text" class="form-control" id="tahun" name="tahun"
                  value="{{ $data_investasi->tahun }}" required> 
@@ -107,7 +112,7 @@
         <!-- Tombol Aksi -->
         <div class="mt-4 d-flex justify-content-end">
             <a href="{{ route('admin.laporan.index') }}" class="btn btn-secondary mr-2">Batal</a>
-            <button type="submit" class="btn btn-primary">Perbarui Data</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
     </form>
 </div>
