@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <h3 class="mb-4">Update Data Realisasii Investasi</h3>
+    <h3 class="mb-4">Update Data Realisasi Investasi</h3>
     
     <form action="{{ route('data_investasi.update', $data_investasi->id) }}" method="post">
         @csrf
