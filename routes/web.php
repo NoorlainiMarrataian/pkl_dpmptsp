@@ -1,61 +1,42 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DatainvestasiController;
+use App\Http\Controllers\DataInvestasiController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LogPengunduhanController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routes (Frontend / User)
 |--------------------------------------------------------------------------
-|
-| Route untuk Data Investasi (frontend/user)
-|
 */
 
-// returns the home page with all posts
-Route::get('/', [DatainvestasiController::class, 'index'])->name('data_investasi.index');
-// returns the form for adding a post
-Route::get('/data_investasi/create', [DatainvestasiController::class, 'create'])->name('data_investasi.create');
-// adds a post to the database
-Route::post('/data_investasi', [DatainvestasiController::class, 'store'])->name('data_investasi.store');
-// returns a page that shows a full post
-Route::get('/data_investasi/{data_investasi}', [DatainvestasiController::class, 'show'])->name('data_investasi.show');
-// returns the form for editing a post
-Route::get('/data_investasi/{data_investasi}/edit', [DatainvestasiController::class, 'edit'])->name('data_investasi.edit');
-// updates a post
-Route::put('/data_investasi/{data_investasi}', [DatainvestasiController::class, 'update'])->name('data_investasi.update');
-// deletes a post
-Route::delete('/data_investasi/{data_investasi}', [DatainvestasiController::class, 'destroy'])->name('data_investasi.destroy');
-//mengambil css admin
-Route::get('admin/login', function () {
-    return view('admin.login');
-});
-Route::middleware(['auth:admin'])->group(function () {
-    Route::get('admin/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-    Route::post('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout');
-});
+// ✅ resource otomatis sudah berisi index, create, store, show, edit, update, destroy
+Route::resource('data_investasi', DataInvestasiController::class);
 
+// kalau ingin tetap menjadikan halaman utama (/) menuju index data_investasi:
+Route::get('/', [DataInvestasiController::class, 'index'])->name('home');
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes Admin
 |--------------------------------------------------------------------------
-|
-| Route untuk halaman backend admin
-|
 */
 
+// halaman login admin
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminController::class, 'login']);
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])
-        ->name('admin.dashboard')
-        ->middleware('auth:admin');
-    Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-     // ✅ Tambahan route untuk log pengunduhan
-    Route::get('/log-pengunduhan', [LogPengunduhanController::class, 'index'])
-        ->name('admin.log_pengunduhan.index')
-        ->middleware('auth:admin');
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+        // log pengunduhan
+        Route::get('/log-pengunduhan', [LogPengunduhanController::class, 'index'])->name('admin.log_pengunduhan.index');
+
+        // ✅ Data Laporan: langsung arahkan ke data_investasi.index
+        Route::get('/laporan', [DataInvestasiController::class, 'index'])->name('admin.laporan.index');
+    });
 });

@@ -129,10 +129,10 @@
                 <p>Admin</p>
             </div>
             <div class="menu">
-                <a href="{{ url('admin/dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
+                <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
                     <i class="fas fa-th-large"></i> Dashboard
                 </a>
-                <a href="{{ url('admin/laporan') }}" class="{{ request()->is('admin/laporan') ? 'active' : '' }}">
+                <a href="{{ route('data_investasi.index') }}" class="{{ request()->is('data_investasi*') ? 'active' : '' }}">
                     <i class="fas fa-file-alt"></i> Data Laporan
                 </a>
                 <a href="{{ url('admin/pengaturan') }}" class="{{ request()->is('admin/pengaturan') ? 'active' : '' }}">
