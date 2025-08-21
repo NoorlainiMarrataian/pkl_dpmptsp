@@ -38,7 +38,7 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('downloads', 'totalVisits'));
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
         return redirect()->route('admin.login');
