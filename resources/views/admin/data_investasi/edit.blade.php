@@ -1,28 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Data Investasi</title>
+@extends('layouts.admin')
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+@section('title', 'Edit Data Investasi')
 
-    <!-- Custom CSS -->
+@push('styles')
     <link rel="stylesheet" href="{{ asset('css/edit.css') }}">
-</head>
-<body>
-<div class="container h-100 mt-5">
-  <div class="row h-100 justify-content-center align-items-center">
-    <div class="col-10 col-md-8 col-lg-6">
-      <h3 class="mb-4">Update Data Realisasi Investasi</h3>
-      
-      <form action="{{ route('data_investasi.update', $data_investasi->id) }}" method="post">
+@endpush
+
+@section('content')
+<div class="container mt-4">
+    <h3 class="mb-4">Update Data Realisasi Investasi</h3>
+    
+    <form action="{{ route('data_investasi.update', $data_investasi->id) }}" method="post">
         @csrf
         @method('PUT')
 
         <div class="form-group">
-          <label for="tahun">Tahun</label>
+          <label for="tahun">Tahun :</label>
           <input type="text" class="form-control" id="tahun" name="tahun"
                  value="{{ $data_investasi->tahun }}" required> 
         </div>
@@ -116,10 +109,6 @@
             <a href="{{ route('admin.laporan.index') }}" class="btn btn-secondary mr-2">Batal</a>
             <button type="submit" class="btn btn-primary">Perbarui Data</button>
         </div>
-
-      </form>
-    </div>
-  </div>
+    </form>
 </div>
-</body>
-</html>
+@endsection
