@@ -15,7 +15,7 @@
         @method('PUT')
 
         <div class="form-group">
-          <label for="tahun">Tahun :</label>
+          <label for="tahun">Tahun</label>
           <input type="text" class="form-control" id="tahun" name="tahun"
                  value="{{ $data_investasi->tahun }}" required> 
         </div>
