@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Data Investasi')
+@section('title', 'Data Laporan')
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/edit.css') }}">

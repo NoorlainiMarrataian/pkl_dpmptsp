@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', 'Data Laporan')
 
 @section('content')
 <div class="container mt-4">
