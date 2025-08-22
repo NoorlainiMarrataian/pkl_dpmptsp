@@ -1,0 +1,67 @@
+/* Header/Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #0a4f6f; /* warna hitam sesuai gambar */
+    color: #fff;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.navbar .logo img {
+    height: 45px;
+}
+
+.navbar .logo span {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.navbar nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.navbar nav ul li a:hover {
+    color: #ffcc00;
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.search-box button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #0a4f6f;
+    font-size: 16px;
+}
