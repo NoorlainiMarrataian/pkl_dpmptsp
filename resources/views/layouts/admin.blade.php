@@ -140,9 +140,6 @@
                 <a href="{{ route('data_investasi.index') }}" class="{{ request()->is('data_investasi') ? 'active' : '' }}">
                     <i class="fas fa-file-alt"></i> Data Laporan
                 </a>
-                <a href="{{ url('admin/pengaturan') }}" class="{{ request()->is('admin/pengaturan') ? 'active' : '' }}">
-                    <i class="fas fa-cog"></i> Pengaturan
-                </a>
             </div>
         </div>
         <div class="logout">
