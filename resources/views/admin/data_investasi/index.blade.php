@@ -7,13 +7,18 @@
         <h2>Data Realisasi Investasi</h2>
         <form action="{{ route('data_investasi.index') }}" method="GET" class="d-flex me-2">
             <input type="text" name="search" class="form-control" placeholder="Cari ID" value="{{ request('search') }}">
-            
         </form>
-        <a href="{{ route('data_investasi.create') }}" class="btn btn-success">Tambah Data</a>
+
+        <!-- Tombol Tambah Data -->
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#tambahDataModal">
+    Tambah Data
+</button>
+
         <button type="button" class="btn btn-primary me-2" onclick="editData()">Edit Data</button>
         <button type="button" class="btn btn-danger" onclick="deleteData()">Hapus Data</button>
     </div>
 
+    {{-- Table --}}
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover investasi-table">
             <thead class="thead-dark">
@@ -72,6 +77,44 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+</div>
+
+<!-- Modal Tambah Data -->
+<div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content p-4 text-center">
+            <h5 class="mb-3">Tambah Data</h5>
+            
+            <a href="{{ route('data_investasi.create') }}" class="btn btn-light w-100 mb-2">Tambah manual</a>
+            <!-- Tombol pemicu modal upload -->
+            <button type="button" class="btn btn-light w-100 mb-3" data-toggle="modal" data-target="#uploadExcelModal">
+                Upload data excel
+            </button>
+            
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Upload Excel -->
+<div class="modal fade" id="uploadExcelModal" tabindex="-1" role="dialog" aria-labelledby="uploadExcelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content p-4 text-center">
+            <h5 class="mb-3">Proses Unggah Dokumen</h5>
+            
+            <form action="{{ route('data_investasi.upload') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" accept=".xlsx" class="form-control mb-2" required>
+                <button type="submit" class="btn btn-light w-100 mb-2">Unggah Data Dari Komputer</button>
+            </form>
+                        
+            <p>Atau</p>
+            
+            <button class="btn btn-light w-100 mb-3">Tarik Dan Letakkan</button>
+            
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
+        </div>
     </div>
 </div>
 

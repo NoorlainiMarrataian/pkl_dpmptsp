@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Datainvestasi;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\DataInvestasiImport;
 
 class DatainvestasiController extends Controller
 {
@@ -108,5 +110,32 @@ class DatainvestasiController extends Controller
     {
         $data_investasi = Datainvestasi::find($id);
         return view('admin.data_investasi.edit', compact('data_investasi'));
+    }
+
+    // DataInvestasiController.php
+    public function uploadForm()
+    {
+        // Menampilkan halaman upload
+        return view('admin.data_investasi.upload');
+    }
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:5120', // max 5 MB
+        ], [
+            'file.required' => 'Silakan pilih file Excel terlebih dahulu.',
+            'file.mimes'    => 'Format harus .xlsx / .xls / .csv',
+        ]);
+
+        try {
+            Excel::import(new DataInvestasiImport, $request->file('file'));
+
+            return redirect()
+                ->route('data_investasi.index')
+                ->with('success', 'Data Excel berhasil diimpor.');
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Gagal mengimpor: '.$e->getMessage());
+        }
     }
 }
