@@ -54,6 +54,6 @@
   </div>
 
   <div class="footer-bottom">
-    © 2025 Dinas PMPTSP Prov. Kalsel
+    © 2025 Dinas PMPTSP Provinsi Kalimantan Selatan
   </div>
 </footer>
