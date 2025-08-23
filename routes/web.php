@@ -24,6 +24,9 @@ Route::get('/', function () {
 // Halaman dashboard user
 Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
 
+// Halaman realisasi investasi (user)
+Route::get('/realisasi-investasi', [UserController::class, 'realisasi'])->name('realisasi');
+
 // Route GET untuk menampilkan form upload
 Route::get('/data_investasi/upload', [DataInvestasiController::class, 'uploadForm'])->name('data_investasi.upload.form');
 
