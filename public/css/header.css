@@ -1,33 +1,58 @@
-/* Header/Navbar */
+/* =========================
+   HEADER / NAVBAR
+   ========================= */
 .navbar {
-    display: flex;
-    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    padding: 15px 30px;
-    background: #0a4f6f; /* warna hitam sesuai gambar */
+    padding: 0 40px;
+    height: 80px;
+    background: linear-gradient(
+        to bottom,
+        rgba(34, 53, 93, 0.95),
+        rgba(31, 47, 90, 0.6),
+        rgba(0, 0, 0, 0)
+    );
     color: #fff;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    box-sizing: border-box;
 }
 
+/* sembunyikan navbar saat scroll */
+.navbar.hidden {
+    transform: translateY(-100%);
+}
+
+/* LOGO */
 .navbar .logo {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: bold;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
 }
 
 .navbar .logo img {
-    height: 45px;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    display: block;
 }
 
-.navbar .logo span {
-    font-size: 14px;
-    line-height: 1.2;
+/* MENU */
+.navbar nav {
+    display: flex;
+    justify-content: center;
 }
 
 .navbar nav ul {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 40px;
     margin: 0;
     padding: 0;
 }
@@ -36,26 +61,31 @@
     color: #fff;
     text-decoration: none;
     font-weight: 600;
+    font-size: 18px;
+    transition: color 0.3s ease;
 }
 
 .navbar nav ul li a:hover {
     color: #ffcc00;
 }
 
-/* Search Box */
+/* SEARCH BOX */
 .search-box {
     display: flex;
     align-items: center;
     background: #fff;
-    border-radius: 20px;
-    padding: 5px 10px;
+    border-radius: 25px;
+    padding: 6px 12px;
+    width: 200px;
 }
 
 .search-box input {
     border: none;
     outline: none;
-    padding: 5px 10px;
+    padding: 5px 8px;
     border-radius: 20px;
+    width: 100%;
+    font-size: 15px;
 }
 
 .search-box button {
@@ -63,5 +93,5 @@
     background: none;
     cursor: pointer;
     color: #0a4f6f;
-    font-size: 16px;
+    font-size: 18px;
 }

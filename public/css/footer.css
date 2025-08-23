@@ -14,62 +14,111 @@ main {
 .footer {
     background-color: #0a4f6f;
     color: #fff;
-    padding: 30px 20px 10px;
+    padding: 20px 15px 10px; /* lebih pendek */
     font-family: Arial, sans-serif;
     margin-top: auto;
+    font-size: 15px;
 }
 
 .footer-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    gap: 20px;
+    gap: 20px; /* jarak antar kolom */
 }
 
 .footer-col {
     flex: 1;
-    min-width: 250px;
+    min-width: 260px;
 }
 
 .footer h4 {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     border-bottom: 1px solid #fff;
-    padding-bottom: 5px;
+    padding-bottom: 4px;
+    font-size: 16px;
 }
 
 .footer address {
-    font-style: normal; /* supaya tidak italic */
-    line-height: 1.6;
+    font-style: normal;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.contact-list i {
+    margin-right: 6px;
+    color: #ffcc00;
+}
+
+/* Maps */
+.footer-maps-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px; /* lebih rapat */
+}
+
+.footer-maps-wrapper .contact-info {
+    flex: 1;
+}
+
+.footer-maps-wrapper .maps-embed iframe {
+    width: 200px;
+    height: 160px;
+    border: 0;
+    border-radius: 6px;
+}
+
+/* Sosial Media */
+.footer .social-icons {
+    margin-top: 6px;
 }
 
 .footer .social-icons a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px 0 0;
+    display: inline-block;
+    background: #fff;
+    color: #0a4f6f;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 6px;
     transition: 0.3s;
 }
 
 .footer .social-icons a:hover {
-    color: #ffcc00;
+    background: #ffcc00;
+    color: #0a4f6f;
 }
 
+/* Bawah */
 .footer-bottom {
     text-align: center;
     border-top: 1px solid #fff;
-    margin-top: 20px;
-    padding-top: 10px;
-    font-size: 14px;
+    margin-top: 15px;
+    padding-top: 8px;
+    font-size: 13px;
 }
 
-/* Responsif untuk mobile */
+/* Responsif */
 @media (max-width: 768px) {
     .footer-container {
         flex-direction: column;
         text-align: center;
     }
-    .footer .social-icons {
-        margin-top: 10px;
+    .footer-maps-wrapper {
+        flex-direction: column;
+        align-items: center;
     }
 }
