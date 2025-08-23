@@ -33,11 +33,13 @@ class DataInvestasiImport implements ToModel, WithHeadingRow, SkipsEmptyRows
             'deskripsi_kbli_2digit'  => $row['deskripsi_kbli_2digit'] ?? null,
             'provinsi'               => $row['provinsi'] ?? null,
             'kabupaten_kota'         => $row['kabupaten_kota'] ?? null,
-            'wilayah_jawa'           => $row['wilayah_jawa'] ?? null,
+            // Mapping kolom 'wilayah_jawa' dari excel ke 'jawa_luar_jawa' di database
+            'wilayah_jawa'           => $row['wilayah_jawa'] ?? $row['jawa_luar_jawa'] ?? null,
             'pulau'                  => $row['pulau'] ?? null,
             'investasi_rp_juta'      => $row['investasi_rp_juta'] ?? null,
             'investasi_us_ribu'      => $row['investasi_us_ribu'] ?? null,
-            'jumlah_tki'             => $row['jumlah_tki'] ?? null,
+            // Mapping kolom 'tki' dari excel ke 'jumlah_tki' di database
+            'jumlah_tki'             => $row['jumlah_tki'] ?? $row['tki'] ?? null,
         ]);
     }
 }
