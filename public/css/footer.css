@@ -81,25 +81,19 @@ main {
 /* Sosial Media */
 .footer .social-icons {
     margin-top: 6px;
+    display: flex;
+    gap: 12px;
 }
 
-.footer .social-icons a {
-    display: inline-block;
-    background: #fff;
-    color: #0a4f6f;
-    font-size: 16px;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 50%;
-    margin-right: 6px;
+.footer .social-icons a img {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
     transition: 0.3s;
 }
 
-.footer .social-icons a:hover {
-    background: #ffcc00;
-    color: #0a4f6f;
+.footer .social-icons a img:hover {
+    transform: scale(1.15);
 }
 
 /* Bawah */
