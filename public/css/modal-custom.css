@@ -1,0 +1,35 @@
+/* Modal Custom Styles */
+.modal-custom {
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 32px 24px;
+}
+.modal-title-custom {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+.input-custom {
+    height: 54px;
+    font-size: 1.15rem;
+    border-radius: 8px;
+    text-align: center;
+}
+.btn-custom-outline {
+    border: 2px solid #07486a !important;
+    color: #07486a !important;
+    background: #fff !important;
+    height: 48px;
+    font-size: 1.08rem;
+    font-weight: 500;
+    border-radius: 8px;
+}
+.btn-custom-primary {
+    background: #07486a !important;
+    color: #fff !important;
+    height: 48px;
+    font-size: 1.08rem;
+    font-weight: 500;
+    border-radius: 8px;
+}

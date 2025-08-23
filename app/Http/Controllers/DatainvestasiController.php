@@ -19,8 +19,12 @@ class DatainvestasiController extends Controller
             $query->where('id', $request->search);
         }
 
-        // kalau mau pakai pagination biar rapi
-        $data_investasi = $query->paginate(10);
+        // Jika ada parameter 'all', tampilkan semua data tanpa pagination
+        if ($request->has('all')) {
+            $data_investasi = $query->get();
+        } else {
+            $data_investasi = $query->paginate(10);
+        }
 
         return view('admin.data_investasi.index', compact('data_investasi'));
     }

@@ -6,7 +6,7 @@
     <nav>
         <ul>
             <li><a href="{{ route('home') }}">Beranda</a></li>
-            <li><a href="{{ route('realisasi') }}">Realisasi Investasi</a></li>
+            <li><a href="{{ route('realisasi.realisasiinvestasi') }}">Realisasi Investasi</a></li>
         </ul>
     </nav>
 

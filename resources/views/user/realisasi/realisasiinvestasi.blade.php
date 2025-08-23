@@ -19,13 +19,17 @@
         <h2>Realisasi Investasi</h2>
         <div class="realisasi-card-container">
             <div class="realisasi-card">
-                <i class="fas fa-globe"></i>
-                <h4>NEGARA INVESTOR</h4>
+                <a href="{{ route('realisasi.negara') }}">
+                    <i class="fas fa-globe"></i>
+                    <h4>NEGARA INVESTOR</h4>
+                </a>
             </div>
             <div class="realisasi-card">
-                <i class="fas fa-map-marker-alt"></i>
-                <h4>LOKASI</h4>
-            </div>
+                <a href="{{ route('realisasi.lokasi') }}">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Lokasi Investasi</h4>
+                </a>
+        </div>
         </div>
     </section>
 </div>

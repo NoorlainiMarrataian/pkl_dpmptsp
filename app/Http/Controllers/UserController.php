@@ -14,7 +14,7 @@ class UserController extends Controller
     public function realisasi()
     {
         // arahkan ke view realisasi.blade.php
-        return view('user.realisasi'); 
+        return view('user.realisasi.realisasiinvestasi'); 
         // pastikan file ada di resources/views/user/realisasi/index.blade.php
     }
 }
