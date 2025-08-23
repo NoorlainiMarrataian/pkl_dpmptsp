@@ -21,7 +21,7 @@
             <button type="button" class="btn investasi-btn-round investasi-btn-edit" data-toggle="modal" data-target="#editModal">
                 <i class="fa fa-pencil"></i>
             </button>
-            <button type="button" class="btn investasi-btn-round investasi-btn-delete" onclick="deleteData()">
+                <button type="button" class="btn investasi-btn-round investasi-btn-delete" data-toggle="modal" data-target="#deleteModal">
                 <i class="fa fa-trash"></i>
             </button>
             <div class="dropdown">
@@ -81,11 +81,7 @@
                     <td>{{ $data->jumlah_tki ?? '-' }}</td>
                     <td>
                         <a href="{{ route('data_investasi.edit', $data->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                        <form action="{{ route('data_investasi.destroy', $data->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus data ini?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        <button type="button" class="btn btn-danger btn-sm btn-table-delete" data-id="{{ $data->id }}">Delete</button>
                     </td>
                 </tr>
                 @empty
@@ -133,6 +129,43 @@
     </div>
 </div>
 
+<!-- Modal Delete Data -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <h5 class="modal-title-custom">Masukkan Nomor ID Data yang akan dihapus</h5>
+            <form id="deleteDataForm">
+                <input type="text" id="deleteDataInput" class="form-control input-custom mb-4" placeholder="12324">
+                <div class="row justify-content-center">
+                    <div class="col-6 col-md-5 mb-2 mb-md-0">
+                        <button type="button" class="btn btn-danger w-100 btn-custom-outline" data-dismiss="modal">Batalkan</button>
+                    </div>
+                    <div class="col-6 col-md-5">
+                        <button id="showConfirmDelete" type="button" class="btn w-100 btn-custom-primary">Hapus</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Hapus Data -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-custom">
+            <h5 class="modal-title-custom mb-5" id="confirmDeleteText">Data akan dihapus</h5>
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-5 mb-2 mb-md-0">
+                    <button type="button" class="btn w-100 btn-custom-outline" data-dismiss="modal">Batalkan</button>
+                </div>
+                <div class="col-6 col-md-5">
+                    <button id="confirmDeleteBtn" type="button" class="btn w-100 btn-custom-primary">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Upload Excel -->
 <div class="modal fade" id="uploadExcelModal" tabindex="-1" role="dialog" aria-labelledby="uploadExcelModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -172,6 +205,7 @@
 </div>
 
 <script>
+    let deleteId = null;
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('editDataForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -180,33 +214,41 @@
                 window.location.href = "/data_investasi/" + id + "/edit";
             }
         });
-    });
-
-    function deleteData() {
-        let id = prompt("Masukkan ID data yang ingin dihapus:");
-        if (id) {
-            if (confirm("Yakin ingin menghapus data dengan ID " + id + "?")) {
-                let form = document.createElement("form");
-                form.action = "/data_investasi/" + id;
-                form.method = "POST";
-
-                let csrf = document.createElement("input");
-                csrf.type = "hidden";
-                csrf.name = "_token";
+        document.querySelectorAll('.btn-table-delete').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                deleteId = this.getAttribute('data-id');
+                $('#confirmDeleteModal').modal('show');
+            });
+        });
+        document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+            if (deleteId) {
+                var form = document.createElement('form');
+                form.action = '/data_investasi/' + deleteId;
+                form.method = 'POST';
+                var csrf = document.createElement('input');
+                csrf.type = 'hidden';
+                csrf.name = '_token';
                 csrf.value = "{{ csrf_token() }}";
-
-                let method = document.createElement("input");
-                method.type = "hidden";
-                method.name = "_method";
-                method.value = "DELETE";
-
+                var method = document.createElement('input');
+                method.type = 'hidden';
+                method.name = '_method';
+                method.value = 'DELETE';
                 form.appendChild(csrf);
                 form.appendChild(method);
-
                 document.body.appendChild(form);
                 form.submit();
             }
-        }
-    }
+        });
+        document.getElementById('showConfirmDelete').addEventListener('click', function() {
+            var id = document.getElementById('deleteDataInput').value;
+            if (id) {
+                deleteId = id;
+                $('#deleteModal').modal('hide');
+                $('#confirmDeleteModal').modal('show');
+                document.getElementById('confirmDeleteModal').querySelector('h5').innerText = 'Nomor ID Data ' + id + ' akan dihapus';
+            }
+        });
+    });
 </script>
 @endsection
