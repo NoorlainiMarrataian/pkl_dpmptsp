@@ -1,6 +1,5 @@
 <footer class="footer">
     <div class="footer-container">
-        <!-- Hubungi Kami -->
         <div class="footer-col">
             <h4>Hubungi Kami</h4>
             <address>
@@ -11,14 +10,12 @@
             </address>
         </div>
 
-        <!-- Jam Kerja -->
         <div class="footer-col">
             <h4>Jam Kerja Layanan</h4>
             <p>Senin – Kamis: 08.00 – 15.00 WITA</p>
             <p>Jum’at: 08.00 – 11.00 & 13.00 – 15.00 WITA</p>
         </div>
 
-        <!-- Ikuti Kami -->
         <div class="footer-col">
             <h4>Ikuti Kami</h4>
             <div class="social-icons">
@@ -33,6 +30,3 @@
         © 2025 DPMPTSP Provinsi Kalimantan Selatan. All rights reserved.
     </div>
 </footer>
-
-{{-- FontAwesome --}}
-<script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
