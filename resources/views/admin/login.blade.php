@@ -8,7 +8,7 @@
 <body>
     <div class="login-bg">
         <div class="login-header">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="login-logo">
+            <img src="{{ asset('images/logo-darisimantan.png') }}" alt="Logo" class="login-logo">
             <span class="login-appname">DARISIMANTAN</span>
         </div>
         <div class="login-main">
