@@ -8,59 +8,147 @@ body {
 .login-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-
-.login-box {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    width: 350px;
-    text-align: center;
-}
-
-h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-h2 span {
-    font-size: 16px;
-    font-weight: normal;
-    color: #555;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    outline: none;
-}
-
-input:focus {
-    border-color: #007bff;
-}
-
-.btn-login {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background: #007bff;
-    color: white;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.btn-login:hover {
-    background: #0056b3;
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Poppins', Arial, sans-serif;
+    }
+    .login-bg {
+        position: relative;
+        min-height: 100vh;
+        background: url('../images/Gedung_HitamPutih.png') center center/cover no-repeat;
+    }
+    .login-bg:before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(255,255,255,0.2);
+        z-index: 1;
+    }
+    .login-header {
+        position: absolute;
+        top: 32px;
+        left: 32px;
+        display: flex;
+        align-items: center;
+        z-index: 10;
+    }
+    .login-logo {
+        height: 48px;
+        margin-right: 16px;
+    }
+    .login-appname {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #07486a;
+        letter-spacing: 1px;
+    }
+    .login-main {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+    .login-title {
+        position: absolute;
+        left: 7vw;
+        top: 25vh;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #222;
+        line-height: 1.1;
+        z-index: 3;
+        max-width: 400px;
+    }
+    .login-title .highlight {
+        color: #1a8cff;
+    }
+    .login-card {
+        position: relative;
+        background: rgba(255,255,255,0.85);
+        border-radius: 24px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        padding: 40px 32px 32px 32px;
+        width: 370px;
+        margin-left: 30vw;
+        margin-top: 7vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-card-img {
+        width: 100%;
+        height: 180px;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 18px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+        background: url('../images/gedung.JPG') center center/cover no-repeat;
+        position: relative;
+    }
+    .login-card-img img {
+        display: none;
+    }
+    .login-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .login-label {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #222;
+        margin-bottom: 4px;
+    }
+    .login-input {
+        height: 44px;
+        border-radius: 8px;
+        border: 1px solid #cfd8dc;
+        padding: 0 14px;
+        font-size: 1.08rem;
+        background: #f7f9fa;
+        margin-bottom: 10px;
+        outline: none;
+        transition: border 0.2s;
+    }
+    .login-input:focus {
+        border: 1.5px solid #1a8cff;
+    }
+    .login-btn {
+        height: 44px;
+        border-radius: 8px;
+        background: #1a8cff;
+        color: #fff;
+        font-size: 1.08rem;
+        font-weight: 600;
+        border: none;
+        margin-top: 8px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(26,140,255,0.10);
+        transition: background 0.2s;
+    }
+    .login-btn:hover {
+        background: #07486a;
+    }
+    @media (max-width: 900px) {
+        .login-title {
+            position: static;
+            font-size: 2rem;
+            margin-bottom: 24px;
+            text-align: center;
+            max-width: 100%;
+        }
+        .login-main {
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 60px;
+        }
+        .login-card {
+            margin-left: 0;
+            margin-top: 0;
+        }
+    }
 }

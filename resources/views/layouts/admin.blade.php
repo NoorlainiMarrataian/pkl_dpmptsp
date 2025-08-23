@@ -22,7 +22,11 @@
             </div>
             <div class="profile">
                 <img src="https://i.ibb.co/4pzjz9w/avatar.png" alt="Foto Admin">
-                <h3>{{ Auth::guard('admin')->user()->username }}</h3>
+                <h3>
+                    @if(Auth::guard('admin')->check())
+                        {{ Auth::guard('admin')->user()->username }}
+                    @endif
+                </h3>
                 <p>Admin</p>
             </div>
             <div class="menu">
