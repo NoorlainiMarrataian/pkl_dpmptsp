@@ -115,7 +115,7 @@
         <div class="modal-content" style="border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.10); padding:32px 24px;">
             <h5 class="text-center mb-4" style="font-weight:700; font-size:1.25rem;">Cari Nomor ID Data</h5>
             <form id="editDataForm">
-                <input type="text" id="editDataInput" class="form-control mb-4" placeholder="12324" style="height:54px; font-size:1.15rem; border-radius:8px; text-align:center;">
+                <input type="text" id="editDataInput" class="form-control mb-4" placeholder="Masukkan Nomor ID" style="height:54px; font-size:1.15rem; border-radius:8px; text-align:center;">
                 <div class="row justify-content-center">
                     <div class="col-6 col-md-5 mb-2 mb-md-0">
                         <button type="button" class="btn btn-danger w-100" data-dismiss="modal" style="height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;">Batalkan</button>
@@ -133,9 +133,9 @@
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
-            <h5 class="modal-title-custom">Masukkan Nomor ID Data yang akan dihapus</h5>
+            <h5 class="modal-title-custom">Masukkan Nomor ID Data Yang Akan Dihapus</h5>
             <form id="deleteDataForm">
-                <input type="text" id="deleteDataInput" class="form-control input-custom mb-4" placeholder="12324">
+                <input type="text" id="deleteDataInput" class="form-control input-custom mb-4" placeholder="Masukkan Nomor ID">
                 <div class="row justify-content-center">
                     <div class="col-6 col-md-5 mb-2 mb-md-0">
                         <button type="button" class="btn btn-danger w-100 btn-custom-outline" data-dismiss="modal">Batalkan</button>
