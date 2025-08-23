@@ -52,14 +52,14 @@ body {
     align-items: flex-start;
 }
 
-.realisasi-card {
+.dashboard-card {
     background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.10);
     padding: 32px 28px;
     width: 100%;
-    max-width: 1000px;      /* card lebih lebar ke kanan */
-    margin-top: 40px;     /* card di bawah peta */
+    max-width: 650px;
+    margin-top: 40px;      /* lebih kecil agar card tepat di bawah peta */
     margin-right: -120px;  /* card menyentuh peta */
     border-left: 8px solid #004d66;
     position: relative;
@@ -103,8 +103,8 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     position: absolute;
     top: -100px;
-    right: -40px;
-    z-index: 2;           /* peta di atas card */
+    right: -40px;      /* geser peta ke kanan */
+    z-index: 2;
 }
 
 .btn-info {
@@ -123,14 +123,16 @@ a
 }
 
 /* TENTANG SECTION */
+
+/* ====== Bagian Tentang ====== */
 .tentang {
-    padding: 5px 10%;   /* dari 50px menjadi 30px agar lebih dekat */
-    background: #fff;
+    padding: 40px 20px;
+    background: #f9f9f9;
 }
 
 .tentang h2 {
     text-align: center;
-    margin-bottom: -80px;   /* lebih rapat ke bawah */
+    margin-bottom: 20px;
     font-size: 26px;
     color: #004d66;
 }
@@ -139,14 +141,17 @@ a
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 2px;           /* jarak antar gambar dan deskripsi lebih dekat */
+    gap: 24px;           /* jarak antar gambar dan teks */
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: row; /* pastikan arah baris */
+    margin: 0 auto;      /* posisikan di tengah */
+    max-width: 1200px;   /* batasi lebar maksimal agar tidak full banget */
+    padding: 0 20px;     /* jarak kiri-kanan di dalam container */
 }
 
 .tentang-content img {
-    width: 500px;        /* ukuran gambar proporsional */
-    border-radius: 12px;
+    width: 500px;        /* ukuran gambar proporsional, bisa sesuaikan */
+    border-radius: 5px;
 }
 
 .tentang-content .deskripsi {
@@ -155,21 +160,14 @@ a
 }
 
 .tentang-content .deskripsi h3 {
-    margin-top: 0;
-    margin-bottom: 6px; /* lebih kecil agar lebih dekat */
-}
-
-.tentang-content .deskripsi p {
-    margin-top: 0;      /* hilangkan jarak atas paragraf */
-}
-
-.tentang-content h3 {
     font-size: 20px;
-    margin-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 8px;
     color: #222;
 }
 
-.tentang-content p {
+.tentang-content .deskripsi p {
+    margin: 0;
     font-size: 15px;
     color: #444;
 }

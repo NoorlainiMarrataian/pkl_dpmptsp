@@ -8,7 +8,7 @@
 <section class="realisasi">
     <div class="realisasi-content">
         <div class="realisasi-text">
-            <div class="realisasi-card">
+            <div class="dashboard-card">
                 <h2>Realisasi Investasi</h2>
                 <p>Selamat datang di Website Realisasi Investasi DPMPTSP Provinsi Kalimantan Selatan. 
                 Website ini dikelola oleh Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP) 
