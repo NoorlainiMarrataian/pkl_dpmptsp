@@ -8,7 +8,13 @@ class UserController extends Controller
 {
     public function dashboard()
     {
-        // arahkan ke view dashboard user
         return view('user.dashboard.index');
+    }
+
+    public function realisasi()
+    {
+        // arahkan ke view realisasi.blade.php
+        return view('user.realisasi'); 
+        // pastikan file ada di resources/views/user/realisasi/index.blade.php
     }
 }
