@@ -6,12 +6,20 @@
 </section>
 
 <section class="realisasi">
-    <h2>Realisasi Investasi</h2>
-    <p>Selamat datang di Website Realisasi Investasi DPMPTSP Provinsi Kalimantan Selatan. 
-       Website ini dikelola oleh Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP) 
-       Provinsi Kalimantan Selatan sebagai wadah resmi untuk menyajikan data dan informasi terkini terkait perkembangan realisasi investasi di daerah.</p>
-    <a href="#" class="btn-info">Info selengkapnya</a>
-    <img src="{{ asset('images/peta.png') }}" alt="Peta Kalimantan Selatan" class="peta">
+    <div class="realisasi-content">
+        <div class="realisasi-text">
+            <div class="realisasi-card">
+                <h2>Realisasi Investasi</h2>
+                <p>Selamat datang di Website Realisasi Investasi DPMPTSP Provinsi Kalimantan Selatan. 
+                Website ini dikelola oleh Dinas Penanaman Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP) 
+                Provinsi Kalimantan Selatan sebagai wadah resmi untuk menyajikan data dan informasi terkini terkait perkembangan realisasi investasi di daerah.</p>
+               <a href="#" class="btn-info">Info selengkapnya</a>
+            </div>
+        </div>
+        <div class="realisasi-img">
+            <img src="{{ asset('images/peta.png') }}" alt="Peta Kalimantan Selatan" class="peta">
+        </div>
+    </div>
 </section>
 
 <section class="tentang">
