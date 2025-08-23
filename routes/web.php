@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LogPengunduhanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RealisasiInvestasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +26,16 @@ Route::get('/', function () {
 Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
 
 // Halaman realisasi investasi (user)
-Route::get('/realisasi-investasi', [UserController::class, 'realisasi'])->name('realisasi');
+Route::get('/realisasi-investasi', [UserController::class, 'realisasi'])->name('realisasi.realisasiinvestasi');
 
+// ✅ Halaman Negara Investor (user)
+Route::get('/negara-investor', [RealisasiInvestasiController::class, 'negaraInvestor'])
+    ->name('realisasi.negara');
+
+// ✅ Halaman Lokasi (user)
+Route::get('/lokasi-investasi', [RealisasiInvestasiController::class, 'lokasi'])
+    ->name('realisasi.lokasi');
+    
 // Route GET untuk menampilkan form upload
 Route::get('/data_investasi/upload', [DataInvestasiController::class, 'uploadForm'])->name('data_investasi.upload.form');
 
