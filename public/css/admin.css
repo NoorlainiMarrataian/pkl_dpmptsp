@@ -1,0 +1,105 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: #0A4C70;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 20px 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar-header {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.sidebar-header img {
+    max-width: 180px;
+}
+
+.profile {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.profile img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.profile p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.menu {
+    flex-grow: 1;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: #fff;
+    color: #0A4C70;
+    font-weight: bold;
+}
+
+.menu a i {
+    margin-right: 10px;
+}
+
+.logout {
+    padding: 15px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.logout button {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.logout button i {
+    margin-right: 10px;
+}
+
+.content {
+    margin-left: 260px;
+    padding: 20px;
+    width: calc(100% - 260px);
+}
