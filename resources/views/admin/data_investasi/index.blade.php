@@ -2,7 +2,7 @@
 @section('title', 'Data Laporan')
 
 @section('content')
-<div class="container mt-4 investasi-container">
+<div class="container-fluid mt-4 investasi-container">
 
     <div class="investasi-header">
         <div class="d-flex align-items-center">
@@ -58,6 +58,7 @@
                     <th>Investasi US$</th>
                     <th>Jumlah TKI</th>
                     <th>Aksi</th>
+            
                 </tr>
             </thead>
             <tbody>
@@ -80,8 +81,8 @@
                     <td>{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
                     <td>{{ $data->jumlah_tki ?? '-' }}</td>
                     <td>
-                        <a href="{{ route('data_investasi.edit', $data->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                        <button type="button" class="btn btn-danger btn-sm btn-table-delete" data-id="{{ $data->id }}">Delete</button>
+                        <a href="{{ route('data_investasi.edit', $data->id) }}" class="btn-table-edit">Edit</a>
+                        <button type="button" class="btn-table-delete" data-id="{{ $data->id }}">Hapus</button>
                     </td>
                 </tr>
                 @empty
