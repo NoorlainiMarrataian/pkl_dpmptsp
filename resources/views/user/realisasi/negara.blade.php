@@ -20,7 +20,7 @@
             <li><a href="#">TRIWULAN 4</a></li>
         </ul>
 
-        <a href="#" class="btn-download">
+        <a href="#" class="btn-download" id="openPopup">
             <i class="fas fa-download"></i> Download
         </a>
     </div>
@@ -47,8 +47,56 @@
         </table>
     </div>
 </section>
+
+{{-- Popup Modal --}}
+<div id="popupForm" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Data Diri</h2>
+        <div class="warning-icon">
+            <i class="fas fa-exclamation"></i>
+        </div>
+        <p>Silahkan isi formulir untuk mengunduh file ini</p>
+
+        <form>
+            <div class="checkbox-group horizontal">
+                <label><input type="checkbox"> Individu</label>
+                <label><input type="checkbox"> Perusahaan</label>
+                <label><input type="checkbox"> Lainnya</label>
+            </div>
+
+            <input type="text" placeholder="Nama Lengkap/Instansi">
+            <input type="email" placeholder="Email">
+            <input type="text" placeholder="Telpon">
+            <textarea placeholder="Keperluan"></textarea>
+
+            <div class="checkbox-group">
+                <label><input type="checkbox"> Anda setuju untuk bertanggung jawab atas data yang diunduh</label>
+                <label><input type="checkbox"> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+            </div>
+
+            <div class="popup-buttons">
+                <button type="submit" class="btn-blue">Unduh</button>
+                <button type="button" id="closePopup" class="btn-red">Batalkan</button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/negara.css') }}">
+<link rel="stylesheet" href="{{ asset('css/popup.css') }}">
+@endpush
+
+@push('scripts')
+<script>
+    document.getElementById("openPopup").addEventListener("click", function(e){
+        e.preventDefault();
+        document.getElementById("popupForm").style.display = "flex";
+    });
+
+    document.getElementById("closePopup").addEventListener("click", function(){
+        document.getElementById("popupForm").style.display = "none";
+    });
+</script>
 @endpush

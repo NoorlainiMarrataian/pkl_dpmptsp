@@ -1,4 +1,6 @@
-/* Container Utama */
+/* =========================
+   HALAMAN NEGARA INVESTOR
+   ========================= */
 .negara-investor {
     padding: 40px 80px;
     background: #f8f9fa;
@@ -10,14 +12,13 @@
 .negara-investor h2 {
     text-align: center;
     font-size: 28px;
-    margin-top: 50px;   /* 🔥 jarak dari atas, biar sama kayak Tren Realisasi Investasi */
+    margin-top: 50px;
     margin-bottom: 30px;
     color: #333;
     font-weight: 700;
 }
 
-
-/* Filter Bar (Tahun & Periode) */
+/* Filter Bar */
 .filter-bar {
     display: flex;
     align-items: center;
