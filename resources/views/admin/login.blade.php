@@ -15,13 +15,6 @@
     <img src="{{ asset('images/logo-darisimantan.png') }}" alt="Logo DARISIMANTAN" class="login-logo">
   </div>
 
-  <!-- Slogan di kiri -->
-  <div class="slogan">
-    “Data Rapi<br>
-    <span>Investasi Happy!</span><br>
-    Silahkan Masuk”
-  </div>
-
   <!-- Card Login -->
   <div class="login-card">
   <div class="login-card-img"></div>
