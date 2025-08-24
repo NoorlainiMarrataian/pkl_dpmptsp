@@ -1,0 +1,100 @@
+/* ==================== POPUP MODAL ==================== */
+
+/* Overlay */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Box */
+.popup-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 450px;
+    max-width: 95%;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.popup-content h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.warning-icon {
+    font-size: 50px;
+    color: red;
+    margin: 20px 0;
+    border: 2px solid red;
+    border-radius: 50%;
+    display: inline-block;
+    padding: 15px;
+}
+
+/* Form Input */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+/* Checkbox */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+    text-align: left;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 8px;
+}
+
+/* Buttons */
+.popup-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-blue {
+    background: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-red {
+    background: #dc3545;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-blue:hover { background: #0056b3; }
+.btn-red:hover { background: #a71d2a; }
