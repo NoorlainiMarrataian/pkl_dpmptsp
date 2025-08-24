@@ -1,34 +1,50 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Login Admin</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Masuk Admin</title>
+  <!-- Bootstrap 4 -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- CSS custom -->
+  <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <body>
-    <div class="login-bg">
-        <div class="login-header">
-            <img src="{{ asset('images/logo-darisimantan.png') }}" alt="Logo" class="login-logo">
-            <span class="login-appname">DARISIMANTAN</span>
+   <!-- Header Logo pojok kiri atas -->
+  <div class="login-header">
+    <img src="{{ asset('images/logo-darisimantan.png') }}" alt="Logo DARISIMANTAN" class="login-logo">
+  </div>
+
+  <!-- Slogan di kiri -->
+  <div class="slogan">
+    “Data Rapi<br>
+    <span>Investasi Happy!</span><br>
+    Silahkan Masuk”
+  </div>
+
+  <!-- Card Login -->
+  <div class="login-card">
+    <div class="image-section"></div>
+    <div class="form-section">
+      <!-- route + csrf -->
+      <form method="POST" action="{{ route('admin.login') }}">
+        @csrf
+        <div class="form-group">
+          <label for="username">Nama Pengguna</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan nama pengguna" required autofocus>
         </div>
-        <div class="login-main">
-            <div class="login-title">
-                <span>"Data Rapi<br><span class="highlight">Investasi Happy</span>"<br>Silahkan Masuk</span>
-            </div>
-            <div class="login-card">
-                <div class="login-card-img">
-                    <img src="{{ asset('images/gedung.JPG') }}" alt="Gedung" />
-                </div>
-                <form method="POST" action="{{ route('admin.login') }}" class="login-form">
-                    @csrf
-                    <label for="username" class="login-label">Nama Pengguna</label>
-                    <input id="username" type="text" class="login-input" name="username" placeholder="Masukkan nama pengguna" required autofocus>
-                    <label for="password" class="login-label">Kata Sandi</label>
-                    <input id="password" type="password" class="login-input" name="password" placeholder="Masukkan kata sandi" required>
-                    <button type="submit" class="login-btn">Masuk</button>
-                </form>
-            </div>
+        <div class="form-group">
+          <label for="password">Kata Sandi</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan kata sandi" required>
         </div>
+        <button type="submit" class="btn btn-login">Masuk</button>
+      </form>
     </div>
+  </div>
+
+  <!-- Bootstrap 4 JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
