@@ -19,7 +19,7 @@
 }
 
 /* Filter Bar */
-.filter-bar {
+.negara-investor .filter-bar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,7 +27,7 @@
     gap: 20px;
 }
 
-.dropdown-tahun {
+.negara-investor .dropdown-tahun {
     padding: 10px 16px;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -35,7 +35,7 @@
     cursor: pointer;
 }
 
-.periode-nav {
+.negara-investor .periode-nav {
     list-style: none;
     display: flex;
     gap: 15px;
@@ -43,11 +43,11 @@
     margin: 0;
 }
 
-.periode-nav li {
+.negara-investor .periode-nav li {
     border-bottom: 2px solid transparent;
 }
 
-.periode-nav li a {
+.negara-investor .periode-nav li a {
     text-decoration: none;
     padding: 8px 14px;
     font-weight: 600;
@@ -55,14 +55,14 @@
     transition: 0.2s;
 }
 
-.periode-nav li.active a,
-.periode-nav li a:hover {
+.negara-investor .periode-nav li.active a,
+.negara-investor .periode-nav li a:hover {
     color: #007bff;
     border-bottom: 2px solid #007bff;
 }
 
 /* Grafik Card */
-.grafik-card {
+.negara-investor .grafik-card {
     background: #ffffff;
     padding: 25px;
     margin-bottom: 40px;
@@ -72,7 +72,7 @@
 }
 
 /* Tabel Card */
-.tabel-card {
+.negara-investor .tabel-card {
     background: #ffffff;
     padding: 25px;
     border-radius: 12px;
@@ -80,35 +80,35 @@
     overflow-x: auto;
 }
 
-.tabel-card table {
+.negara-investor .tabel-card table {
     width: 100%;
     border-collapse: collapse;
     text-align: center;
 }
 
-.tabel-card th, 
-.tabel-card td {
+.negara-investor .tabel-card th, 
+.negara-investor .tabel-card td {
     border: 1px solid #ddd;
     padding: 12px 15px;
     font-size: 14px;
 }
 
-.tabel-card th {
+.negara-investor .tabel-card th {
     background: #007bff;
     color: #fff;
     font-weight: 600;
     text-transform: uppercase;
 }
 
-.tabel-card tr:nth-child(even) {
+.negara-investor .tabel-card tr:nth-child(even) {
     background: #f2f2f2;
 }
 
-.tabel-card tr:hover {
+.negara-investor .tabel-card tr:hover {
     background: #e9f5ff;
 }
 
-.btn-download {
+.negara-investor .btn-download {
     background: #007bff;
     color: #fff;
     padding: 8px 16px;
@@ -121,6 +121,6 @@
     gap: 6px;
 }
 
-.btn-download:hover {
+.negara-investor .btn-download:hover {
     background: #0056b3;
 }

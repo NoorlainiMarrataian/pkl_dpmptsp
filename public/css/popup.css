@@ -12,89 +12,91 @@
 }
 
 /* Box */
-.popup-content {
+.popup-overlay .popup-content {
     background: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    width: 450px;
+    padding: 20px; /* lebih kecil dari 30px */
+    border-radius: 10px;
+    width: 400px; /* diperkecil sedikit */
     max-width: 95%;
     text-align: center;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
 }
 
-.popup-content h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
+.popup-overlay .popup-content h2 {
+    font-size: 20px; /* lebih kecil */
+    margin-bottom: 10px; /* lebih rapat */
     font-weight: bold;
 }
 
-.warning-icon {
-    font-size: 50px;
+.popup-overlay .warning-icon {
+    font-size: 40px; /* diperkecil */
     color: red;
-    margin: 20px 0;
+    margin: 15px 0; /* lebih rapat */
     border: 2px solid red;
     border-radius: 50%;
     display: inline-block;
-    padding: 15px;
+    padding: 10px; /* lebih kecil */
 }
 
 /* Form Input */
-input[type="text"],
-input[type="email"],
-textarea {
+.popup-overlay .popup-content input[type="text"],
+.popup-overlay .popup-content input[type="email"],
+.popup-overlay .popup-content textarea {
     width: 100%;
-    margin: 10px 0;
-    padding: 10px;
+    margin: 6px 0; /* lebih rapat */
+    padding: 8px; /* lebih kecil */
     border: 1px solid #ccc;
     border-radius: 6px;
+    font-size: 14px;
 }
 
-textarea {
-    min-height: 60px;
+.popup-overlay .popup-content textarea {
+    min-height: 50px; /* diperkecil */
     resize: vertical;
 }
 
 /* Checkbox */
-.checkbox-group {
+.popup-overlay .checkbox-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 15px 0;
+    gap: 6px; /* lebih rapat */
+    margin: 10px 0; /* lebih rapat */
     text-align: left;
 }
 
-.checkbox-group label {
+.popup-overlay .checkbox-group label {
     display: flex;
     align-items: center;
-    font-size: 14px;
-    gap: 8px;
+    font-size: 13px; /* lebih kecil */
+    gap: 6px;
 }
 
 /* Buttons */
-.popup-buttons {
-    margin-top: 20px;
+.popup-overlay .popup-buttons {
+    margin-top: 15px; /* lebih rapat */
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
 }
 
-.btn-blue {
+.popup-overlay .btn-blue,
+.popup-overlay .btn-red {
+    padding: 8px 16px; /* lebih kecil */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.popup-overlay .btn-blue {
     background: #007bff;
     color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
 }
 
-.btn-red {
+.popup-overlay .btn-red {
     background: #dc3545;
     color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
 }
 
-.btn-blue:hover { background: #0056b3; }
-.btn-red:hover { background: #a71d2a; }
+.popup-overlay .btn-blue:hover { background: #0056b3; }
+.popup-overlay .btn-red:hover { background: #a71d2a; }
