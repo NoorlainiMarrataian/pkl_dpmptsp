@@ -47,6 +47,7 @@
 .navbar nav {
     display: flex;
     justify-content: center;
+    margin-left: -30px;   /* 🔥 geser menu sedikit ke kiri */
 }
 
 .navbar nav ul {

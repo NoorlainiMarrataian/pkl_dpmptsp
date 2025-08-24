@@ -6,8 +6,10 @@
 .lokasi-investasi h2 {
     text-align: center;
     font-size: 28px;
+    margin-top: 50px;   /* 🔥 jarak dari atas, biar sama kayak Tren Realisasi Investasi */
     margin-bottom: 30px;
     color: #333;
+    font-weight: 700;
 }
 
 .subjudul {

@@ -37,16 +37,16 @@
 
       <h4>Ikuti Kami</h4>
       <div class="social-icons">
-        <a href="https://www.facebook.com" target="_blank">
+        <a href="https://www.facebook.com/dpmptspkalsel/" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
         </a>
-        <a href="https://www.instagram.com" target="_blank">
+        <a href="https://www.instagram.com/dpmptspkalsel/" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
         </a>
-        <a href="https://twitter.com" target="_blank">
+        <a href="https://x.com/Dpmptspkalsel" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
         </a>
-        <a href="https://www.youtube.com" target="_blank">
+        <a href="https://www.youtube.com/channel/UCuXLTbIfnxgAjupKFbBVSXQ" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
         </a>
       </div>

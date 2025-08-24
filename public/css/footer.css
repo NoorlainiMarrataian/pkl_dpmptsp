@@ -1,6 +1,6 @@
 /* Layout dasar sticky footer */
 html, body {
-    height: 100%;
+    height: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@ main {
 .footer {
     background-color: #0a4f6f;
     color: #fff;
-    padding: 20px 15px 10px; /* lebih pendek */
+    padding: 15px 20px; 
     font-family: Arial, sans-serif;
     margin-top: auto;
     font-size: 15px;
@@ -24,9 +24,8 @@ main {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    max-width: 1100px;
-    margin: 0 auto;
-    gap: 20px; /* jarak antar kolom */
+    gap: 30px; /* jarak antar kolom */
+    padding: 0 30px; /* biar gak nempel banget ke tepi */
 }
 
 .footer-col {

@@ -6,13 +6,15 @@
 /* Section Grafik */
 .grafik-section {
     text-align: center;
+    margin-top: 60px;   /* 🔥 tambah jarak dari atas */
     margin-bottom: 50px;
 }
 
 .grafik-section h2 {
-    font-size: 28px;
+    font-size: 26px;
+    font-weight: 600;
     margin-bottom: 20px;
-    color: #333;
+    color: #000;
 }
 
 .grafik-card {
@@ -24,32 +26,33 @@
 
 /* Section Realisasi Card */
 .realisasi-section {
-    background: #0b3d5c;   /* biru tua sesuai gambar */
-    padding: 40px;
+    background: #0b3d5c;
+    padding: 50px 30px;
     border-radius: 15px;
     margin: 40px auto;
-    max-width: 900px;      /* biar ga kepanjangan */
+    max-width: 950px;
 }
 
 .realisasi-section h2 {
     text-align: center;
     font-size: 28px;
-    margin-bottom: 30px;
-    color: #fff;           /* judul putih sesuai gambar */
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #fff;
 }
 
 .realisasi-card-container {
     display: flex;
-    justify-content: center;   /* bikin card ke tengah */
-    gap: 40px;                 /* jarak antar card */
+    justify-content: center;
+    gap: 60px;
     flex-wrap: wrap;
 }
 
 .realisasi-card {
     background: #ffffff;
     border-radius: 12px;
-    padding: 40px 30px;
-    width: 220px;              /* ukuran konsisten */
+    padding: 50px 40px;
+    width: 230px;
     text-align: center;
     transition: transform 0.2s ease-in-out;
     box-shadow: 0 4px 10px rgba(0,0,0,0.08);
@@ -59,15 +62,34 @@
     transform: translateY(-5px);
 }
 
+.realisasi-card a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+}
+
 .realisasi-card i {
-    font-size: 50px;
-    color: #000;              /* ikon hitam sesuai gambar */
-    margin-bottom: 15px;
+    font-size: 40px;
+    color: #000;
 }
 
 .realisasi-card h4 {
     font-size: 18px;
     font-weight: 700;
-    color: #000;              /* teks hitam sesuai gambar */
+    color: #000;
     letter-spacing: 1px;
+    text-transform: uppercase;
 }
