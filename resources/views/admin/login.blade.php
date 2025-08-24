@@ -24,23 +24,20 @@
 
   <!-- Card Login -->
   <div class="login-card">
-    <div class="image-section"></div>
-    <div class="form-section">
-      <!-- route + csrf -->
-      <form method="POST" action="{{ route('admin.login') }}">
-        @csrf
-        <div class="form-group">
-          <label for="username">Nama Pengguna</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan nama pengguna" required autofocus>
-        </div>
-        <div class="form-group">
-          <label for="password">Kata Sandi</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan kata sandi" required>
-        </div>
-        <button type="submit" class="btn btn-login">Masuk</button>
-      </form>
+  <div class="login-card-img"></div>
+  <form method="POST" action="{{ route('admin.login') }}" class="login-form">
+    @csrf
+    <div class="form-group">
+      <label for="username" class="login-label">Nama Pengguna</label>
+      <input id="username" type="text" class="form-control login-input" name="username" placeholder="Masukkan nama pengguna" required autofocus>
     </div>
-  </div>
+    <div class="form-group">
+      <label for="password" class="login-label">Kata Sandi</label>
+      <input id="password" type="password" class="form-control login-input" name="password" placeholder="Masukkan kata sandi" required>
+    </div>
+    <button type="submit" class="btn btn-login">Masuk</button>
+  </form>
+</div>
 
   <!-- Bootstrap 4 JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
