@@ -7,13 +7,21 @@
     {{-- Filter Tahun & Periode --}}
     <div class="filter-bar">
         <select class="dropdown-tahun">
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
+            <option value="2025" name="tahun">2025</option>
+            <option value="2024" name="tahun">2024</option>
+            <option value="2023" name="tahun">2023</option>
         </select>
+        
+        <form class = "periode-nav" action="/negara-investor" method="GET">
+            <button type="submit" name="tahun" value="Tahun">1 tahun</button>
+            <button type="submit" name="triwulan" value="Triwulan 1">triwulan 1</button>
+            <button type="submit" name="triwulan" value="Triwulan 2">triwulan 2</button>
+            <button type="submit" name="triwulan" value="Triwulan 3">triwulan 3</button>
+            <button type="submit" name="triwulan" value="Triwulan 4">triwulan 4</button>
+        </form>
 
         <ul class="periode-nav">
-            <li class="active"><a href="#">1 TAHUN</a></li>
+            <li class="active"><a href="{{ route('realisasi.negara', request('satutahun'), ['satutahun'=>2020]) }}">1 TAHUN</a></li>
             <li><a href="#">TRIWULAN 1</a></li>
             <li><a href="#">TRIWULAN 2</a></li>
             <li><a href="#">TRIWULAN 3</a></li>
@@ -42,7 +50,18 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- Data kosong dulu, nanti diisi dari database --}}
+                @forelse ($data_investasi as $data)
+                <tr>
+                    <td>{{ $data->negara ?? '-' }}</td>
+                    <td></td>
+                    <td>{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
+                    <td>{{ isset($data->investasi_rp_juta) ? number_format($data->investasi_rp_juta, 2, ',', '.') : '-' }}</td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="17" class="text-center">Belum ada data investasi.</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
