@@ -5,61 +5,52 @@
     <h2>NEGARA INVESTOR</h2>
 
     {{-- Filter Tahun & Periode --}}
-    <div class="filter-bar">
-        <select class="dropdown-tahun">
-            <option value="2025" name="tahun">2025</option>
-            <option value="2024" name="tahun">2024</option>
-            <option value="2023" name="tahun">2023</option>
+    <form class="filter-bar" action="{{ route('realisasi.negara') }}" method="GET">
+        <select class="dropdown-tahun" name="tahun">
+            <option value="">Pilih Tahun</option>
+            @foreach(range(date('Y'), 2020) as $th)
+                <option value="{{ $th }}" {{ request('tahun') == $th ? 'selected' : '' }}>{{ $th }}</option>
+            @endforeach
         </select>
-        
-        <form class = "periode-nav" action="/negara-investor" method="GET">
-            <button type="submit" name="tahun" value="Tahun">1 tahun</button>
-            <button type="submit" name="triwulan" value="Triwulan 1">triwulan 1</button>
-            <button type="submit" name="triwulan" value="Triwulan 2">triwulan 2</button>
-            <button type="submit" name="triwulan" value="Triwulan 3">triwulan 3</button>
-            <button type="submit" name="triwulan" value="Triwulan 4">triwulan 4</button>
-        </form>
-
-        <ul class="periode-nav">
-            <li class="active"><a href="{{ route('realisasi.negara', request('satutahun'), ['satutahun'=>2020]) }}">1 TAHUN</a></li>
-            <li><a href="#">TRIWULAN 1</a></li>
-            <li><a href="#">TRIWULAN 2</a></li>
-            <li><a href="#">TRIWULAN 3</a></li>
-            <li><a href="#">TRIWULAN 4</a></li>
-        </ul>
+        <button type="submit" name="triwulan" value="Tahun">1 tahun</button>
+        <button type="submit" name="triwulan" value="Triwulan 1">Triwulan 1</button>
+        <button type="submit" name="triwulan" value="Triwulan 2">Triwulan 2</button>
+        <button type="submit" name="triwulan" value="Triwulan 3">Triwulan 3</button>
+        <button type="submit" name="triwulan" value="Triwulan 4">Triwulan 4</button>
 
         <a href="#" class="btn-download" id="openPopup">
             <i class="fas fa-download"></i> Download
         </a>
-    </div>
+    </form>
 
+    {{-- Grafik --}}
     <div class="grafik-card">
-        <img src="https://via.placeholder.com/1000x400?text=Grafik+Negara+Investor" 
-             alt="Grafik Negara Investor">
+        <canvas id="chartNegara" width="1000" height="400"></canvas>
     </div>
 
-    <div class="tabel-card" style="background:#fff; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.08); padding:24px; margin-top:24px;">
+    {{-- Tabel --}}
+    <div class="tabel-card">
         <h3 class="judul-tabel" style="font-size:1.2rem; font-weight:700; margin-bottom:16px; color:#07486a;">PMA</h3>
-        <table class="tabel-negara" style="border-collapse:collapse; width:100%; font-size:14px; background:#fff; color:#222;">
+        <table class="tabel-negara">
             <thead>
-                <tr style="background:#e0f2f1; color:#07486a;">
-                    <th style="padding:10px 8px; border:1px solid #bdbdbd;">Negara</th>
-                    <th style="padding:10px 8px; border:1px solid #bdbdbd;">Proyek</th>
-                    <th style="padding:10px 8px; border:1px solid #bdbdbd;">Tambahan Investasi dalam Ribu (US Dollar)</th>
-                    <th style="padding:10px 8px; border:1px solid #bdbdbd;">Tambahan Investasi dalam Juta (Rp)</th>
+                <tr>
+                    <th>Negara</th>
+                    <th>Proyek</th>
+                    <th>Tambahan Investasi dalam Ribu (US Dollar)</th>
+                    <th>Tambahan Investasi dalam Juta (Rp)</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($data_investasi as $data)
                 <tr>
-                    <td style="padding:8px; border:1px solid #bdbdbd;">{{ $data->negara ?? '-' }}</td>
-                    <td style="padding:8px; border:1px solid #bdbdbd;"></td>
-                    <td style="padding:8px; border:1px solid #bdbdbd;">{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
-                    <td style="padding:8px; border:1px solid #bdbdbd;">{{ isset($data->investasi_rp_juta) ? number_format($data->investasi_rp_juta, 2, ',', '.') : '-' }}</td>
+                    <td>{{ $data->negara ?? '-' }}</td>
+                    <td>{{ $data->proyek ?? '-' }}</td>
+                    <td>{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
+                    <td>{{ isset($data->investasi_rp_juta) ? number_format($data->investasi_rp_juta, 2, ',', '.') : '-' }}</td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-center" style="padding:8px; border:1px solid #bdbdbd;">Belum ada data investasi.</td>
+                    <td colspan="4" class="text-center">Belum ada data investasi.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -83,17 +74,14 @@
                 <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
                 <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
             </div>
-
             <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
             <input type="email" name="email_pengunduh" placeholder="Email" required>
             <input type="text" name="telpon" placeholder="Telpon">
             <textarea name="keperluan" placeholder="Keperluan"></textarea>
-
             <div class="checkbox-group">
                 <label><input type="checkbox" required> Anda setuju untuk bertanggung jawab atas data yang diunduh</label>
                 <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
             </div>
-
             <div class="popup-buttons">
                 <button type="submit" class="btn-blue">Unduh</button>
                 <button type="button" id="closePopup" class="btn-red">Batalkan</button>
@@ -108,19 +96,20 @@
 <link rel="stylesheet" href="{{ asset('css/popup.css') }}">
 @endpush
 
-
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // Popup
     document.getElementById("openPopup").addEventListener("click", function(e){
         e.preventDefault();
         document.getElementById("popupForm").style.display = "flex";
     });
-
     document.getElementById("closePopup").addEventListener("click", function(){
         document.getElementById("popupForm").style.display = "none";
     });
 
+    // Download
     document.getElementById('downloadForm').addEventListener('submit', function(e){
         e.preventDefault();
         var form = this;
@@ -151,6 +140,23 @@
                 alert('Gagal menyimpan data.');
             }
         });
+    });
+
+    // Grafik Chart.js
+    const ctx = document.getElementById('chartNegara');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @json($data_investasi->pluck('negara')),
+            datasets: [{
+                label: 'Investasi US$ (ribu)',
+                data: @json($data_investasi->pluck('investasi_us_ribu')),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
     });
 </script>
 @endpush
