@@ -17,26 +17,22 @@ class RealisasiInvestasiController extends Controller
     // Halaman Negara Investor
     public function negaraInvestor(Request $request)
     {
+        $tahun = $request->input('tahun');
+        $triwulan = $request->input('triwulan');
+
         $query = Datainvestasi::query();
 
-        $tahun = $request->input ('tahun');
-        $triwulan = $request->input ('triwulan');
+        if ($tahun) {
+            $query->where('tahun', $tahun);
+        }
 
-        // Mengambil semua data user yang statusnya 'aktif'
-        
+        if ($triwulan) {
+            $query->where('periode', $triwulan);
+        }
 
-        // if ($request->has('tahun') && $request ->has('triwulan')) {
-        //     $data_investasi = Datainvestasi::where('tahun', '=', $tahun) -> where('periode', '=', $triwulan) ->get();
-        // } else {
-        //     $data_investasi = $query->get();
-        // }
+        $data_investasi = $query->get();
 
-        $data_investasi = Datainvestasi::where('periode', '=', $triwulan) ->get();
-
-
-        //$data_investasi = $query->where('id', 4);
-
-        return view('user.realisasi.negara', compact('data_investasi'));
+        return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
     }
 
 
