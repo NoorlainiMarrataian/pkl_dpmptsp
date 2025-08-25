@@ -5,45 +5,41 @@ body {
 }
 
 .sidebar {
-    width: 260px;
+    width: 300px;
     background-color: #0A4C70;
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
-    padding: 20px 0;
+    padding: 0;
     position: fixed;
     left: 0;
     top: 0;
+    
 }
 
 .sidebar-header {
-    text-align: center;
-    padding: 0 20px;
+    text-align: center; 
+    padding: 0 20px; 
+    margin-top: 0;
 }
 
 .sidebar-header img {
-    max-width: 180px;
+    max-width: 100%;
+    height: auto;
 }
 
 .profile {
     text-align: center;
-    margin: 20px 0;
-}
-
-.profile img {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
+    margin: 15px 0 25px 0;
 }
 
 .profile h3 {
     margin: 0;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
+    color: #fff;
 }
 
 .profile p {
@@ -53,10 +49,12 @@ body {
 }
 
 .menu {
-    flex-grow: 1;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .menu a {
+    margin-top: 5px;
     display: flex;
     align-items: center;
     padding: 12px 20px;
@@ -64,6 +62,7 @@ body {
     text-decoration: none;
     font-size: 14px;
     transition: background 0.3s;
+    border-bottom: 1px solid rgb(255, 255, 255);
 }
 
 .menu a:hover,
@@ -78,12 +77,13 @@ body {
 }
 
 .logout {
-    padding: 15px 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgb(255, 255, 255);
+    margin: 0 20px 40px 20px;
 }
 
 .logout button {
     width: 100%;
+    height: 40px;
     background: none;
     border: none;
     color: #fff;
@@ -92,6 +92,15 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
+    
+}
+
+.logout button:hover,
+.logout button:active {
+    background: #fff;
+    color: #0A4C70;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
 }
 
 .logout button i {
@@ -99,7 +108,7 @@ body {
 }
 
 .content {
-    margin-left: 260px;
+    margin-left: 300px;
     padding: 20px;
-    width: calc(100% - 260px);
+    width: calc(100% - 300px);
 }

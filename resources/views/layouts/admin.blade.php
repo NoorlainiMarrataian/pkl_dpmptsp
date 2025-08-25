@@ -18,16 +18,15 @@
         <div>
             <div class="sidebar-header">
                 <!-- Logo Pemerintah / Aplikasi -->
-                <img src="/images/logo_darisimantan.png" alt="Logo DARISIMANTAN">
+                <img src="/images/logo-darisimantan.png" alt="Logo DARISIMANTAN">
             </div>
             <div class="profile">
-                <img src="https://i.ibb.co/4pzjz9w/avatar.png" alt="Foto Admin">
                 <h3>
                     @if(Auth::guard('admin')->check())
-                        {{ Auth::guard('admin')->user()->username }}
+                    {{ Auth::guard('admin')->user()->username }}
                     @endif
                 </h3>
-                <p>Admin</p>
+                <p>Adminn</p>
             </div>
             <div class="menu">
                 <a href="{{ route('admin.dashboard') }}" class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
@@ -51,9 +50,7 @@
         @yield('content')
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
