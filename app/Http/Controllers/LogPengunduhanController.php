@@ -25,8 +25,8 @@ class LogPengunduhanController extends Controller
             'waktu_download' => now(),
         ]);
 
-        // Setelah isi form langsung download file
-        return response()->download(public_path('files/data.pdf'));
+    // Setelah isi form, return JSON agar AJAX bisa lanjutkan download PDF di frontend
+    return response()->json(['success' => true]);
     }
 
     // Tampilkan data untuk admin

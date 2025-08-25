@@ -76,21 +76,22 @@
         </div>
         <p>Silahkan isi formulir untuk mengunduh file ini</p>
 
-        <form>
+        <form id="downloadForm" method="POST" action="{{ route('log_pengunduhan.store') }}">
+            @csrf
             <div class="checkbox-group horizontal">
-                <label><input type="checkbox"> Individu</label>
-                <label><input type="checkbox"> Perusahaan</label>
-                <label><input type="checkbox"> Lainnya</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
             </div>
 
-            <input type="text" placeholder="Nama Lengkap/Instansi">
-            <input type="email" placeholder="Email">
-            <input type="text" placeholder="Telpon">
-            <textarea placeholder="Keperluan"></textarea>
+            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
+            <input type="email" name="email_pengunduh" placeholder="Email" required>
+            <input type="text" name="telpon" placeholder="Telpon">
+            <textarea name="keperluan" placeholder="Keperluan"></textarea>
 
             <div class="checkbox-group">
-                <label><input type="checkbox"> Anda setuju untuk bertanggung jawab atas data yang diunduh</label>
-                <label><input type="checkbox"> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+                <label><input type="checkbox" required> Anda setuju untuk bertanggung jawab atas data yang diunduh</label>
+                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
             </div>
 
             <div class="popup-buttons">
@@ -120,17 +121,36 @@
         document.getElementById("popupForm").style.display = "none";
     });
 
-    document.querySelector('.btn-blue').addEventListener('click', function(e){
+    document.getElementById('downloadForm').addEventListener('submit', function(e){
         e.preventDefault();
-        var element = document.querySelector('.tabel-card');
-        html2pdf().set({
-            margin: 10,
-            filename: 'tabel-negara-investor.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(element).save();
-        document.getElementById("popupForm").style.display = "none";
+        var form = this;
+        var formData = new FormData(form);
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': form.querySelector('input[name=_token]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success){
+                setTimeout(function() {
+                    var element = document.querySelector('.tabel-card');
+                    html2pdf().set({
+                        margin: 10,
+                        filename: 'tabel-negara-investor.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2, useCORS: true },
+                        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    }).from(element).save();
+                    document.getElementById("popupForm").style.display = "none";
+                }, 300);
+            } else {
+                alert('Gagal menyimpan data.');
+            }
+        });
     });
 </script>
 @endpush

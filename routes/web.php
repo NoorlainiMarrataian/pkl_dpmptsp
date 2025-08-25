@@ -42,6 +42,9 @@ Route::get('/data_investasi/upload', [DataInvestasiController::class, 'uploadFor
 // Route POST untuk memproses file upload
 Route::post('/data_investasi/upload', [DataInvestasiController::class, 'upload'])->name('data_investasi.upload');
 
+// Route untuk mengunduh data investasi dalam format Excel
+Route::post('/log-pengunduhan', [LogPengunduhanController::class, 'store'])->name('log_pengunduhan.store');
+
 
 
 /*
