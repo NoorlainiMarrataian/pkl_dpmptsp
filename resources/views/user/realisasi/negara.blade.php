@@ -38,28 +38,28 @@
              alt="Grafik Negara Investor">
     </div>
 
-    <div class="tabel-card">
-        <h3 class="judul-tabel">PMA</h3>
-        <table class="tabel-negara">
+    <div class="tabel-card" style="background:#fff; border-radius:16px; box-shadow:0 2px 12px rgba(0,0,0,0.08); padding:24px; margin-top:24px;">
+        <h3 class="judul-tabel" style="font-size:1.2rem; font-weight:700; margin-bottom:16px; color:#07486a;">PMA</h3>
+        <table class="tabel-negara" style="border-collapse:collapse; width:100%; font-size:14px; background:#fff; color:#222;">
             <thead>
-                <tr>
-                    <th>Negara</th>
-                    <th>Proyek</th>
-                    <th>Tambahan Investasi dalam Ribu (US Dollar)</th>
-                    <th>Tambahan Investasi dalam Juta (Rp)</th>
+                <tr style="background:#e0f2f1; color:#07486a;">
+                    <th style="padding:10px 8px; border:1px solid #bdbdbd;">Negara</th>
+                    <th style="padding:10px 8px; border:1px solid #bdbdbd;">Proyek</th>
+                    <th style="padding:10px 8px; border:1px solid #bdbdbd;">Tambahan Investasi dalam Ribu (US Dollar)</th>
+                    <th style="padding:10px 8px; border:1px solid #bdbdbd;">Tambahan Investasi dalam Juta (Rp)</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($data_investasi as $data)
                 <tr>
-                    <td>{{ $data->negara ?? '-' }}</td>
-                    <td></td>
-                    <td>{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
-                    <td>{{ isset($data->investasi_rp_juta) ? number_format($data->investasi_rp_juta, 2, ',', '.') : '-' }}</td>
+                    <td style="padding:8px; border:1px solid #bdbdbd;">{{ $data->negara ?? '-' }}</td>
+                    <td style="padding:8px; border:1px solid #bdbdbd;"></td>
+                    <td style="padding:8px; border:1px solid #bdbdbd;">{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
+                    <td style="padding:8px; border:1px solid #bdbdbd;">{{ isset($data->investasi_rp_juta) ? number_format($data->investasi_rp_juta, 2, ',', '.') : '-' }}</td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="17" class="text-center">Belum ada data investasi.</td>
+                    <td colspan="4" class="text-center" style="padding:8px; border:1px solid #bdbdbd;">Belum ada data investasi.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -107,7 +107,9 @@
 <link rel="stylesheet" href="{{ asset('css/popup.css') }}">
 @endpush
 
+
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
     document.getElementById("openPopup").addEventListener("click", function(e){
         e.preventDefault();
@@ -115,6 +117,19 @@
     });
 
     document.getElementById("closePopup").addEventListener("click", function(){
+        document.getElementById("popupForm").style.display = "none";
+    });
+
+    document.querySelector('.btn-blue').addEventListener('click', function(e){
+        e.preventDefault();
+        var element = document.querySelector('.tabel-card');
+        html2pdf().set({
+            margin: 10,
+            filename: 'tabel-negara-investor.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(element).save();
         document.getElementById("popupForm").style.display = "none";
     });
 </script>
