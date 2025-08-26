@@ -1,3 +1,39 @@
+/* Custom pagination styles for index.blade.php */
+.custom-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+.custom-pagination-link {
+    text-decoration: none;
+}
+.custom-pagination-btn {
+    background: #fff;
+    border: none;
+    border-left: 4px solid #003366;
+    padding: 8px 32px;
+    color: #222;
+    font-weight: bold;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+.custom-pagination-btn.disabled,
+.custom-pagination-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+}
+
+.custom-pagination-btn:hover:not(:disabled) {
+    background: #003366;   /* biru tua */
+    color: #fff;           /* teks putih agar kontras */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
 /* Container & Header */
 .investasi-container {
     background: #EBE8E8;

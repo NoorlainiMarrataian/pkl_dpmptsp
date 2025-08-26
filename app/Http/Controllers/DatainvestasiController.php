@@ -21,7 +21,7 @@ class DatainvestasiController extends Controller
 
         // Jika ada parameter 'all', tampilkan semua data tanpa pagination
         if ($request->has('all')) {
-            $data_investasi = $query->get();
+            $data_investasi = $query->paginate(10000); // Tetap gunakan paginator agar view tidak error
         } else {
             $data_investasi = $query->paginate(10);
         }

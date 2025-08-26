@@ -2,8 +2,8 @@
 @section('title', 'Data Laporan')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/investasi.css') }}">
 <div class="container-fluid mt-4 investasi-container">
-
     <div class="investasi-header">
         <div class="d-flex align-items-center">
         <h2 class="investasi-title mb-0">Data Realisasi Investasi</h2>
@@ -29,11 +29,27 @@
                     Pilih Tampilan
                 </button>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownTampilan">
-                    <a class="dropdown-item" href="{{ route('data_investasi.index', array_merge(request()->except('all'), ['all' => 1])) }}">Semua data</a>
+                    <a class="dropdown-item" href="{{ route('data_investasi.index', array_merge(request()->except('page'), ['all' => 1])) }}">Semua data</a>
                     <a class="dropdown-item" href="{{ route('data_investasi.index', request()->except('all')) }}">10 data</a>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="custom-pagination" style="display: flex; justify-content: center; gap: 16px; margin-bottom: 16px; margin-top: 16px">
+    @if ($data_investasi->onFirstPage())
+            <button disabled class="custom-pagination-btn disabled">PREV</button>
+    @else
+        <a href="{{ $data_investasi->previousPageUrl() }}" style="text-decoration: none;">
+                <button class="custom-pagination-btn">PREV</button>
+        </a>
+    @endif
+    @if ($data_investasi->hasMorePages())
+        <a href="{{ $data_investasi->nextPageUrl() }}" style="text-decoration: none;">
+                <button class="custom-pagination-btn">NEXT</button>
+        </a>
+    @else
+            <button disabled class="custom-pagination-btn disabled">NEXT</button>
+    @endif
     </div>
 
     {{-- Table --}}
@@ -58,7 +74,7 @@
                     <th>Investasi US$</th>
                     <th>Jumlah TKI</th>
                     <th>Aksi</th>
-            
+            <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -81,8 +97,8 @@
                     <td>{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
                     <td>{{ $data->jumlah_tki ?? '-' }}</td>
                     <td>
-                        <a href="{{ route('data_investasi.edit', $data->id) }}" class="btn-table-edit">Edit</a>
-                        <button type="button" class="btn-table-delete" data-id="{{ $data->id }}">Hapus</button>
+                        <a href="{{ route('data_investasi.edit', $data->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <button type="button" class="btn btn-danger btn-sm btn-table-delete" data-id="{{ $data->id }}">Delete</button>
                     </td>
                 </tr>
                 @empty
