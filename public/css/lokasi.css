@@ -1,27 +1,32 @@
+/* Section Lokasi Investasi */
 .lokasi-investasi {
     padding: 40px 80px;
     background: #f8f9fa;
+    min-height: 100vh; /* supaya ada jarak bawah */
 }
 
+/* Judul Halaman */
 .lokasi-investasi h2 {
     text-align: center;
     font-size: 28px;
-    margin-top: 50px;   /* 🔥 jarak dari atas, biar sama kayak Tren Realisasi Investasi */
-    margin-bottom: 30px;
+    margin: 50px 0 30px; /* jarak atas & bawah */
     color: #333;
     font-weight: 700;
 }
 
+/* Subjudul (jika ada) */
 .subjudul {
     text-align: center;
     margin: 40px 0 20px;
     font-size: 20px;
     font-weight: 600;
+    color: #444;
 }
 
 /* Filter Bar */
 .filter-bar {
     display: flex;
+    flex-wrap: wrap; /* supaya responsif di layar kecil */
     align-items: center;
     justify-content: center;
     gap: 15px;
@@ -35,41 +40,28 @@
     border-radius: 6px;
     font-size: 14px;
     cursor: pointer;
+    min-width: 120px;
+    background: #fff;
 }
 
-.periode-nav {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    padding: 0;
-    margin: 0;
-}
-
-.periode-nav li a {
-    text-decoration: none;
+/* Tombol Periode */
+.filter-bar button {
     padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    background: #f1f1f1;
+    cursor: pointer;
+    font-size: 14px;
     font-weight: 600;
-    color: #333;
-    border-bottom: 2px solid transparent;
+    transition: background 0.3s, color 0.3s;
 }
 
-.periode-nav li.active a,
-.periode-nav li a:hover {
-    color: #007bff;
-    border-bottom: 2px solid #007bff;
+.filter-bar button:hover {
+    background: #007bff;
+    color: #fff;
 }
 
 /* Download Button */
-.btn-download {
-    background: #007bff;
-    color: #fff;
-    padding: 8px 14px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
 .btn-download {
     background: #007bff;
     color: #fff;
@@ -77,38 +69,76 @@
     border-radius: 6px;
     text-decoration: none;
     font-weight: 600;
-    transition: background 0.3s;
     display: flex;
     align-items: center;
     gap: 6px;
+    transition: background 0.3s;
 }
 
 .btn-download:hover {
     background: #0056b3;
 }
 
-/* Cards */
+/* Cards (Grafik & Tabel) */
 .grafik-card,
-.tabel-card,
-.diagram-card {
+.tabel-card {
     background: #fff;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     margin-bottom: 40px;
     text-align: center;
 }
 
+/* Judul Tabel */
 .judul-tabel {
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: 600;
+    color: #333;
 }
 
-.placeholder {
-    background: #ddd;
-    padding: 80px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #555;
+/* Tabel Data */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: #fff;
+}
+
+.table th, 
+.table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.table th {
+    background: #f1f1f1;
+    font-weight: 600;
+}
+
+.table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .lokasi-investasi {
+        padding: 20px;
+    }
+    .filter-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .dropdown-tahun, 
+    .filter-bar select, 
+    .filter-bar button, 
+    .btn-download {
+        width: 100%;
+    }
+    .grafik-card, 
+    .tabel-card {
+        padding: 15px;
+    }
 }

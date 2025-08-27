@@ -32,29 +32,33 @@
     <div class="tabel-card">
         <h3 class="judul-tabel" style="font-size:1.2rem; font-weight:700; margin-bottom:16px; color:#07486a;">PMA</h3>
         <table class="tabel-negara">
-            <thead>
-                <tr>
-                    <th>Negara</th>
-                    <th>Proyek</th>
-                    <th>Tambahan Investasi dalam Ribu (US Dollar)</th>
-                    <th>Tambahan Investasi dalam Juta (Rp)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($data_investasi as $data)
-                <tr>
-                    <td>{{ $data->negara ?? '-' }}</td>
-                    <td>{{ $data->proyek ?? '-' }}</td>
-                    <td>{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
-                    <td>{{ isset($data->investasi_rp_juta) ? number_format($data->investasi_rp_juta, 2, ',', '.') : '-' }}</td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" class="text-center">Belum ada data investasi.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+        <thead>
+            <tr>
+                <th>Negara</th>
+                <th>Proyek</th>
+                <th>Tahun</th> <!-- Tambahan -->
+                <th>Periode</th> <!-- Tambahan -->
+                <th>Tambahan Investasi dalam Ribu (US Dollar)</th>
+                <th>Tambahan Investasi dalam Juta (Rp)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($data_investasi as $data)
+            <tr>
+                <td>{{ $data->negara ?? '-' }}</td>
+                <td>{{ $data->status_penanaman_modal ?? '-' }}</td>
+                <td>{{ $data->tahun ?? '-' }}</td> <!-- Tambahan -->
+                <td>{{ $data->periode ?? '-' }}</td> <!-- Tambahan -->
+                <td>{{ isset($data->total_investasi_us_ribu) ? number_format($data->total_investasi_us_ribu, 2, ',', '.') : '-' }}</td>
+                <td>{{ isset($data->total_investasi_rp_juta) ? number_format($data->total_investasi_rp_juta, 2, ',', '.') : '-' }}</td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="6" class="text-center">Belum ada data investasi.</td> <!-- colspan disesuaikan -->
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
     </div>
 </section>
 
@@ -148,15 +152,20 @@
         type: 'bar',
         data: {
             labels: @json($data_investasi->pluck('negara')),
-            datasets: [{
-                label: 'Investasi US$ (ribu)',
-                data: @json($data_investasi->pluck('investasi_us_ribu')),
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
+            datasets: [
+                {
+                    label: 'Investasi Rp (juta)',
+                    data: @json($data_investasi->pluck('investasi_rp_juta')),
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    borderColor: 'rgba(255, 0, 0, 1)',
+                    borderWidth: 1
+                }
+            ]
         },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        options: { 
+            responsive: true, 
+            scales: { y: { beginAtZero: true } } 
+        }
     });
 </script>
 @endpush
