@@ -2,130 +2,101 @@
 
 @section('content')
 <section class="lokasi-investasi">
-    <h2>LOKASI</h2>
+    <h2>Data Kabupaten/Kota di Provinsi Kalimantan Selatan</h2>
 
-    {{-- Filter Tahun & Periode --}}
-    <div class="filter-bar">
-        <select class="dropdown-tahun">
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
+    {{-- Filter Tahun, Jenis, dan Periode --}}
+    <form class="filter-bar" action="{{ route('realisasi.lokasi') }}" method="GET">
+        {{-- Filter Tahun --}}
+        <select class="dropdown-tahun" name="tahun">
+            <option value="">Pilih Tahun</option>
+            @foreach(range(date('Y'), 2010) as $th)
+                <option value="{{ $th }}" {{ request('tahun') == $th ? 'selected' : '' }}>{{ $th }}</option>
+            @endforeach
         </select>
 
-        <ul class="periode-nav">
-            <li class="active"><a href="#">1 TAHUN</a></li>
-            <li><a href="#">TRIWULAN 1</a></li>
-            <li><a href="#">TRIWULAN 2</a></li>
-            <li><a href="#">TRIWULAN 3</a></li>
-            <li><a href="#">TRIWULAN 4</a></li>
-        </ul>
+        {{-- Filter Jenis Investasi --}}
+        <select class="dropdown-jenis" name="jenis">
+            <option value="">Pilih Status</option>
+            <option value="PMA" {{ request('jenis') == 'PMA' ? 'selected' : '' }}>PMA</option>
+            <option value="PMDN" {{ request('jenis') == 'PMDN' ? 'selected' : '' }}>PMDN</option>
+            <option value="PMA+PMDN" {{ request('jenis') == 'PMA+PMDN' ? 'selected' : '' }}>PMA + PMDN</option>
+        </select>
+
+        {{-- Filter Periode --}}
+        <button type="submit" name="triwulan" value="Tahun">1 Tahun</button>
+        <button type="submit" name="triwulan" value="Triwulan 1">Triwulan 1</button>
+        <button type="submit" name="triwulan" value="Triwulan 2">Triwulan 2</button>
+        <button type="submit" name="triwulan" value="Triwulan 3">Triwulan 3</button>
+        <button type="submit" name="triwulan" value="Triwulan 4">Triwulan 4</button>
 
         {{-- Tombol Download --}}
         <a href="#" class="btn-download">
             <i class="fas fa-download"></i> Download
         </a>
-    </div>
+    </form>
 
     {{-- Grafik Lokasi --}}
     <div class="grafik-card">
-        <img src="https://via.placeholder.com/1000x400?text=Grafik+Lokasi+Investasi" alt="Grafik Lokasi">
+        <canvas id="chartLokasi" width="1000" height="400"></canvas>
     </div>
 
-    {{-- Tabel Triwulan --}}
+    {{-- Tabel Data Lokasi --}}
     <div class="tabel-card">
-        <h3 class="judul-tabel">TABEL DATA TRIWULAN 1</h3>
-        <div class="placeholder">TABEL DATA TRIWULAN 1</div>
+        <h3 class="judul-tabel">TABEL DATA LOKASI</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    {{-- Hapus kolom No, Provinsi, dan Jumlah TKI --}}
+                    <th>Kabupaten/Kota</th>
+                    <th>Status</th>
+                    <th>Jumlah Proyek</th>
+                    <th>Investasi (Rp Juta)</th>
+                    <th>Investasi (USD Ribu)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($dataLokasi as $lokasi)
+                    <tr>
+                        {{-- Hapus kolom No, Provinsi, dan Jumlah TKI --}}
+                        <td>{{ $lokasi->kabupaten_kota }}</td>
+                        <td>{{ $lokasi->status_penanaman_modal }}</td>
+                        <td>{{ $lokasi->proyek }}</td>
+                        <td>{{ number_format($lokasi->investasi_rp_juta, 0, ',', '.') }}</td>
+                        <td>{{ number_format($lokasi->investasi_us_ribu, 0, ',', '.') }}</td>
+                    </tr>
+                @empty
+                    <tr>
+                        {{-- Sesuaikan colspan menjadi 5 --}}
+                        <td colspan="5" class="text-center">Tidak ada data untuk filter yang dipilih</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
-
-    {{-- Filter Tambahan --}}
-    <div class="filter-bar extra">
-        <select>
-            <option>Realisasi Investasi Terbesar</option>
-        </select>
-        <select>
-            <option>Proyek Terbesar</option>
-        </select>
-        <select>
-            <option>Sektor</option>
-        </select>
-        <select>
-            <option>TRIWULAN I</option>
-        </select>
-
-        <a href="#" class="btn-download">
-            <i class="fas fa-download"></i> Download
-        </a>
-    </div>
-
-    {{-- Diagram Lokasi --}}
-    <div class="diagram-card">
-        <img src="https://via.placeholder.com/600x400?text=Diagram+Lokasi+Kabupaten/Kota" alt="Diagram Lokasi">
-    </div>
-
-    <div class="tabel-card">
-        <h3 class="judul-tabel">TABEL DATA TRIWULAN 1</h3>
-        <div class="placeholder">TABEL DATA TRIWULAN 1</div>
-    </div>
-
-    {{-- Grafik Perbandingan Tahun --}}
-    <h3 class="subjudul">GRAFIK PERBANDINGAN TAHUN DATA REALISASI INVESTASI</h3>
-    <div class="filter-bar">
-        <select>
-            <option>PMA / PMDN</option>
-        </select>
-        <select>
-            <option>2021</option>
-        </select>
-        <span>-</span>
-        <select>
-            <option>2025</option>
-        </select>
-        <a href="#" class="btn-download">
-            <i class="fas fa-download"></i> Download
-        </a>
-    </div>
-    <div class="grafik-card">
-        <img src="https://via.placeholder.com/1000x400?text=Grafik+Perbandingan+Tahun" alt="Grafik Tahun">
-    </div>
-    <div class="tabel-card">
-        <h3 class="judul-tabel">TABEL DATA TRIWULAN 1</h3>
-        <div class="placeholder">TABEL DATA TRIWULAN 1</div>
-    </div>
-
-    {{-- Grafik Perbandingan Triwulan --}}
-    <h3 class="subjudul">GRAFIK PERBANDINGAN TRIWULAN DATA REALISASI INVESTASI</h3>
-    <div class="filter-bar">
-        <select>
-            <option>PMA / PMDN</option>
-        </select>
-        <select>
-            <option>2021</option>
-        </select>
-        <select>
-            <option>TRIWULAN 1</option>
-        </select>
-        <span>-</span>
-        <select>
-            <option>2025</option>
-        </select>
-        <select>
-            <option>TRIWULAN 1</option>
-        </select>
-        <a href="#" class="btn-download">
-            <i class="fas fa-download"></i> Download
-        </a>
-    </div>
-    <div class="grafik-card">
-        <img src="https://via.placeholder.com/1000x400?text=Grafik+Perbandingan+Triwulan" alt="Grafik Triwulan">
-    </div>
-    <div class="tabel-card">
-        <h3 class="judul-tabel">TABEL DATA TRIWULAN 1</h3>
-        <div class="placeholder">TABEL DATA TRIWULAN 1</div>
-    </div>
-
 </section>
 @endsection
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/lokasi.css') }}">
+@endpush
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('chartLokasi').getContext('2d');
+    const chartLokasi = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @json($chartLabels), 
+            datasets: [{
+                label: 'Investasi (Rp Juta)',
+                data: @json($chartData),
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+</script>
 @endpush
