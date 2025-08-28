@@ -8,7 +8,7 @@
     <form class="filter-bar" action="{{ route('realisasi.negara') }}" method="GET">
         <select class="dropdown-tahun" name="tahun">
             <option value="">Pilih Tahun</option>
-            @foreach(range(date('Y'), 2020) as $th)
+            @foreach(range(date('Y'), 2010) as $th)
                 <option value="{{ $th }}" {{ request('tahun') == $th ? 'selected' : '' }}>{{ $th }}</option>
             @endforeach
         </select>
