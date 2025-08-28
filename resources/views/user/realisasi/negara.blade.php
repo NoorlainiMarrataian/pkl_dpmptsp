@@ -6,17 +6,17 @@
 
     {{-- Filter Tahun & Periode --}}
     <form class="filter-bar" action="{{ route('realisasi.negara') }}" method="GET">
-        <select class="dropdown-tahun" name="tahun">
+        <select class="dropdown-tahun" name="tahun" id="tahunSelect">
             <option value="">Pilih Tahun</option>
             @foreach(range(date('Y'), 2010) as $th)
                 <option value="{{ $th }}" {{ request('tahun') == $th ? 'selected' : '' }}>{{ $th }}</option>
             @endforeach
         </select>
-        <button type="submit" name="triwulan" value="Tahun">1 tahun</button>
-        <button type="submit" name="triwulan" value="Triwulan 1">Triwulan 1</button>
-        <button type="submit" name="triwulan" value="Triwulan 2">Triwulan 2</button>
-        <button type="submit" name="triwulan" value="Triwulan 3">Triwulan 3</button>
-        <button type="submit" name="triwulan" value="Triwulan 4">Triwulan 4</button>
+        <button type="submit" name="triwulan" value="Tahun" class="btn-periode" disabled>1 Tahun</button>
+        <button type="submit" name="triwulan" value="Triwulan 1" class="btn-periode" disabled>Triwulan 1</button>
+        <button type="submit" name="triwulan" value="Triwulan 2" class="btn-periode" disabled>Triwulan 2</button>
+        <button type="submit" name="triwulan" value="Triwulan 3" class="btn-periode" disabled>Triwulan 3</button>
+        <button type="submit" name="triwulan" value="Triwulan 4" class="btn-periode" disabled>Triwulan 4</button>
 
         <a href="#" class="btn-download" id="openPopup">
             <i class="fas fa-download"></i> Download
@@ -24,42 +24,49 @@
     </form>
 
     {{-- Grafik --}}
-    <div class="grafik-card">
-        <canvas id="chartNegara" width="1000" height="400"></canvas>
-    </div>
+    @if($data_investasi->isNotEmpty())
+        <div class="grafik-card">
+            <canvas id="chartNegara" width="1000" height="400"></canvas>
+        </div>
+    @endif
 
     {{-- Tabel --}}
-    <div class="tabel-card">
-        <h3 class="judul-tabel" style="font-size:1.2rem; font-weight:700; margin-bottom:16px; color:#07486a;">PMA</h3>
-        <table class="tabel-negara">
-        <thead>
-            <tr>
-                <th>Negara</th>
-                <th>Proyek</th>
-                <th>Tahun</th> <!-- Tambahan -->
-                <th>Periode</th> <!-- Tambahan -->
-                <th>Tambahan Investasi dalam Ribu (US Dollar)</th>
-                <th>Tambahan Investasi dalam Juta (Rp)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($data_investasi as $data)
-            <tr>
-                <td>{{ $data->negara ?? '-' }}</td>
-                <td>{{ $data->status_penanaman_modal ?? '-' }}</td>
-                <td>{{ $data->tahun ?? '-' }}</td> <!-- Tambahan -->
-                <td>{{ $data->periode ?? '-' }}</td> <!-- Tambahan -->
-                <td>{{ isset($data->total_investasi_us_ribu) ? number_format($data->total_investasi_us_ribu, 2, ',', '.') : '-' }}</td>
-                <td>{{ isset($data->total_investasi_rp_juta) ? number_format($data->total_investasi_rp_juta, 2, ',', '.') : '-' }}</td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="6" class="text-center">Belum ada data investasi.</td> <!-- colspan disesuaikan -->
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
-    </div>
+    @if($data_investasi->isNotEmpty())
+        <div class="tabel-card">
+            <h3 class="judul-tabel">PMA</h3>
+            <table class="tabel-negara">
+                <thead>
+                    <tr>
+                        <th>Negara</th>
+                        <th>Jenis PM</th>
+                        <th>Tahun</th>
+                        <th>Periode</th>
+                        <th>Tambahan Investasi (US$ Ribu)</th>
+                        <th>Tambahan Investasi (Rp Juta)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($data_investasi as $data)
+                    <tr>
+                        <td>{{ $data->negara ?? '-' }}</td>
+                        <td>{{ $data->status_penanaman_modal ?? '-' }}</td>
+                        <td>{{ $data->tahun ?? '-' }}</td>
+                        <td>{{ $data->periode ?? '-' }}</td>
+                        <td>{{ isset($data->total_investasi_us_ribu) ? number_format($data->total_investasi_us_ribu, 2, ',', '.') : '-' }}</td>
+                        <td>{{ isset($data->total_investasi_rp_juta) ? number_format($data->total_investasi_rp_juta, 2, ',', '.') : '-' }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+
+    {{-- Pesan kosong --}}
+    @if($data_investasi->isEmpty())
+        <p class="text-center" style="margin-top:20px; font-style:italic; color:#777;">
+            Silakan pilih <b>Tahun</b> dan <b>Periode</b> terlebih dahulu untuk melihat data.
+        </p>
+    @endif
 </section>
 
 {{-- Popup Modal --}}
@@ -83,7 +90,7 @@
             <input type="text" name="telpon" placeholder="Telpon">
             <textarea name="keperluan" placeholder="Keperluan"></textarea>
             <div class="checkbox-group">
-                <label><input type="checkbox" required> Anda setuju untuk bertanggung jawab atas data yang diunduh</label>
+                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
                 <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
             </div>
             <div class="popup-buttons">
@@ -104,6 +111,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // Enable tombol periode setelah pilih tahun
+    const tahunSelect = document.getElementById("tahunSelect");
+    const periodeButtons = document.querySelectorAll(".btn-periode");
+    tahunSelect.addEventListener("change", function(){
+        periodeButtons.forEach(btn => {
+            btn.disabled = (this.value === "");
+        });
+    });
+    // Jalankan sekali saat load halaman
+    periodeButtons.forEach(btn => {
+        btn.disabled = (tahunSelect.value === "");
+    });
+
     // Popup
     document.getElementById("openPopup").addEventListener("click", function(e){
         e.preventDefault();
@@ -146,6 +166,7 @@
         });
     });
 
+    @if($data_investasi->isNotEmpty())
     // Grafik Chart.js
     const ctx = document.getElementById('chartNegara');
     const chart = new Chart(ctx, {
@@ -155,7 +176,7 @@
             datasets: [
                 {
                     label: 'Investasi Rp (juta)',
-                    data: @json($data_investasi->pluck('investasi_rp_juta')),
+                    data: @json($data_investasi->pluck('total_investasi_rp_juta')),
                     backgroundColor: 'rgba(255, 0, 0, 1)',
                     borderColor: 'rgba(255, 0, 0, 1)',
                     borderWidth: 1
@@ -167,5 +188,6 @@
             scales: { y: { beginAtZero: true } } 
         }
     });
+    @endif
 </script>
 @endpush

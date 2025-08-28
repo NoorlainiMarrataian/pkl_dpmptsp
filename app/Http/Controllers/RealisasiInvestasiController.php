@@ -15,10 +15,17 @@ class RealisasiInvestasiController extends Controller
     }
 
     // Halaman Negara Investor
+    // Halaman Negara Investor
     public function negaraInvestor(Request $request)
     {
         $tahun = $request->input('tahun');
         $triwulan = $request->input('triwulan');
+
+        // Jika belum pilih tahun atau periode, data kosong
+        if (!$tahun || !$triwulan) {
+            $data_investasi = collect(); 
+            return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
+        }
 
         $query = Datainvestasi::query();
 
@@ -31,13 +38,14 @@ class RealisasiInvestasiController extends Controller
 
         $data_investasi = $query
             ->selectRaw('negara, status_penanaman_modal, tahun, periode,
-                         SUM(investasi_us_ribu) as total_investasi_us_ribu,
-                         SUM(investasi_rp_juta) as total_investasi_rp_juta')
+                        SUM(investasi_us_ribu) as total_investasi_us_ribu,
+                        SUM(investasi_rp_juta) as total_investasi_rp_juta')
             ->groupBy('negara', 'status_penanaman_modal', 'tahun', 'periode')
             ->get();
 
         return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
     }
+
 
     // Halaman Lokasi (Bagian 1 & 2)
     public function lokasi(Request $request)

@@ -191,3 +191,7 @@ new Chart(document.getElementById('chartPerbandinganPeriode'), {
 </script>
 @endif
 @endpush
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/perbandingan.css') }}">
+@endpush

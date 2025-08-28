@@ -1,144 +1,130 @@
-/* Section Lokasi Investasi */
+/* CSS untuk halaman lokasi investasi */
+
+/* ===== Umum ===== */
 .lokasi-investasi {
-    padding: 40px 80px;
-    background: #f8f9fa;
-    min-height: 100vh; /* supaya ada jarak bawah */
-}
-
-/* Judul Halaman */
-.lokasi-investasi h2 {
-    text-align: center;
-    font-size: 28px;
-    margin: 50px 0 30px; /* jarak atas & bawah */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
-    font-weight: 700;
+    background-color: #f4f6f8;
+    padding: 20px 10px;
 }
 
-/* Subjudul (jika ada) */
-.subjudul {
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #1a73e8;
+}
+
+h3.judul-tabel {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #333;
     text-align: center;
-    margin: 40px 0 20px;
-    font-size: 20px;
-    font-weight: 600;
-    color: #444;
 }
 
-/* Filter Bar */
+/* ===== Card Section ===== */
+.card-section {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+/* ===== Filter Bar ===== */
 .filter-bar {
     display: flex;
-    flex-wrap: wrap; /* supaya responsif di layar kecil */
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px 0 30px;
-}
-
-.dropdown-tahun,
-.filter-bar select {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-    min-width: 120px;
-    background: #fff;
-}
-
-/* Tombol Periode */
-.filter-bar button {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 6px;
-    background: #f1f1f1;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: background 0.3s, color 0.3s;
-}
-
-.filter-bar button:hover {
-    background: #007bff;
-    color: #fff;
-}
-
-/* Download Button */
-.btn-download {
-    background: #007bff;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: background 0.3s;
-}
-
-.btn-download:hover {
-    background: #0056b3;
-}
-
-/* Cards (Grafik & Tabel) */
-.grafik-card,
-.tabel-card {
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-/* Judul Tabel */
-.judul-tabel {
+    flex-wrap: wrap;
+    gap: 10px;
     margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
+    align-items: center;
 }
 
-/* Tabel Data */
-.table {
+.filter-bar select,
+.filter-bar button,
+.filter-bar .btn-download {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.filter-bar select:focus,
+.filter-bar button:focus,
+.filter-bar .btn-download:focus {
+    outline: none;
+    border-color: #1a73e8;
+}
+
+.filter-bar button:hover,
+.filter-bar .btn-download:hover {
+    background-color: #1a73e8;
+    color: #fff;
+    border-color: #1a73e8;
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: #1a73e8;
+    font-weight: 500;
+}
+
+.btn-download i {
+    margin-right: 5px;
+}
+
+/* ===== Grafik ===== */
+.grafik-card {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+/* ===== Tabel ===== */
+.table, .tabel-investasi {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
-    background: #fff;
+    font-size: 0.95rem;
 }
 
-.table th, 
-.table td {
-    padding: 10px;
+.table th, .table td,
+.tabel-investasi th, .tabel-investasi td {
     border: 1px solid #ddd;
+    padding: 10px;
     text-align: center;
 }
 
-.table th {
-    background: #f1f1f1;
-    font-weight: 600;
+.table th, .tabel-investasi th {
+    background-color: #1a73e8;
+    color: #fff;
 }
 
-.table tbody tr:hover {
-    background: #f9f9f9;
+.table tbody tr:nth-child(even),
+.tabel-investasi tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-/* Responsif untuk layar kecil */
+.table tbody tr:hover,
+.tabel-investasi tbody tr:hover {
+    background-color: #e6f0ff;
+}
+
+/* ===== Responsif ===== */
 @media (max-width: 768px) {
-    .lokasi-investasi {
-        padding: 20px;
-    }
     .filter-bar {
         flex-direction: column;
-        gap: 10px;
+        align-items: stretch;
     }
-    .dropdown-tahun, 
-    .filter-bar select, 
-    .filter-bar button, 
-    .btn-download {
-        width: 100%;
+
+    .grafik-card canvas {
+        width: 100% !important;
+        height: auto !important;
     }
-    .grafik-card, 
-    .tabel-card {
-        padding: 15px;
+
+    .table, .tabel-investasi {
+        font-size: 0.85rem;
     }
 }
