@@ -1,0 +1,111 @@
+/* =========================
+   PERBANDINGAN PAGE STYLES
+   ========================= */
+
+.perbandingan-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.perbandingan-container h2 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+/* Filter Section */
+.perbandingan-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.perbandingan-filters button {
+    background-color: #0077B6;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.perbandingan-filters button:hover {
+    background-color: #005f87;
+}
+
+/* Chart Section */
+.perbandingan-chart {
+    margin: 30px 0;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.perbandingan-chart canvas {
+    width: 100% !important;
+    height: 400px !important;
+}
+
+/* Table Section */
+.perbandingan-table {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.perbandingan-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.perbandingan-table th, 
+.perbandingan-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 14px;
+}
+
+.perbandingan-table th {
+    background-color: #0077B6;
+    color: #fff;
+    font-weight: bold;
+}
+
+.perbandingan-table tr:nth-child(even) {
+    background-color: #f4f6f8;
+}
+
+.perbandingan-table tr:hover {
+    background-color: #eef5fb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .perbandingan-container {
+        padding: 15px;
+    }
+
+    .perbandingan-filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .perbandingan-filters button {
+        width: 100%;
+        max-width: 250px;
+    }
+}
