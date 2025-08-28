@@ -52,8 +52,7 @@
                 <thead>
                     <tr>
                         <th>Kabupaten/Kota</th>
-                        <th>Status</th>
-                        <th>Jumlah Proyek</th>
+                        <th>Proyek</th>
                         <th>Investasi (Rp Juta)</th>
                         <th>Investasi (USD Ribu)</th>
                     </tr>
@@ -63,7 +62,6 @@
                         <tr>
                             <td>{{ $lokasi->kabupaten_kota }}</td>
                             <td>{{ $lokasi->status_penanaman_modal }}</td>
-                            <td>{{ $lokasi->proyek }}</td>
                             <td>{{ number_format($lokasi->investasi_rp_juta, 0, ',', '.') }}</td>
                             <td>{{ number_format($lokasi->investasi_us_ribu, 0, ',', '.') }}</td>
                         </tr>
