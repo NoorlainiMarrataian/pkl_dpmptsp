@@ -35,7 +35,11 @@ Route::get('/negara-investor', [RealisasiInvestasiController::class, 'negaraInve
 // ✅ Halaman Lokasi (user)
 Route::get('/lokasi-investasi', [RealisasiInvestasiController::class, 'lokasi'])
     ->name('realisasi.lokasi');
-    
+
+// Halaman Perbandingan (User)
+Route::get('/perbandingan-investasi', [RealisasiInvestasiController::class, 'perbandingan'])
+    ->name('realisasi.perbandingan');
+
 // Route GET untuk menampilkan form upload
 Route::get('/data_investasi/upload', [DataInvestasiController::class, 'uploadForm'])->name('data_investasi.upload.form');
 
