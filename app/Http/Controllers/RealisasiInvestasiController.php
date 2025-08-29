@@ -27,7 +27,7 @@ class RealisasiInvestasiController extends Controller
             return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
         }
 
-        $query = Datainvestasi::query();
+        $query = Datainvestasi::where('status_penanaman_modal', 'PMA');
 
         if ($tahun) {
             $query->where('tahun', $tahun);
@@ -38,6 +38,7 @@ class RealisasiInvestasiController extends Controller
 
         $data_investasi = $query
             ->selectRaw('negara, status_penanaman_modal, tahun, periode,
+                        COUNT(status_penanaman_modal) as jumlah_pma,
                         SUM(investasi_us_ribu) as total_investasi_us_ribu,
                         SUM(investasi_rp_juta) as total_investasi_rp_juta')
             ->groupBy('negara', 'status_penanaman_modal', 'tahun', 'periode')

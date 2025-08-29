@@ -39,6 +39,7 @@
                     <tr>
                         <th>Negara</th>
                         <th>Jenis PM</th>
+                        <th>Jumlah PMA</th>
                         <th>Tahun</th>
                         <th>Periode</th>
                         <th>Tambahan Investasi (US$ Ribu)</th>
@@ -50,6 +51,7 @@
                     <tr>
                         <td>{{ $data->negara ?? '-' }}</td>
                         <td>{{ $data->status_penanaman_modal ?? '-' }}</td>
+                        <td>{{ $data->jumlah_pma ?? '-' }}</td> 
                         <td>{{ $data->tahun ?? '-' }}</td>
                         <td>{{ $data->periode ?? '-' }}</td>
                         <td>{{ isset($data->total_investasi_us_ribu) ? number_format($data->total_investasi_us_ribu, 2, ',', '.') : '-' }}</td>
