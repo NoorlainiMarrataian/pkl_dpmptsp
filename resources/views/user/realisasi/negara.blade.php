@@ -49,7 +49,6 @@
                     @foreach ($data_investasi as $data)
                     <tr>
                         <td>{{ $data->negara ?? '-' }}</td>
-                        <td>{{ $data->status_penanaman_modal ?? '-' }}</td>
                         <td>{{ $data->jumlah_pma ?? '-' }}</td> 
                         <td>{{ $data->tahun ?? '-' }}</td>
                         <td>{{ $data->periode ?? '-' }}</td>
