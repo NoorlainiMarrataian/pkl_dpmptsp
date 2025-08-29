@@ -39,7 +39,6 @@
                     <tr>
                         <th>Negara</th>
                         <th>Jenis PM</th>
-                        <th>Jumlah PMA</th>
                         <th>Tahun</th>
                         <th>Periode</th>
                         <th>Tambahan Investasi (US$ Ribu)</th>

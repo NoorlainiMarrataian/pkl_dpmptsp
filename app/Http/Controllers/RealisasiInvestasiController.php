@@ -15,13 +15,11 @@ class RealisasiInvestasiController extends Controller
     }
 
     // Halaman Negara Investor
-    // Halaman Negara Investor
     public function negaraInvestor(Request $request)
     {
         $tahun = $request->input('tahun');
         $triwulan = $request->input('triwulan');
 
-        // Jika belum pilih tahun atau periode, data kosong
         if (!$tahun || !$triwulan) {
             $data_investasi = collect(); 
             return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
@@ -47,24 +45,64 @@ class RealisasiInvestasiController extends Controller
         return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
     }
 
-
     // Halaman Lokasi (Bagian 1 & 2)
     public function lokasi(Request $request)
     {
-        // Bagian 1: Data Kabupaten/Kota
-        $dataLokasi = DB::table('data_investasi')
-            ->when($request->tahun, fn($q) => $q->where('tahun', $request->tahun))
-            ->when($request->jenis && $request->jenis != 'PMA+PMDN',
-                fn($q) => $q->where('status_penanaman_modal', $request->jenis))
-            ->select('kabupaten_kota','status_penanaman_modal',
-                DB::raw('SUM(proyek) as proyek'),
-                DB::raw('SUM(investasi_rp_juta) as investasi_rp_juta'),
-                DB::raw('SUM(investasi_us_ribu) as investasi_us_ribu'))
-            ->groupBy('kabupaten_kota','status_penanaman_modal')
-            ->get();
+        $jenis = $request->jenis;
 
+        // Bagian 1: Data Kabupaten/Kota sesuai jenis
+        $dataLokasi = collect();
+        $dataPMA = collect();
+        $dataPMDN = collect();
+        $dataGabungan = collect();
+
+        if ($jenis === 'PMA') {
+            $dataLokasi = DB::table('data_investasi')
+                ->where('status_penanaman_modal', 'PMA')
+                ->when($request->tahun, fn($q) => $q->where('tahun', $request->tahun))
+                ->select('kabupaten_kota', 'status_penanaman_modal',
+                    DB::raw('SUM(investasi_us_ribu) as total_investasi_us_ribu'),
+                    DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta'))
+                ->groupBy('kabupaten_kota','status_penanaman_modal')
+                ->get();
+
+        } elseif ($jenis === 'PMDN') {
+            $dataLokasi = DB::table('data_investasi')
+                ->where('status_penanaman_modal', 'PMDN')
+                ->when($request->tahun, fn($q) => $q->where('tahun', $request->tahun))
+                ->select('kabupaten_kota', 'status_penanaman_modal',
+                    DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta'))
+                ->groupBy('kabupaten_kota','status_penanaman_modal')
+                ->get();
+
+        } elseif ($jenis === 'PMA+PMDN') {
+            $dataPMA = DB::table('data_investasi')
+                ->where('status_penanaman_modal', 'PMA')
+                ->when($request->tahun, fn($q) => $q->where('tahun', $request->tahun))
+                ->select('kabupaten_kota', 'status_penanaman_modal',
+                    DB::raw('SUM(investasi_us_ribu) as total_investasi_us_ribu'),
+                    DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta'))
+                ->groupBy('kabupaten_kota','status_penanaman_modal')
+                ->get();
+
+            $dataPMDN = DB::table('data_investasi')
+                ->where('status_penanaman_modal', 'PMDN')
+                ->when($request->tahun, fn($q) => $q->where('tahun', $request->tahun))
+                ->select('kabupaten_kota', 'status_penanaman_modal',
+                    DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta'))
+                ->groupBy('kabupaten_kota','status_penanaman_modal')
+                ->get();
+
+            $dataGabungan = DB::table('data_investasi')
+                ->when($request->tahun, fn($q) => $q->where('tahun', $request->tahun))
+                ->select(DB::raw("'PMA+PMDN' as status_penanaman_modal"),
+                    DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta'))
+                ->get();
+        }
+
+        // Data untuk chart
         $chartLabels = $dataLokasi->pluck('kabupaten_kota');
-        $chartData   = $dataLokasi->pluck('investasi_rp_juta');
+        $chartData   = $dataLokasi->pluck('total_investasi_rp_juta'); // perbaiki dari field yg ada
 
         // Bagian 2: Data Provinsi
         $dataProvinsi = DB::table('data_investasi')
@@ -76,13 +114,67 @@ class RealisasiInvestasiController extends Controller
             ->groupBy('provinsi')
             ->get();
 
+        // Bagian 3: Top 5 PMA & PMDN
+        // Top 5 PMA
+        $topPMA = DB::table('data_investasi')
+            ->where('status_penanaman_modal', 'PMA')
+            ->when($request->tahun2, fn($q) => $q->where('tahun', $request->tahun2))
+            ->select(
+                'kabupaten_kota',
+                DB::raw('SUM(proyek) as total_proyek'),
+                DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta'),
+                DB::raw('SUM(investasi_us_ribu) as total_investasi_us_ribu')
+            )
+            ->groupBy('kabupaten_kota')
+            ->orderByDesc('total_investasi_rp_juta')
+            ->limit(5)
+            ->get();
+
+        // Top 5 PMDN
+        $topPMDN = DB::table('data_investasi')
+            ->where('status_penanaman_modal', 'PMDN')
+            ->when($request->tahun2, fn($q) => $q->where('tahun', $request->tahun2))
+            ->select(
+                'kabupaten_kota',
+                DB::raw('SUM(proyek) as total_proyek'),
+                DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta'),
+                DB::raw('SUM(investasi_us_ribu) as total_investasi_us_ribu')
+            )
+            ->groupBy('kabupaten_kota')
+            ->orderByDesc('total_investasi_rp_juta')
+            ->limit(5)
+            ->get();
+
+        // Bagian sektor
+        $sektor = DB::table('data_investasi')
+            ->when($request->tahun2, fn($q) => $q->where('tahun', $request->tahun2))
+            ->when($request->triwulan2 && $request->triwulan2 !== 'Tahun', 
+                fn($q) => $q->where('periode', $request->triwulan2))
+            ->select(
+                'kabupaten_kota',
+                'status_penanaman_modal',
+                DB::raw('SUM(investasi_us_ribu) as total_usd'),
+                DB::raw('SUM(investasi_rp_juta) as total_rp')
+            )
+            ->groupBy('kabupaten_kota', 'status_penanaman_modal')
+            ->orderByDesc('total_rp')
+            ->get();
+
         return view('user.realisasi.lokasi', compact(
             'dataLokasi',
             'chartLabels',
             'chartData',
-            'dataProvinsi'
+            'dataProvinsi',
+            'dataPMA',
+            'dataPMDN',
+            'dataGabungan',
+            'jenis',
+            'topPMA',
+            'topPMDN',
+            'sektor'
         ));
     }
+
 
     // Halaman Perbandingan (Bagian 3 & 4)
     public function perbandingan(Request $request)
