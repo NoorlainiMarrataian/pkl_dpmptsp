@@ -38,7 +38,7 @@
                 <thead>
                     <tr>
                         <th>Negara</th>
-                        <th>Jenis PM</th>
+                        <th>Proyek</th>
                         <th>Tahun</th>
                         <th>Periode</th>
                         <th>Tambahan Investasi (US$ Ribu)</th>
