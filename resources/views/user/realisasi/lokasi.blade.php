@@ -3,9 +3,7 @@
 @section('content')
 <section class="lokasi-investasi">
 
-    {{-- =======================
-         BAGIAN 1: Data Kabupaten/Kota
-    ======================== --}}
+    {{-- =======================         BAGIAN 1: Data Kabupaten/Kota    ======================== --}}
     <div class="card-section">
         <h2>Data Kabupaten/Kota di Provinsi Kalimantan Selatan</h2>
 
@@ -48,36 +46,124 @@
         {{-- Tabel Data Lokasi --}}
         <div class="tabel-card">
             <h3 class="judul-tabel">TABEL DATA LOKASI</h3>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Kabupaten/Kota</th>
-                        <th>Proyek</th>
-                        <th>Investasi (Rp Juta)</th>
-                        <th>Investasi (USD Ribu)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($dataLokasi as $lokasi)
+
+            @if($jenis === 'PMA')
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>{{ $lokasi->kabupaten_kota }}</td>
-                            <td>{{ $lokasi->status_penanaman_modal }}</td>
-                            <td>{{ number_format($lokasi->investasi_rp_juta, 0, ',', '.') }}</td>
-                            <td>{{ number_format($lokasi->investasi_us_ribu, 0, ',', '.') }}</td>
+                            <th>Kabupaten/Kota</th>
+                            <th>Status</th>
+                            <th>Total Investasi (USD Ribu)</th>
+                            <th>Total Investasi (Juta Rp)</th>
                         </tr>
-                    @empty
+                    </thead>
+                    <tbody>
+                        @forelse($dataLokasi as $lokasi)
+                            <tr>
+                                <td>{{ $lokasi->kabupaten_kota }}</td>
+                                <td>{{ $lokasi->status_penanaman_modal }}</td>
+                                <td>{{ number_format($lokasi->total_investasi_us_ribu, 0, ',', '.') }}</td>
+                                <td>{{ number_format($lokasi->total_investasi_rp_juta, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="4" class="text-center">Tidak ada data</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+            @elseif($jenis === 'PMDN')
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td colspan="5" class="text-center">Tidak ada data untuk filter yang dipilih</td>
+                            <th>Kabupaten/Kota</th>
+                            <th>Status</th>
+                            <th>Tambahan Investasi (Juta Rp)</th>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @forelse($dataLokasi as $lokasi)
+                            <tr>
+                                <td>{{ $lokasi->kabupaten_kota }}</td>
+                                <td>{{ $lokasi->status_penanaman_modal }}</td>
+                                <td>{{ number_format($lokasi->tambahan_investasi_dalam_juta, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="3" class="text-center">Tidak ada data</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+            @elseif($jenis === 'PMA+PMDN')
+                <h4>Tabel PMA</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Kabupaten/Kota</th>
+                            <th>Status</th>
+                            <th>Tambahan Investasi (USD Ribu)</th>
+                            <th>Tambahan Investasi (Juta Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($dataPMA as $row)
+                            <tr>
+                                <td>{{ $row->kabupaten_kota }}</td>
+                                <td>{{ $row->status_penanaman_modal }}</td>
+                                <td>{{ number_format($row->tambahan_investasi_dalam_ribu_usd, 0, ',', '.') }}</td>
+                                <td>{{ number_format($row->tambahan_investasi_dalam_juta, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="4" class="text-center">Tidak ada data PMA</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+                <h4>Tabel PMDN</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Kabupaten/Kota</th>
+                            <th>Status</th>
+                            <th>Tambahan Investasi (Juta Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($dataPMDN as $row)
+                            <tr>
+                                <td>{{ $row->kabupaten_kota }}</td>
+                                <td>{{ $row->status_penanaman_modal }}</td>
+                                <td>{{ number_format($row->tambahan_investasi_dalam_juta, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="3" class="text-center">Tidak ada data PMDN</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+                <h4>Tabel Gabungan (PMA+PMDN)</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Total Investasi (Juta Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($dataGabungan as $row)
+                            <tr>
+                                <td>{{ $row->status_penanaman_modal }}</td>
+                                <td>{{ number_format($row->tambahan_investasi_dalam_juta, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="2" class="text-center">Tidak ada data gabungan</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 
-    {{-- =======================
-    BAGIAN 2: Data Investasi Provinsi
-    ======================== --}}
+    {{-- =======================    BAGIAN 2: Data Investasi Provinsi    ======================== --}}
     <div class="card-section">
         <h2>Data Investasi Provinsi Kalimantan Selatan</h2>
 
@@ -111,32 +197,105 @@
 
         {{-- Tabel Data --}}
         <div class="table-container">
+            @if(request('filter') == 'top_investasi')
+                <h3>5 Realisasi Investasi Terbesar - PMDN</h3>
+                <table class="tabel-investasi">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kabupaten/Kota</th>
+                            <th>Total Investasi (Rp Juta)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($topPMDN as $index => $row)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $row->kabupaten_kota }}</td>
+                                <td>{{ number_format($row->total_investasi_rp_juta, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="3" class="text-center">Tidak ada data</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+            @elseif(request('filter') == 'top_proyek')
+                <h3>5 Proyek Terbesar - PMA</h3>
+                <table class="tabel-investasi">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kabupaten/Kota</th>
+                            <th>Total Proyek PMA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{-- PMA --}}
+                        @forelse($topPMA as $index => $row)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $row->kabupaten_kota }}</td>
+                            <td>{{ $row->total_proyek }}</td>
+                        </tr>
+                        @empty
+                        <tr><td colspan="3" class="text-center">Tidak ada data</td></tr>
+                        @endforelse
+
+                    </tbody>
+                </table>
+
+                <h3>5 Proyek Terbesar - PMDN</h3>
+                <table class="tabel-investasi">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kabupaten/Kota</th>
+                            <th>Total Proyek PMDN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{-- PMDN --}}
+                        @forelse($topPMDN as $index => $row)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $row->kabupaten_kota }}</td>
+                            <td>{{ $row->total_proyek }}</td>
+                        </tr>
+                        @empty
+                        <tr><td colspan="3" class="text-center">Tidak ada data</td></tr>
+                        @endforelse
+
+                    </tbody>
+                </table>
+                
+            @elseif(request('filter') == 'sektor')
+            <h3>Data Investasi Berdasarkan Sektor</h3>
             <table class="tabel-investasi">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Provinsi</th>
-                        <th>Investasi (Rp Juta)</th>
-                        <th>Investasi (US$ Ribu)</th>
-                        <th>Jumlah Proyek</th>
+                        <th>Kabupaten/Kota</th>
+                        <th>Status</th>
+                        <th>Tambahan Investasi (USD Ribu)</th>
+                        <th>Tambahan Investasi (Juta Rp)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($dataProvinsi as $index => $row)
+                    @forelse($sektor as $index => $row)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $row->provinsi }}</td>
-                            <td>{{ number_format($row->investasi_rp_juta, 0, ',', '.') }}</td>
-                            <td>{{ number_format($row->investasi_us_ribu, 0, ',', '.') }}</td>
-                            <td>{{ $row->proyek ?? '-' }}</td>
+                            <td>{{ $row->kabupaten_kota }}</td>
+                            <td>{{ $row->status_penanaman_modal }}</td>
+                            <td>{{ number_format($row->total_usd, 0, ',', '.') }}</td>
+                            <td>{{ number_format($row->total_rp, 0, ',', '.') }}</td>
                         </tr>
                     @empty
-                        <tr>
-                            <td colspan="5" style="text-align: center;">Tidak ada data ditemukan.</td>
-                        </tr>
+                        <tr><td colspan="5" class="text-center">Tidak ada data sektor</td></tr>
                     @endforelse
                 </tbody>
             </table>
+        @endif
         </div>
     </div>
 
@@ -157,7 +316,7 @@
 @endpush
 
 @push('scripts')
-@if($dataLokasi->isNotEmpty())
+@if(!empty($chartLabels))
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const ctx = document.getElementById('chartLokasi').getContext('2d');
