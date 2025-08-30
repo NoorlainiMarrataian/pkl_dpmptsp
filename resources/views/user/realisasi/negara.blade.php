@@ -38,6 +38,7 @@
                 <thead>
                     <tr>
                         <th>Negara</th>
+                        <th>Status Penanaman Modal</th>
                         <th>Jenis PM</th>
                         <th>Tahun</th>
                         <th>Periode</th>
@@ -49,6 +50,7 @@
                     @foreach ($data_investasi as $data)
                     <tr>
                         <td>{{ $data->negara ?? '-' }}</td>
+                        <td>{{ $data->status_penanaman_modal ?? '-' }}</td>
                         <td>{{ $data->jumlah_pma ?? '-' }}</td> 
                         <td>{{ $data->tahun ?? '-' }}</td>
                         <td>{{ $data->periode ?? '-' }}</td>

@@ -32,15 +32,24 @@ class RealisasiInvestasiController extends Controller
         }
         if ($triwulan && $triwulan !== 'Tahun') {
             $query->where('periode', $triwulan);
-        }
+
+            $data_investasi = $query
+                ->selectRaw('negara, status_penanaman_modal, tahun, periode,
+                            COUNT(status_penanaman_modal) as jumlah_pma,
+                            SUM(investasi_us_ribu) as total_investasi_us_ribu,
+                            SUM(investasi_rp_juta) as total_investasi_rp_juta')
+                ->groupBy('negara', 'status_penanaman_modal', 'tahun', 'periode')
+                ->get();
+        } else { 
 
         $data_investasi = $query
-            ->selectRaw('negara, status_penanaman_modal, tahun, periode,
+            ->selectRaw('negara, status_penanaman_modal, tahun,
                         COUNT(status_penanaman_modal) as jumlah_pma,
                         SUM(investasi_us_ribu) as total_investasi_us_ribu,
                         SUM(investasi_rp_juta) as total_investasi_rp_juta')
-            ->groupBy('negara', 'status_penanaman_modal', 'tahun', 'periode')
+            ->groupBy('negara', 'status_penanaman_modal', 'tahun')
             ->get();
+        }
 
         return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
     }
