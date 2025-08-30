@@ -1,9 +1,11 @@
+/* ===== Dashboard dan Layout ===== */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
 }
 
+/* ===== Sidebar ===== */
 .sidebar {
     width: 300px;
     background-color: #0A4C70;
@@ -16,12 +18,11 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    
 }
 
 .sidebar-header {
-    text-align: center; 
-    padding: 0 20px; 
+    text-align: center;
+    padding: 0 20px;
     margin-top: 0;
 }
 
@@ -92,7 +93,6 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
-    
 }
 
 .logout button:hover,
@@ -107,8 +107,103 @@ body {
     margin-right: 10px;
 }
 
+/* ===== Konten ===== */
 .content {
     margin-left: 300px;
     padding: 20px;
     width: calc(100% - 300px);
+    padding-right: 10px;
+}
+
+/* ===== Dashboard ===== */
+.dashboard h2 {
+    margin-bottom: 10px; /* rapat ke bawah */
+}
+
+/* Container card + gambar dekorasi */
+.dashboard-stats {
+    display: flex;
+    margin: 10px 0;      
+    align-items: center; /* vertikal sejajar */
+    flex-wrap: wrap;     /* responsive jika layar sempit */
+}
+
+
+/* Card Total Kunjungan Website */
+.total-visits-card {
+    background: linear-gradient(135deg, #3498db, #0A4C70);
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    border: 2px solid #fff;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.card-number p {
+    margin: 0;
+    color: #fff;
+    font-size: 30px;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.card-icon i {
+    font-size: 40px;
+    color: #fff;
+}
+
+/* Animasi angka */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ===== Gambar dekorasi di samping card ===== */
+.decorative-side {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center; /* vertikal sejajar card */
+}
+
+
+.decorative-side img {
+    width: 860px;   /* besar sesuai kebutuhan */
+    max-width: 110%; /* responsive */
+    height: auto;
+    margin-bottom: -240px;
+    margin-top: -200px;
+    display: block;
+}
+
+
+.dashboard table {
+    margin-top: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.dashboard th,
+.dashboard td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.dashboard thead {
+    background-color: #0A4C70;
+    color: #fff;
 }

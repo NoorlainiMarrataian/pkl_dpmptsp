@@ -6,12 +6,27 @@
     <h2>Selamat datang, {{ Auth::guard('admin')->user()->username }}</h2>
 
     {{-- ✅ Statistik ringkas --}}
-    <div style="display: flex; gap: 20px; margin: 20px 0;">
-        <div style="flex: 1; background: #f8f9fa; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <h3 style="margin: 0; font-size: 16px; color: #333;">Total Kunjungan Website</h3>
-            <p style="font-size: 22px; font-weight: bold; color: #0A4C70;">{{ $totalVisits }}</p>
+    <div class="dashboard-stats" style="display: flex; gap: 20px; margin: 20px 0; align-items: center;">
+        
+        {{-- Card Total Kunjungan Website --}}
+        <div class="total-visits-card">
+            <h3 style="margin: 0; font-size: 16px; color: #fff;">Total Kunjungan Website</h3>
+            <div class="card-content">
+                <div class="card-number">
+                    <p style="font-size: 32px; font-weight: bold;">{{ $totalVisits }}</p>
+                </div>
+                <div class="card-icon">
+                    <i class="fa fa-users"></i>
+                </div>
+            </div>
+        </div>
+
+        {{-- Gambar dekorasi di samping card --}}
+        <div class="decorative-side">
+            <img src="{{ asset('images/item_dashboard.png') }}" alt="side decoration">
         </div>
     </div>
+
 
     {{-- ✅ Tabel Data Pengunduh --}}
     <h3 style="margin-top: 30px;">Data Pengunduh</h3>

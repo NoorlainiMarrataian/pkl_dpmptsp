@@ -3,7 +3,7 @@
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/investasi.css') }}">
-<div class="container-fluid mt-4 investasi-container">
+<div class="container-fluid investasi-container">
     <div class="investasi-header">
         <div class="d-flex align-items-center">
         <h2 class="investasi-title mb-0">Data Realisasi Investasi</h2>
@@ -35,46 +35,54 @@
             </div>
         </div>
     </div>
-    <div class="custom-pagination" style="display: flex; justify-content: center; gap: 16px; margin-bottom: 16px; margin-top: 16px">
+    <div class="custom-pagination">
     @if ($data_investasi->onFirstPage())
-            <button disabled class="custom-pagination-btn disabled">PREV</button>
+        <button disabled class="pagination-btn prev disabled">
+            <span class="arrow">«</span> Previous
+        </button>
     @else
         <a href="{{ $data_investasi->previousPageUrl() }}" style="text-decoration: none;">
-                <button class="custom-pagination-btn">PREV</button>
+            <button class="pagination-btn prev">
+                <span class="arrow">«</span> Previous
+            </button>
         </a>
     @endif
+
     @if ($data_investasi->hasMorePages())
         <a href="{{ $data_investasi->nextPageUrl() }}" style="text-decoration: none;">
-                <button class="custom-pagination-btn">NEXT</button>
+            <button class="pagination-btn next">
+                Next <span class="arrow">»</span>
+            </button>
         </a>
     @else
-            <button disabled class="custom-pagination-btn disabled">NEXT</button>
+        <button disabled class="pagination-btn next disabled">
+            Next <span class="arrow">»</span>
+        </button>
     @endif
     </div>
 
     {{-- Table --}}
-    <div class="table-responsive mt-3">
-        <table class="table table-bordered table-striped investasi-table mb-0">
+   <div class="table-responsive mt-1">
+        <table class="table table-bordered table-striped investasi-table mb-0 text-center align-middle">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
-                    <th>Tahun</th>
-                    <th>Periode</th>
-                    <th>Status Penanaman Modal</th>
-                    <th>Regional</th>
-                    <th>Negara</th>
-                    <th>Sektor Utama</th>
-                    <th>Nama Sektor</th>
-                    <th>Deskripsi KBLI</th>
-                    <th>Provinsi</th>
-                    <th>Kab/Kota</th>
-                    <th>Jawa / Luar Jawa</th>
-                    <th>Pulau</th>
-                    <th>Investasi Rp</th>
-                    <th>Investasi US$</th>
-                    <th>Jumlah TKI</th>
-                    <th>Aksi</th>
-            <th>Aksi</th>
+                    <th style="min-width:70px;">ID</th>
+                    <th style="min-width:90px;">Tahun</th>
+                    <th style="min-width:100px;">Periode</th>
+                    <th style="min-width:160px;">Status Penanaman Modal</th>
+                    <th style="min-width:120px;">Regional</th>
+                    <th style="min-width:120px;">Negara</th>
+                    <th style="min-width:140px;">Sektor Utama</th>
+                    <th style="min-width:140px;">Nama Sektor</th>
+                    <th style="min-width:180px;">Deskripsi KBLI</th>
+                    <th style="min-width:140px;">Provinsi</th>
+                    <th style="min-width:140px;">Kab/Kota</th>
+                    <th style="min-width:150px;">Jawa / Luar Jawa</th>
+                    <th style="min-width:120px;">Pulau</th>
+                    <th style="min-width:150px;">Investasi Rp</th>
+                    <th style="min-width:150px;">Investasi US$</th>
+                    <th style="min-width:130px;">Jumlah TKI</th>
+                    <th style="text-align:center; min-width:120px;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,8 +105,15 @@
                     <td>{{ isset($data->investasi_us_ribu) ? number_format($data->investasi_us_ribu, 2, ',', '.') : '-' }}</td>
                     <td>{{ $data->jumlah_tki ?? '-' }}</td>
                     <td>
-                        <a href="{{ route('data_investasi.edit', $data->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                        <button type="button" class="btn btn-danger btn-sm btn-table-delete" data-id="{{ $data->id }}">Delete</button>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="{{ route('data_investasi.edit', $data->id) }}" class="btn-table edit">Edit</a>
+                            <form action="{{ route('data_investasi.destroy', $data->id) }}" method="POST"
+                                  onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-table delete">Delete</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty
