@@ -22,26 +22,42 @@ class RealisasiInvestasiController extends Controller
 
         if (!$tahun || !$triwulan) {
             $data_investasi = collect(); 
-            return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
+            $total = null;
+            return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan', 'total'));
         }
 
-        $query = Datainvestasi::query();
+        $query = Datainvestasi::where('status_penanaman_modal', 'PMA');
 
         if ($tahun) {
             $query->where('tahun', $tahun);
         }
         if ($triwulan && $triwulan !== 'Tahun') {
             $query->where('periode', $triwulan);
-        }
 
+            $data_investasi = $query
+                ->selectRaw('negara, status_penanaman_modal, tahun, periode,
+                            COUNT(status_penanaman_modal) as jumlah_pma,
+                            SUM(investasi_us_ribu) as total_investasi_us_ribu,
+                            SUM(investasi_rp_juta) as total_investasi_rp_juta')
+                ->groupBy('negara', 'status_penanaman_modal', 'tahun', 'periode')
+                ->get();
+        } else { 
+            // 1 tahun saja
         $data_investasi = $query
-            ->selectRaw('negara, status_penanaman_modal, tahun, periode,
+            ->selectRaw('negara, status_penanaman_modal, tahun,
+                        COUNT(status_penanaman_modal) as jumlah_pma,
                         SUM(investasi_us_ribu) as total_investasi_us_ribu,
                         SUM(investasi_rp_juta) as total_investasi_rp_juta')
-            ->groupBy('negara', 'status_penanaman_modal', 'tahun', 'periode')
+            ->groupBy('negara', 'status_penanaman_modal', 'tahun')
             ->get();
+        }
+        $total = [
+            'jumlah_pma' => $data_investasi->sum('jumlah_pma'),
+            'total_investasi_us_ribu' => $data_investasi->sum('total_investasi_us_ribu'),
+            'total_investasi_rp_juta' => $data_investasi->sum('total_investasi_rp_juta'),
+        ];
 
-        return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan'));
+        return view('user.realisasi.negara', compact('data_investasi', 'tahun', 'triwulan', 'total'));
     }
 
     // Halaman Lokasi (Bagian 1 & 2)

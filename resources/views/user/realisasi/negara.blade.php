@@ -38,7 +38,8 @@
                 <thead>
                     <tr>
                         <th>Negara</th>
-                        <th>Proyek</th>
+                        <th>Status Penanaman Modal</th>
+                        <th>Jenis PM</th>
                         <th>Tahun</th>
                         <th>Periode</th>
                         <th>Tambahan Investasi (US$ Ribu)</th>
@@ -50,12 +51,19 @@
                     <tr>
                         <td>{{ $data->negara ?? '-' }}</td>
                         <td>{{ $data->status_penanaman_modal ?? '-' }}</td>
+                        <td>{{ $data->jumlah_pma ?? '-' }}</td> 
                         <td>{{ $data->tahun ?? '-' }}</td>
                         <td>{{ $data->periode ?? '-' }}</td>
                         <td>{{ isset($data->total_investasi_us_ribu) ? number_format($data->total_investasi_us_ribu, 2, ',', '.') : '-' }}</td>
                         <td>{{ isset($data->total_investasi_rp_juta) ? number_format($data->total_investasi_rp_juta, 2, ',', '.') : '-' }}</td>
                     </tr>
                     @endforeach
+                    <tr class="total-row">
+                        <td colspan="2"><strong>Total</strong></td>
+                        <td><strong>{{ $total['jumlah_pma'] ?? '-' }}</strong></td>
+                        <td colspan="2"></td>
+                        <td><strong>{{ isset($total['total_investasi_us_ribu']) ? number_format($total['total_investasi_us_ribu'], 2, ',', '.') : '-' }}</strong></td>
+                        <td><strong>{{ isset($total['total_investasi_rp_juta']) ? number_format($total['total_investasi_rp_juta'], 2, ',', '.') : '-' }}</strong></td>
                 </tbody>
             </table>
         </div>
