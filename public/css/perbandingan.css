@@ -1,111 +1,185 @@
-/* =========================
-   PERBANDINGAN PAGE STYLES
-   ========================= */
+/* ================================
+   PERBANDINGAN INVESTASI STYLE
+   Versi Super Rapi & Modern
+   ================================ */
 
-.perbandingan-container {
+.perbandingan-investasi {
+    margin: 40px auto;
     max-width: 1200px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
 }
 
-/* Title */
-.perbandingan-container h2 {
-    text-align: center;
-    font-size: 26px;
-    margin-bottom: 25px;
-    color: #333;
-}
-
-/* Filter Section */
-.perbandingan-filters {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-}
-
-.perbandingan-filters button {
-    background-color: #0077B6;
-    color: #fff;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 15px;
-    transition: all 0.3s ease;
-}
-
-.perbandingan-filters button:hover {
-    background-color: #005f87;
-}
-
-/* Chart Section */
-.perbandingan-chart {
-    margin: 30px 0;
-    padding: 20px;
+/* --- Card Utama --- */
+.perbandingan-investasi .card {
+    border-radius: 18px;
     background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    padding: 30px;
 }
 
-.perbandingan-chart canvas {
-    width: 100% !important;
-    height: 400px !important;
-}
-
-/* Table Section */
-.perbandingan-table {
-    overflow-x: auto;
-    margin-top: 20px;
-}
-
-.perbandingan-table table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.perbandingan-table th, 
-.perbandingan-table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
+/* --- Judul Utama --- */
+.perbandingan-investasi h2 {
+    font-size: 1.9rem;
+    font-weight: 700;
     text-align: center;
-    font-size: 14px;
+    margin-bottom: 30px;
+    color: #1e2a38;
+    letter-spacing: 0.5px;
 }
 
-.perbandingan-table th {
-    background-color: #0077B6;
+/* --- Filter Bar --- */
+.perbandingan-investasi .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 35px;
+    background: #fdfdfd;
+    border: 1px solid #eaeaea;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.perbandingan-investasi .filter-bar div {
+    flex: 1;
+    min-width: 200px;
+}
+
+.perbandingan-investasi .filter-bar label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.perbandingan-investasi .filter-bar select,
+.perbandingan-investasi .filter-bar input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d0d7de;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background: #fff;
+    transition: all 0.25s ease;
+}
+
+.perbandingan-investasi .filter-bar select:focus,
+.perbandingan-investasi .filter-bar input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 4px rgba(52,152,219,0.15);
+    outline: none;
+}
+
+.perbandingan-investasi .filter-bar .btn {
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.25s ease, transform 0.1s ease;
+}
+
+.perbandingan-investasi .filter-bar .btn:hover {
+    transform: translateY(-1px);
+}
+
+/* --- Chart Section --- */
+.perbandingan-investasi .chart-section {
+    padding: 25px;
+    background: linear-gradient(to bottom right, #f9fbff, #f3f8ff);
+    border-radius: 16px;
+    margin-bottom: 40px;
+    border: 1px solid #e1ecf7;
+}
+
+.perbandingan-investasi .chart-section h4 {
+    text-align: center;
+    font-size: 1.35rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #1e2a38;
+}
+
+/* --- Tabel Wrapper --- */
+.perbandingan-investasi .tabel-wrapper {
+    margin-top: 10px;
+}
+
+.perbandingan-investasi .judul-tabel {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1e2a38;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+/* --- Table Styling --- */
+.perbandingan-investasi table {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 35px;
+    background: #fff;
+}
+
+.perbandingan-investasi thead {
+    background: #3498db;
     color: #fff;
-    font-weight: bold;
 }
 
-.perbandingan-table tr:nth-child(even) {
-    background-color: #f4f6f8;
+.perbandingan-investasi th, 
+.perbandingan-investasi td {
+    padding: 14px 16px;
+    font-size: 0.95rem;
+    vertical-align: middle;
+    border-color: #ebebeb;
 }
 
-.perbandingan-table tr:hover {
-    background-color: #eef5fb;
+.perbandingan-investasi th {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* Responsive */
+.perbandingan-investasi td.text-end {
+    text-align: right;
+}
+
+.perbandingan-investasi td.text-center,
+.perbandingan-investasi th.text-center {
+    text-align: center;
+}
+
+/* Hover effect untuk tabel */
+.perbandingan-investasi tbody tr {
+    transition: background 0.25s ease;
+}
+.perbandingan-investasi tbody tr:hover {
+    background: #f7fbff;
+}
+
+/* --- Responsive --- */
 @media (max-width: 768px) {
-    .perbandingan-container {
-        padding: 15px;
-    }
-
-    .perbandingan-filters {
+    .perbandingan-investasi .filter-bar {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
     }
 
-    .perbandingan-filters button {
-        width: 100%;
-        max-width: 250px;
+    .perbandingan-investasi h2 {
+        font-size: 1.5rem;
+    }
+
+    .perbandingan-investasi .chart-section h4,
+    .perbandingan-investasi .judul-tabel {
+        font-size: 1.1rem;
+    }
+
+    .perbandingan-investasi table {
+        font-size: 0.85rem;
     }
 }
