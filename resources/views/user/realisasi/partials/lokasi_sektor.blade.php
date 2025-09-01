@@ -1,6 +1,6 @@
 
     <div id="bagian2-content" class="card-section">
-        <h2>Data Lokasi - Berdasarkan Sektor</h2>
+        <h2 class="judul-lokasi">Data Realisasi Investasi Kalimantan</h2>
 
         {{-- Filter Tahun, Jenis Data, dan Periode --}}
         <form id="form-bagian2" class="filter-bar" action="{{ route('realisasi.lokasi') }}" method="GET">
@@ -32,7 +32,7 @@
                 5 Proyek Terbesar Berdasarkan Kab Kota
             </button>
             <button type="submit" name="jenisBagian2" value="sektor" class="btn btn-secondary">
-                Sektor
+                Berdasarkan Sektor
             </button>
 
             <input type="hidden" name="tahun" value="{{ request('tahun') }}">
@@ -170,7 +170,7 @@
         @endif
 
         @if($jenisBagian2 === 'sektor')
-            <h3>Data Sektor</h3>
+            <h2 class="judul-lokasi">Data Berdasarkan Sektor</h2>
             <table class="table table-bordered">
                 <thead>
                     <tr>
