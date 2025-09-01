@@ -252,11 +252,33 @@ class RealisasiInvestasiController extends Controller
         } elseif ($jenisBagian2 === 'sektor') {
             // Query data sektor
             $sektor = DB::table('data_investasi')
-                ->select('nama_sektor', 'periode', 'status_penanaman_modal')
-                ->when($tahun2, fn($q) => $q->where('tahun', $tahun2))
-                ->when($triwulan2 && $triwulan2 != 'Tahun', fn($q) => $q->where('periode', $triwulan2))
-                ->orderBy('nama_sektor')
-                ->get();
+                ->select('nama_sektor',  
+
+                    // === PMDN ===
+                    DB::raw("SUM(CASE WHEN status_penanaman_modal = 'PMDN' THEN 1 ELSE 0 END) as proyek_pmdn"),
+                    DB::raw("SUM(CASE WHEN status_penanaman_modal = 'PMDN' THEN investasi_rp_juta ELSE 0 END) as total_investasi_rp_pmdn"),
+
+                    // === PMA ===
+                    DB::raw("SUM(CASE WHEN status_penanaman_modal = 'PMA' THEN 1 ELSE 0 END) as proyek_pma"),
+                    DB::raw("SUM(CASE WHEN status_penanaman_modal = 'PMA' THEN investasi_rp_juta ELSE 0 END) as total_investasi_rp_pma"),
+                    DB::raw("SUM(CASE WHEN status_penanaman_modal = 'PMA' THEN investasi_us_ribu ELSE 0 END) as total_investasi_us_pma"),
+
+                    // === TOTAL (PMA + PMDN) ===
+                    DB::raw("SUM(CASE WHEN status_penanaman_modal IN ('PMDN','PMA') THEN 1 ELSE 0 END) as total_proyek"),
+                    DB::raw("SUM(investasi_rp_juta) as total_investasi_rp_all")
+                )
+                ->when($tahun2, fn($q) => $q->where('tahun', $tahun2));
+                
+                // Kalau pilih triwulan (bukan Tahun), tambahkan kolom periode
+                if ($triwulan2 && $triwulan2 != 'Tahun') {
+                    $sektor->addSelect('periode')
+                        ->where('periode', $triwulan2)
+                        ->groupBy('nama_sektor', 'periode');
+                } else {
+                    $sektor->groupBy('nama_sektor');
+                }
+
+                $sektor = $sektor->orderBy('nama_sektor')->get();
         }
         
         if ($request->ajax()) {

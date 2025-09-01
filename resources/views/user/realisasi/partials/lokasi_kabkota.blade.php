@@ -1,6 +1,6 @@
 {{-- partial: lokasi_kabkota.blade.php --}}
 <div class="card-section">
-    <h2>Data Kabupaten/Kota di Provinsi Kalimantan Selatan</h2>
+    <h2 class="judul-lokasi">Data Realisasi Investasi Kalimantan Selatan Berdasarkan Kabupaten/Kota</h2>
 
     {{-- Filter Tahun, Jenis, dan Periode --}}
     <form class="filter-bar" action="{{ route('realisasi.lokasi') }}" method="GET">
@@ -37,6 +37,7 @@
 
     {{-- Grafik Lokasi --}}
     <div class="grafik-card">
+        <h3 class="judul-grafik" >GRAFIK DATA LOKASI</h3>
         <canvas id="chartLokasi" width="1000" height="400"></canvas>
     </div>
 

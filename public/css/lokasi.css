@@ -85,6 +85,21 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.judul-grafik {
+    text-align: center;
+    margin-top: 5px;
+}
+
+h2.mb-4 {
+    margin-top: 80px;   /* atur sesuai tinggi header */
+    text-align: center;
+}
+
+h2.judul-lokasi {
+    margin-top: 5px;
+    text-align: center;
+}
+
 /* Table */
 .tabel-card,
 .table-container {

@@ -3,6 +3,8 @@
 @section('content')
 <section class="lokasi-investasi container mt-4">
 
+    <h2 class="mb-4">LOKASI</h2>
+
     {{-- ===== BAGIAN 1: Kab/Kota ===== --}}
     <div class="card mb-5">
         <div class="card-body">
