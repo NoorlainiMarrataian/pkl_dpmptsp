@@ -4,42 +4,43 @@ namespace App\Imports;
 
 use App\Models\Datainvestasi;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 
-class DataInvestasiImport implements ToModel, WithHeadingRow, SkipsEmptyRows
+class DataInvestasiImport implements ToModel, WithStartRow, SkipsEmptyRows
 {
     /**
-     * Pastikan baris pertama di Excel adalah HEADER dengan nama kolom:
-     * tahun, periode, status_penanaman_modal, regional, negara, sektor_utama,
-     * nama_sektor, deskripsi_kbli_2digit, provinsi, kabupaten_kota,
-     * wilayah_jawa, pulau, investasi_rp_juta, investasi_us_ribu, jumlah_tki
+     * Tentukan baris awal untuk membaca data.
+     * Jika baris 1 ada judul, maka pakai 2.
+     * Jika file langsung isi data, ubah ke return 1.
      */
-    public function model(array $row)
-    {
-        // Lewati baris yang tidak punya 'tahun'
-        if (!isset($row['tahun'])) {
-            return null;
-        }
+    public function startRow(): int
+{
+    return 2; // lewati baris header
+}
 
-        return new Datainvestasi([
-            'tahun'                  => (int) ($row['tahun'] ?? null),
-            'periode'                => $row['periode'] ?? null,
-            'status_penanaman_modal' => $row['status_penanaman_modal'] ?? null,
-            'regional'               => $row['regional'] ?? null,
-            'negara'                 => $row['negara'] ?? null,
-            'sektor_utama'           => $row['sektor_utama'] ?? null,
-            'nama_sektor'            => $row['nama_sektor'] ?? null,
-            'deskripsi_kbli_2digit'  => $row['deskripsi_kbli_2digit'] ?? null,
-            'provinsi'               => $row['provinsi'] ?? null,
-            'kabupaten_kota'         => $row['kabupaten_kota'] ?? null,
-            // Mapping kolom 'wilayah_jawa' dari excel ke 'jawa_luar_jawa' di database
-            'wilayah_jawa'           => $row['wilayah_jawa'] ?? $row['jawa_luar_jawa'] ?? null,
-            'pulau'                  => $row['pulau'] ?? null,
-            'investasi_rp_juta'      => $row['investasi_rp_juta'] ?? null,
-            'investasi_us_ribu'      => $row['investasi_us_ribu'] ?? null,
-            // Mapping kolom 'tki' dari excel ke 'jumlah_tki' di database
-            'jumlah_tki'             => $row['jumlah_tki'] ?? $row['tki'] ?? null,
-        ]);
+public function model(array $row)
+{
+    if (!isset($row[0]) || !is_numeric($row[0])) {
+        return null; // skip kalau tahun kosong atau bukan angka
     }
+
+    return new Datainvestasi([
+        'tahun'                  => (int) $row[0],
+        'periode'                => $row[1] ?? null,
+        'status_penanaman_modal' => $row[2] ?? null,
+        'regional'               => $row[3] ?? null,
+        'negara'                 => $row[4] ?? null,
+        'sektor_utama'           => $row[5] ?? null,
+        'nama_sektor'            => $row[6] ?? null,
+        'deskripsi_kbli_2digit'  => $row[7] ?? null,
+        'provinsi'               => $row[8] ?? null,
+        'kabupaten_kota'         => $row[9] ?? null,
+        'wilayah_jawa'           => $row[10] ?? null,
+        'pulau'                  => $row[11] ?? null,
+        'investasi_rp_juta'      => $row[12] ?? null,
+        'investasi_us_ribu'      => $row[13] ?? null,
+        'jumlah_tki'             => $row[14] ?? null,
+    ]);
+}
 }

@@ -124,22 +124,25 @@ class DatainvestasiController extends Controller
     }
 
     public function upload(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv|max:5120', // max 5 MB
-        ], [
-            'file.required' => 'Silakan pilih file Excel terlebih dahulu.',
-            'file.mimes'    => 'Format harus .xlsx / .xls / .csv',
-        ]);
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv|max:5120',
+    ], [
+        'file.required' => 'Silakan pilih file Excel terlebih dahulu.',
+        'file.mimes'    => 'Format harus .xlsx / .xls / .csv',
+        'file.max'      => 'Ukuran file maksimal 5 MB.',
+    ]);
 
-        try {
-            Excel::import(new DataInvestasiImport, $request->file('file'));
+    try {
+        \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\DataInvestasiImport, $request->file('file'));
 
-            return redirect()
-                ->route('data_investasi.index')
-                ->with('success', 'Data Excel berhasil diimpor.');
-        } catch (\Throwable $e) {
-            return back()->with('error', 'Gagal mengimpor: '.$e->getMessage());
-        }
+        return redirect()
+            ->route('data_investasi.index')
+            ->with('success', 'Data Excel berhasil diimpor.');
+    } catch (\Throwable $e) {
+        return redirect()
+            ->route('data_investasi.index')
+            ->with('error', 'Gagal mengimpor: '.$e->getMessage());
+    }
     }
 }

@@ -126,13 +126,54 @@
     </div>
 </div>
 
+{{-- Modal Popup Pesan --}}
+@if(session('error') || session('success'))
+<div class="modal fade" id="popupMessage" tabindex="-1" role="dialog" aria-labelledby="popupMessageLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content shadow-lg rounded">
+      <div class="modal-header {{ session('error') ? 'bg-danger text-white' : 'bg-success text-white' }}">
+        <h5 class="modal-title" id="popupMessageLabel">
+            @if(session('error'))
+                <i class="fas fa-exclamation-circle"></i> Terjadi Kesalahan
+            @else
+                <i class="fas fa-check-circle"></i> Berhasil
+            @endif
+        </h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ session('error') ?? session('success') }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
+{{-- Script Bootstrap & jQuery --}}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+{{-- Script untuk menampilkan modal otomatis --}}
+@if(session('error') || session('success'))
+<script>
+    $(document).ready(function(){
+        $('#popupMessage').modal('show');
+    });
+</script>
+@endif
+
 <!-- Modal Tambah Data -->
 <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content investasi-modal-content">
             <h5 class="investasi-modal-title">Tambah Data</h5>
             <a href="{{ route('data_investasi.create') }}" class="btn investasi-modal-btn">Tambah manual</a>
-            <button type="button" class="btn investasi-modal-btn" data-toggle="modal" data-target="#uploadExcelModal" data-dismiss="modal">
+            <button type="button" class="btn investasi-modal-btn investasi-btn-upload" data-target="#uploadExcelModal">
                 Upload data excel
             </button>
             <button type="button" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
@@ -141,7 +182,6 @@
 </div>
 
 <!-- Modal Edit Data -->
-
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.10); padding:32px 24px;">
@@ -170,10 +210,10 @@
                 <input type="text" id="deleteDataInput" class="form-control input-custom mb-4" placeholder="Masukkan Nomor ID">
                 <div class="row justify-content-center">
                     <div class="col-6 col-md-5 mb-2 mb-md-0">
-                        <button type="button" class="btn btn-danger w-100 btn-custom-outline" data-dismiss="modal">Batalkan</button>
+                        <button type="button" class="btn btn-danger w-100" data-dismiss="modal" style="height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;">Batalkan</button>
                     </div>
                     <div class="col-6 col-md-5">
-                        <button id="showConfirmDelete" type="button" class="btn w-100 btn-custom-primary">Hapus</button>
+                        <button id="showConfirmDelete" type="button" class="btn w-100" style="background:#07486a; color:#fff; height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;">Hapus</button>
                     </div>
                 </div>
             </form>
@@ -188,10 +228,10 @@
             <h5 class="modal-title-custom mb-5" id="confirmDeleteText">Data akan dihapus</h5>
             <div class="row justify-content-center">
                 <div class="col-6 col-md-5 mb-2 mb-md-0">
-                    <button type="button" class="btn w-100 btn-custom-outline" data-dismiss="modal">Batalkan</button>
+                    <button type="button" class="btn btn-danger w-100" data-dismiss="modal" style="height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;">Batalkan</button>
                 </div>
                 <div class="col-6 col-md-5">
-                    <button id="confirmDeleteBtn" type="button" class="btn w-100 btn-custom-primary">Hapus</button>
+                    <button id="confirmDeleteBtn" type="button" class="btn w-100" style="background:#07486a; color:#fff; height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;">Hapus</button>
                 </div>
             </div>
         </div>
@@ -200,45 +240,65 @@
 
 <!-- Modal Upload Excel -->
 <div class="modal fade" id="uploadExcelModal" tabindex="-1" role="dialog" aria-labelledby="uploadExcelModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content investasi-modal-content">
-            <h5 class="investasi-modal-title">Proses Unggah Dokumen</h5>
-            <div class="mb-3 fw-bold" style="text-align:center;">Unggah Data Dari Komputer / Tarik Dan Letakkan</div>
-            <form action="{{ route('data_investasi.upload') }}" method="POST" enctype="multipart/form-data" id="uploadExcelForm">
-                @csrf
-                <div class="investasi-modal-file">
-                    <span class="investasi-modal-file-icon"><i class="fa fa-file"></i></span>
-                    <input type="text" id="fileNameDisplayExcel" class="form-control investasi-modal-file-input" placeholder="namadokumen.xlsx" readonly>
-                    <label for="excelFileInput" class="investasi-modal-file-label">Telusuri</label>
-                    <input type="file" id="excelFileInput" name="file" accept=".xlsx" style="display:none;" required>
-                </div>
-                <div class="d-flex justify-content-center gap-2">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="border-radius:8px; font-weight:500; width:120px;">Batalkan</button>
-                    <button type="submit" class="btn" style="background:#003366; color:#fff; border-radius:8px; font-weight:500; width:120px;">Simpan</button>
-                </div>
-            </form>
-            <script>
-                // Update file name display
-                document.addEventListener('DOMContentLoaded', function() {
-                    var fileInput = document.getElementById('excelFileInput');
-                    var fileNameDisplay = document.getElementById('fileNameDisplayExcel');
-                    var labelTelusuri = document.querySelector('label[for="excelFileInput"]');
-                    labelTelusuri.addEventListener('click', function(e) {
-                        fileInput.click();
-                    });
-                    fileInput.addEventListener('change', function() {
-                        fileNameDisplay.value = fileInput.files.length ? fileInput.files[0].name : '';
-                    });
-                });
-            </script>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content investasi-modal-content">
+
+      <h5 class="investasi-modal-title">Proses Unggah Dokumen</h5>
+
+      {{-- Alert error/success --}}
+      <div id="uploadErrorAlert" class="alert alert-danger" style="display:none;"></div>
+      <div id="uploadSuccessAlert" class="alert alert-success" style="display:none;"></div>
+
+      <div class="mb-3 fw-bold text-center">
+        Unggah Data Dari Komputer / Tarik Dan Letakkan
+      </div>
+
+      <form action="{{ route('data_investasi.upload') }}" method="POST" enctype="multipart/form-data" id="uploadExcelForm">
+        @csrf
+        <div class="investasi-modal-file">
+          <span class="investasi-modal-file-icon"><i class="fa fa-file"></i></span>
+          <input type="text" id="fileNameDisplayExcel" class="form-control investasi-modal-file-input" placeholder="namadokumen.xlsx" readonly>
+          <label for="excelFileInput" class="investasi-modal-file-label">Telusuri</label>
+          <input type="file" id="excelFileInput" name="file" accept=".xlsx" style="display:none;" required>
         </div>
 
+        <div class="row justify-content-center mt-3">
+          <div class="col-6 col-md-5 mb-2">
+            <button type="button" class="btn btn-danger w-100"
+              style="height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;"
+              data-dismiss="modal">
+              Batalkan
+            </button>
+          </div>
+          <div class="col-6 col-md-5">
+            <button type="submit" class="btn w-100"
+              style="background:#07486a; color:#fff; height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;">
+              Simpan
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          var fileInput = document.getElementById('excelFileInput');
+          var fileNameDisplay = document.getElementById('fileNameDisplayExcel');
+          
+          // update nama file ketika dipilih
+          fileInput.addEventListener('change', function() {
+            fileNameDisplay.value = fileInput.files.length ? fileInput.files[0].name : '';
+          });
+        });
+      </script>
+
     </div>
+  </div>
 </div>
 
 <script>
     let deleteId = null;
     document.addEventListener('DOMContentLoaded', function() {
+        // edit cari ID
         document.getElementById('editDataForm').addEventListener('submit', function(e) {
             e.preventDefault();
             var id = document.getElementById('editDataInput').value;
@@ -246,6 +306,8 @@
                 window.location.href = "/data_investasi/" + id + "/edit";
             }
         });
+
+        // hapus via tombol table
         document.querySelectorAll('.btn-table-delete').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -253,6 +315,8 @@
                 $('#confirmDeleteModal').modal('show');
             });
         });
+
+        // konfirmasi hapus
         document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
             if (deleteId) {
                 var form = document.createElement('form');
@@ -272,15 +336,39 @@
                 form.submit();
             }
         });
-        document.getElementById('showConfirmDelete').addEventListener('click', function() {
+
+        // pindah Delete → ConfirmDelete mulus
+        const deleteModal = $('#deleteModal');
+        const confirmDeleteModal = $('#confirmDeleteModal');
+        document.getElementById('showConfirmDelete').addEventListener('click', function(e) {
+            e.preventDefault();
             var id = document.getElementById('deleteDataInput').value;
             if (id) {
                 deleteId = id;
-                $('#deleteModal').modal('hide');
-                $('#confirmDeleteModal').modal('show');
-                document.getElementById('confirmDeleteModal').querySelector('h5').innerText = 'Nomor ID Data ' + id + ' akan dihapus';
+                document.querySelector('#confirmDeleteModal h5').innerText = 'Nomor ID Data ' + id + ' akan dihapus';
+                deleteModal.modal('hide');
+                deleteModal.on('hidden.bs.modal', function(){
+                    confirmDeleteModal.modal('show');
+                    deleteModal.off('hidden.bs.modal');
+                });
             }
         });
+
+        // pindah Tambah Data → Upload Excel mulus
+        const tambahDataModal = $('#tambahDataModal');
+        const uploadExcelModal = $('#uploadExcelModal');
+        const btnUploadExcel = document.querySelector('#tambahDataModal .investasi-btn-upload');
+        if(btnUploadExcel){
+            btnUploadExcel.addEventListener('click', function(e){
+                e.preventDefault();
+                tambahDataModal.modal('hide');
+                tambahDataModal.on('hidden.bs.modal', function(){
+                    uploadExcelModal.modal('show');
+                    tambahDataModal.off('hidden.bs.modal');
+                });
+            });
+        }
     });
 </script>
 @endsection
+

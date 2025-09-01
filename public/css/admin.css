@@ -171,7 +171,6 @@ body {
     50% { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
-
 /* ===== Gambar dekorasi di samping card ===== */
 .decorative-side {
     flex-shrink: 0;
@@ -188,7 +187,6 @@ body {
     margin-top: -200px;
     display: block;
 }
-
 
 .dashboard table {
     margin-top: 0;
