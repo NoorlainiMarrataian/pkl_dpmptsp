@@ -40,14 +40,6 @@ Route::get('/lokasi-investasi', [RealisasiInvestasiController::class, 'lokasi'])
 Route::get('/perbandingan-investasi', [RealisasiInvestasiController::class, 'perbandingan'])
     ->name('realisasi.perbandingan');
 
-// Partial untuk Bagian 1 (AJAX)
-Route::get('/perbandingan-investasi/bagian1', [RealisasiInvestasiController::class, 'perbandinganBagian1'])
-    ->name('realisasi.perbandingan.bagian1');
-
-// Partial untuk Bagian 2 (AJAX)
-Route::get('/perbandingan-investasi/bagian2', [RealisasiInvestasiController::class, 'perbandinganBagian2'])
-    ->name('realisasi.perbandingan.bagian2');
-
 // Route GET untuk menampilkan form upload
 Route::get('/data_investasi/upload', [DataInvestasiController::class, 'uploadForm'])->name('data_investasi.upload.form');
 
