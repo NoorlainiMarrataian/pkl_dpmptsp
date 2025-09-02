@@ -36,7 +36,7 @@ Route::get('/negara-investor', [RealisasiInvestasiController::class, 'negaraInve
 Route::get('/lokasi-investasi', [RealisasiInvestasiController::class, 'lokasi'])
     ->name('realisasi.lokasi');
 
-// Halaman Perbandingan (User)
+// Halaman utama Perbandingan Investasi
 Route::get('/perbandingan-investasi', [RealisasiInvestasiController::class, 'perbandingan'])
     ->name('realisasi.perbandingan');
     

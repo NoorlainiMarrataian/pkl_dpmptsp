@@ -296,9 +296,30 @@ class RealisasiInvestasiController extends Controller
 
     public function perbandingan(Request $request)
     {
+<<<<<<< HEAD
         $tahun1 = $request->tahun1;
         $tahun2 = $request->tahun2;
         $jenis  = $request->jenis; // jenis sama untuk kedua tahun
+=======
+        $dataPerbandingan = collect();
+        $perbandinganLabels = [];
+        $perbandinganData   = [];
+        $rows               = collect();
+        
+
+        // ================================        // Bagian 1: Perbandingan Antar Tahun        // ================================
+        if ($request->filled(['tahun_awal','tahun_akhir'])) {
+            // === Grafik (semua tahun dalam range) ===
+            $dataPerbandingan = DB::table('data_investasi')
+                ->select(
+                    'tahun',
+                    DB::raw('SUM(investasi_rp_juta) as investasi_rp_juta')
+                )
+                ->whereBetween('tahun', [$request->tahun_awal, $request->tahun_akhir])
+                ->groupBy('tahun')
+                ->orderBy('tahun','asc')
+                ->get();
+>>>>>>> aee78d98636a88e8ccf1b5b36d174fbe184c66e7
 
         $dataTahun1 = collect();
         $dataTahun2 = collect();
@@ -366,6 +387,7 @@ class RealisasiInvestasiController extends Controller
                 $chartData1  = [$dataTahun1->sum('total_investasi_rp_all')];
             }
 
+<<<<<<< HEAD
             // --- Data Tahun 2 ---
             if ($jenis === 'PMA') {
                 $dataTahun2 = DB::table('data_investasi')
@@ -417,6 +439,13 @@ class RealisasiInvestasiController extends Controller
 
                 $chartData2 = [$dataTahun2->sum('total_investasi_rp_all')];
             }
+=======
+        } else {
+            // $dataPerbandingan   = collect();
+            // $perbandinganLabels = [];
+            // $perbandinganData   = [];
+            // $rows               = collect();
+>>>>>>> aee78d98636a88e8ccf1b5b36d174fbe184c66e7
         }
 
         if ($request->ajax()) {
@@ -558,6 +587,7 @@ class RealisasiInvestasiController extends Controller
                 'dataTriwulan1','dataTriwulan2','tahun1','tahun2','periode1','periode2','jenis','chartLabels','chartData1','chartData2'
             ))->render();
         }
+<<<<<<< HEAD
         return view('user.realisasi.perbandingan2', compact(
             'dataTriwulan1',
             'tahun1',
@@ -570,5 +600,30 @@ class RealisasiInvestasiController extends Controller
             'chartData1',
             'chartData2'
         ));
+=======
+
+        if ($request->ajax()) {
+            return view('user.realisasi.bandingpartial.ajax_bagian2', compact(
+                'perbandinganPeriodeLabels', 'perbandinganPeriodeData'
+            ))->render();
+        }
+
+        return view('user.realisasi.perbandingan', compact( 
+            'dataPerbandingan', 
+            'perbandinganLabels', 
+            'perbandinganData', 
+            'dataPerbandinganPeriode', 
+            'perbandinganPeriodeLabels', 
+            'perbandinganPeriodeData', 
+            'dataPerbandinganPeriodeByTahun', 
+            'rows' 
+            ) + [ 
+                'tahun_awal' => $request->tahun_awal, 
+                'tahun_akhir' => $request->tahun_akhir, 
+                'tahun_awal4' => $request->tahun_awal4, 
+                'tahun_akhir4' => $request->tahun_akhir4, 
+            ]
+        ); 
+>>>>>>> aee78d98636a88e8ccf1b5b36d174fbe184c66e7
     }
 }

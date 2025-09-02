@@ -45,6 +45,13 @@
             <div>
                 <button type="submit" class="btn btn-primary">Tampilkan</button>
             </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <a href="#" class="btn btn-success w-100" id="openPopupBagian1">
+                    <i class="fas fa-download"></i> Unduh Bagian 1
+                </a>
+            </div>
+            
         </form>
 
         {{-- Tabel Perbandingkan 1--}}
