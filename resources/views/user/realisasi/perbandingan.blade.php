@@ -35,6 +35,13 @@
             <div class="col-md-2 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary w-100">Tampilkan</button>
             </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <a href="#" class="btn btn-success w-100" id="openPopupBagian1">
+                    <i class="fas fa-download"></i> Unduh Bagian 1
+                </a>
+            </div>
+            
         </form>
 
         {{-- ======================= CHART ======================== --}}
@@ -163,18 +170,18 @@
                     @endif
                 </div>
             @empty
-                <p class="text-center">Tidak ada data untuk periode yang dipilih</p>
+                <p class="text-center">Silahkan pilih tahun</p>
             @endforelse
         </div>
     </div>
 
     
     {{-- ======================= BAGIAN 2 ======================== --}}
-    <div class="card shadow-sm p-4">
+    <div class="card shadow-sm p-4" id="bagian2-content">
     <h2 class="text-center mb-4">Perbandingan Data Antar Tahun-Periode di Kalsel</h2>
 
     {{-- ======================= FILTER ======================== --}}
-    <form class="filter-bar row g-3 justify-content-center mb-4" action="{{ route('realisasi.perbandingan') }}" method="GET">
+    <form class="filter-bar row g-3 justify-content-center mb-4" id="form-bagian2" action="{{ route('realisasi.perbandingan') }}" method="GET">
         <div class="col-md-3">
             <label for="jenis_investasi" class="form-label">Jenis Investasi:</label>
             <select name="jenis_investasi" id="jenis_investasi" class="form-select" required>
@@ -220,6 +227,13 @@
         <div class="col-md-2 d-flex align-items-end">
             <button type="submit" class="btn btn-primary w-100">Tampilkan</button>
         </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+            <a href="#" class="btn btn-success w-100" id="openPopupBagian2">
+                <i class="fas fa-download"></i> Unduh Bagian 2
+            </a>
+        </div>
+
     </form>
 
     {{-- ======================= CHART ======================== --}}
@@ -356,13 +370,113 @@
                 @endif
             </div>
         @empty
-            <p class="text-center">Tidak ada data untuk periode yang dipilih</p>
+            <p class="text-center">Silakan pilih tahun dan periode</p>
         @endforelse
     </div>
 </div>
 
 </section>
 @endsection
+
+{{-- ======================= POPUP ======================== --}}
+<div id="popupForm" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Data Diri</h2>
+        <div class="warning-icon">
+            <i class="fas fa-exclamation"></i>
+        </div>
+        <p>kan isi formulir untuk mengunduh file ini</p>
+
+        <form id="downloadForm" method="POST" action="{{ route('log_pengunduhan.store') }}">
+            @csrf
+            <div class="checkbox-group horizontal">
+                <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
+            </div>
+            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
+            <input type="email" name="email_pengunduh" placeholder="Email" required>
+            <input type="text" name="telpon" placeholder="Telpon">
+            <textarea name="keperluan" placeholder="Keperluan"></textarea>
+            <div class="checkbox-group">
+                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
+                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+            </div>
+            <div class="popup-buttons">
+                <button type="submit" class="btn-blue">Unduh</button>
+                <button type="button" id="closePopup" class="btn-red">Batalkan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Script Unduh Bagian 1 & 2 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const popup = document.getElementById('popupForm');
+    const closeBtn = document.getElementById('closePopup');
+    const form = document.getElementById('downloadForm');
+    let target = null; // Menyimpan bagian mana yang dipilih
+
+    // Tombol buka popup Bagian 1
+    const btnBagian1 = document.getElementById('openPopupBagian1');
+    if (btnBagian1) {
+        btnBagian1.addEventListener('click', function(e) {
+            e.preventDefault();
+            target = 'bagian1';
+            popup.style.display = 'flex';
+        });
+    }
+
+    // Tombol buka popup Bagian 2
+    const btnBagian2 = document.getElementById('openPopupBagian2');
+    if (btnBagian2) {
+        btnBagian2.addEventListener('click', function(e) {
+            e.preventDefault();
+            target = 'bagian2';
+            popup.style.display = 'flex';
+        });
+    }
+
+    // Tombol tutup popup
+    closeBtn.addEventListener('click', function() {
+        popup.style.display = 'none';
+    });
+
+    // Submit form popup
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Simpan log ke server
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' }
+        }).then(() => {
+            // Pilih bagian sesuai target
+            let element = null;
+            if (target === 'bagian1') {
+                element = document.querySelector('.tabel-wrapper');
+            } else if (target === 'bagian2') {
+                element = document.getElementById('bagian2-content');
+            }
+
+            if (element) {
+                html2pdf().from(element).set({
+                    margin: 0.5,
+                    filename: target === 'bagian1' ? 'Bagian1.pdf' : 'Bagian2.pdf',
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+                }).save();
+            }
+
+            popup.style.display = 'none';
+        });
+    });
+});
+</script>
+
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -438,3 +552,20 @@
 
 <link rel="stylesheet" href="{{ asset('css/perbandingan.css') }}">
 @stack('styles')
+
+@push('scripts')
+<script>
+$('#form-bagian2').on('submit', function(e) {
+    // jika tombol download ditekan, biarkan submit normal
+    if($(document.activeElement).attr('name') === 'download') return;
+
+    e.preventDefault();
+    let url = $(this).attr('action');
+    let data = $(this).serialize();
+
+    $.get(url, data, function(response) {
+        $('#bagian2-content').html(response);
+    });
+});
+</script>
+@endpush

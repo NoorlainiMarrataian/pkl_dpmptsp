@@ -298,6 +298,12 @@ class RealisasiInvestasiController extends Controller
 
     public function perbandingan(Request $request)
     {
+        $dataPerbandingan = collect();
+        $perbandinganLabels = [];
+        $perbandinganData   = [];
+        $rows               = collect();
+        
+
         // ================================        // Bagian 1: Perbandingan Antar Tahun        // ================================
         if ($request->filled(['tahun_awal','tahun_akhir'])) {
             // === Grafik (semua tahun dalam range) ===
@@ -389,10 +395,10 @@ class RealisasiInvestasiController extends Controller
             }
 
         } else {
-            $dataPerbandingan   = collect();
-            $perbandinganLabels = [];
-            $perbandinganData   = [];
-            $rows               = collect();
+            // $dataPerbandingan   = collect();
+            // $perbandinganLabels = [];
+            // $perbandinganData   = [];
+            // $rows               = collect();
         }
 
     // ================================    // Bagian 2: Perbandingan Tahun + Periode    // ================================
@@ -517,6 +523,12 @@ class RealisasiInvestasiController extends Controller
             $perbandinganPeriodeLabels      = [];
             $perbandinganPeriodeData        = [];
             $dataPerbandinganPeriodeByTahun = collect();
+        }
+
+        if ($request->ajax()) {
+            return view('user.realisasi.bandingpartial.ajax_bagian2', compact(
+                'perbandinganPeriodeLabels', 'perbandinganPeriodeData'
+            ))->render();
         }
 
         return view('user.realisasi.perbandingan', compact( 
