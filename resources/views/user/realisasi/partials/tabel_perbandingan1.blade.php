@@ -3,49 +3,39 @@
 {{-- Chart --}}
 @if(($jenis === 'PMA' || $jenis === 'PMDN' || $jenis === 'PMA+PMDN') && ($dataTahun1->isNotEmpty() || $dataTahun2->isNotEmpty()))
     <div class="mb-4" style="width: 100%; height: 400px;">
-        <canvas id="chartTotalInvestasi1"></canvas>
+        <canvas id="chartPerbandingan1"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('chartTotalInvestasi1');
-    if (ctx) {
-        new Chart(ctx.getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ["{{ $tahun1 }}", "{{ $tahun2 }}"],
-                datasets: [{
-                    label: 'Total Investasi (Rp Juta)',
-                    data: [
-                        {{ $dataTahun1->sum('total_investasi_rp_juta') }},
-                        {{ $dataTahun2->sum('total_investasi_rp_juta') }}
-                    ],
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(153, 102, 255, 0.5)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return value.toLocaleString('id-ID');
-                            }
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('chartPerbandingan1');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($chartLabels ?? []),
+                    datasets: [
+                        {
+                            label: 'Tahun {{ $tahun1 }}',
+                            data: @json($chartData1 ?? []),
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        },
+                        {
+                            label: 'Tahun {{ $tahun2 }}',
+                            data: @json($chartData2 ?? []),
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)',
                         }
-                    }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
                 }
-            }
-        });
-    }
-</script>
+            });
+        }
+    });
+    </script>
+
 
 @endif
 

@@ -302,6 +302,8 @@ class RealisasiInvestasiController extends Controller
 
         $dataTahun1 = collect();
         $dataTahun2 = collect();
+        $dataTriwulan1 = collect();
+        $dataTriwulan2 = collect();
         $chartLabels = [];
         $chartData1 = [];
         $chartData2 = [];
@@ -420,9 +422,16 @@ class RealisasiInvestasiController extends Controller
         }
 
         if ($request->ajax()) {
-            return view('user.realisasi.partials.tabel_perbandingan1', compact(
-                'dataTahun1','dataTahun2','tahun1','tahun2','jenis','chartLabels','chartData1','chartData2'
-            ))->render();
+            return response()->json([
+                'html' => view('user.realisasi.partials.tabel_perbandingan1', compact(
+                    'dataTahun1','dataTahun2',
+                    'tahun1','tahun2','jenis','chartLabels','chartData1','chartData2'
+
+                ))->render(),
+                'chartLabels' => $chartLabels,
+                'chartData1'  => $chartData1,
+                'chartData2'  => $chartData2,
+            ]);
         }
 
         return view('user.realisasi.perbandingan', compact(
@@ -445,7 +454,7 @@ class RealisasiInvestasiController extends Controller
         $periode1 = $request->periode1; // triwulan tahun 1
         $periode2 = $request->periode2;
         $jenis  = $request->jenis; // jenis sama untuk kedua tahun
-
+        
         $dataTriwulan1 = collect();
         $dataTriwulan2 = collect();
         $chartLabels = [];
@@ -554,9 +563,23 @@ class RealisasiInvestasiController extends Controller
             $chartLabels = ["$periode1 $tahun1", "$periode2 $tahun2"];
         }
         if ($request->ajax()) {
-            return view('user.realisasi.partials.tabel_perbandingan2', compact(
-                'dataTriwulan1','dataTriwulan2','tahun1','tahun2','periode1','periode2','jenis','chartLabels','chartData1','chartData2'
-            ))->render();
+            return response()->json([
+                'html' => view('user.realisasi.partials.tabel_perbandingan2', compact(
+                    'dataTriwulan1',
+                    'dataTriwulan2',
+                    'tahun1',
+                    'tahun2',
+                    'periode1',
+                    'periode2',
+                    'jenis',
+                    'chartLabels',
+                    'chartData1',
+                    'chartData2'
+                ))->render(),
+                'chartLabels' => $chartLabels,
+                'chartData1'  => $chartData1,
+                'chartData2'  => $chartData2,
+            ]);
         }
         return view('user.realisasi.perbandingan2', compact(
             'dataTriwulan1',

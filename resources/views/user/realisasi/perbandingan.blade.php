@@ -135,38 +135,81 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function(){
+    let chart1 = null;
 
-    // ===== PERBANDINGAN 1 =====
     $('#form-perbandingan1').submit(function(e){
         e.preventDefault();
         $.ajax({
             url: "{{ route('realisasi.perbandingan') }}",
             type: "GET",
             data: $(this).serialize(),
-            success: function(data){
-                $('#tabel-perbandingan1').html(data);
-            },
-            error: function(){
-                alert('Gagal memuat data perbandingan pertahun');
+            success: function(response){
+                $('#tabel-perbandingan1').html(response.html);
+
+                if (chart1) chart1.destroy();
+                let ctx = document.getElementById('chartPerbandingan1').getContext('2d');
+                chart1 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: response.chartLabels,
+                        datasets: [{
+                            label: 'Total Investasi (Rp Juta)',
+                            data: response.chartData1.concat(response.chartData2),
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.5)',
+                                'rgba(153, 102, 255, 0.5)'
+                            ],
+                            borderColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
             }
         });
     });
 
     // ===== PERBANDINGAN 2 =====
+    let chart2 = null;
+
     $('#form-perbandingan2').submit(function(e){
         e.preventDefault();
         $.ajax({
             url: "{{ route('realisasi.perbandingan2') }}",
             type: "GET",
             data: $(this).serialize(),
-            success: function(data){
-                $('#tabel-perbandingan2').html(data);
-            },
-            error: function(){
-                alert('Gagal memuat data perbandingan triwulan');
+            success: function(response){
+                $('#tabel-perbandingan2').html(response.html);
+
+                if (chart2) chart2.destroy();
+                let ctx = document.getElementById('chartPerbandingan2').getContext('2d');
+                chart2 = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: response.chartLabels,
+                        datasets: [{
+                            label: 'Total Investasi (Rp Juta)',
+                            data: response.chartData1.concat(response.chartData2),
+                            backgroundColor: [
+                                'rgba(255, 159, 64, 0.5)',
+                                'rgba(54, 162, 235, 0.5)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(54, 162, 235, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
             }
         });
     });
+
 
 });
 </script>
