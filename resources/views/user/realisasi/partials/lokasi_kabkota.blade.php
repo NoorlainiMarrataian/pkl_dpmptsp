@@ -24,15 +24,15 @@
         <button type="submit" name="triwulan" value="Triwulan 3">Triwulan 3</button>
         <button type="submit" name="triwulan" value="Triwulan 4">Triwulan 4</button>
 
-        {{-- ====================== --}}
         {{-- Hidden input untuk Bagian 2 --}}
-        {{-- Letakkan **setelah semua select/button**, sebelum tombol Download atau submit terakhir --}}
         <input type="hidden" name="tahun2" value="{{ request('tahun2') }}">
         <input type="hidden" name="triwulan2" value="{{ request('triwulan2') }}">
         <input type="hidden" name="jenisBagian2" value="{{ request('jenisBagian2') }}">
-        {{-- ====================== --}}
 
-        <a href="#" class="btn-download"><i class="fas fa-download"></i> Download</a>
+        {{-- Tombol Download dengan popup --}}
+        <a href="#" class="btn-download" id="openPopupLokasi">
+            <i class="fas fa-download"></i> Download
+        </a>
     </form>
 
     {{-- Grafik Lokasi --}}
@@ -139,6 +139,89 @@
     </div>
 </div>
 
+{{-- Popup Modal Unduh --}}
+<div id="popupFormLokasi" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Data Diri</h2>
+        <div class="warning-icon"><i class="fas fa-exclamation"></i></div>
+        <p>Silahkan isi formulir untuk mengunduh file ini</p>
+
+        <form id="downloadFormLokasi" method="POST" action="{{ route('log_pengunduhan.store') }}">
+            @csrf
+            <div class="checkbox-group horizontal">
+                <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
+            </div>
+            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
+            <input type="email" name="email_pengunduh" placeholder="Email" required>
+            <input type="text" name="telpon" placeholder="Telpon">
+            <textarea name="keperluan" placeholder="Keperluan"></textarea>
+            <div class="checkbox-group">
+                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
+                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+            </div>
+            <div class="popup-buttons">
+                <button type="submit" class="btn-blue">Unduh</button>
+                <button type="button" id="closePopupLokasi" class="btn-red">Batalkan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@push('scripts')
+<script 
+src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    //Popup Form
+    document.getElementById("openPopupLokasi").addEventListener("click", function(e) {
+        e.preventDefault();
+        document.getElementById("popupFormLokasi").style.display = "flex";
+    });
+
+    document.getElementById("closePopupLokasi").addEventListener("click", function() {
+        document.getElementById("popupFormLokasi").style.display = "none";
+    });
+
+
+    //Download PDF
+    document.getElementById("downloadFormLokasi").addEventListener("submit", function(e) {
+        e.preventDefault(); // Prevent form submission
+        var form= this;
+        var formData = new FormData(form);
+        fetch(form.action, {
+            method:'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': form.querySelector('input[name=_token]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                setTimeout(function() {
+                    var element = document.querySelector('.tabel-card');
+                    html2pdf().set({
+                        margin:       10,
+                        filename:     'data_lokasi_investasi.pdf',
+                        image:        { type: 'jpeg', quality: 0.98 },
+                        html2canvas:  { scale: 2, useCORS: true },
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    }).from(element).save();
+                    document.getElementById("popupFormLokasi").style.display = "none";
+                }, 300);
+
+            }else {
+                alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+            }
+        });
+    });
+</script>
+@endpush
+
 @push('scripts')
 @if(!empty($chartLabels))
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -163,4 +246,6 @@
 </script>
 @endif
 @endpush
+
 {{-- endpartial --}}
+
