@@ -1,4 +1,3 @@
-{{-- resources/views/user/realisasi/perbandingan.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
@@ -117,6 +116,12 @@
             <div>
                 <button type="submit" class="btn btn-primary">Tampilkan</button>
             </div>
+
+             <div class="col-md-2 d-flex align-items-end">
+                <a href="#" class="btn btn-success w-100" id="openPopupBagian2">
+                    <i class="fas fa-download"></i> Unduh Bagian 2
+                </a>
+            </div>
         </form>
 
         {{-- Tabel Perbandingkan 2--}}
@@ -126,9 +131,37 @@
     </div>
 </div>
 
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('css/perbandingan.css') }}">
-@endpush
+{{-- ============ POPUP DOWNLOAD (Dipakai Bagian 1 & 2) ============ --}}
+<div id="popupForm" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Data Diri</h2>
+        <p>Silahkan isi formulir untuk mengunduh file ini</p>
+
+        <form id="downloadForm" method="POST" action="{{ route('log_pengunduhan.store') }}">
+            @csrf
+            <input type="hidden" name="bagian" id="bagianInput">
+
+            <div class="checkbox-group horizontal">
+                <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
+            </div>
+            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
+            <input type="email" name="email_pengunduh" placeholder="Email" required>
+            <input type="text" name="telpon" placeholder="Telpon">
+            <textarea name="keperluan" placeholder="Keperluan"></textarea>
+            <div class="checkbox-group">
+                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
+                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+            </div>
+            <div class="popup-buttons">
+                <button type="submit" class="btn-blue">Unduh</button>
+                <button type="button" id="closePopup" class="btn-red">Batalkan</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
 
 
 @push('scripts')
@@ -137,6 +170,7 @@
 $(document).ready(function(){
     let chart1 = null;
 
+    // ===== PERBANDINGAN 1 =====
     $('#form-perbandingan1').submit(function(e){
         e.preventDefault();
         $.ajax({
@@ -174,7 +208,6 @@ $(document).ready(function(){
 
     // ===== PERBANDINGAN 2 =====
     let chart2 = null;
-
     $('#form-perbandingan2').submit(function(e){
         e.preventDefault();
         $.ajax({
@@ -211,6 +244,37 @@ $(document).ready(function(){
     });
 
 
+    // ===== POPUP DOWNLOAD BAGIAN 1 & 2 =====
+    $('#openPopupBagian1').click(function(e){
+        e.preventDefault();
+        $('#bagianInput').val('Bagian 1');
+        $('#popupForm').fadeIn();
+    });
+
+    $('#openPopupBagian2').click(function(e){
+        e.preventDefault();
+        $('#bagianInput').val('Bagian 2');
+        $('#popupForm').fadeIn();
+    });
+
+    $('#closePopup').click(function(){
+        $('#popupForm').fadeOut();
+        $('#downloadForm')[0].reset();
+    });
+
+    // Optional: close popup kalau klik di luar konten
+    $(document).mouseup(function(e){
+        let container = $(".popup-content");
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+            $('#popupForm').fadeOut();
+        }
+    });
+
 });
 </script>
+@endpush
+
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/perbandingan.css') }}">
 @endpush
