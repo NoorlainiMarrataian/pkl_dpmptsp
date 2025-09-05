@@ -284,7 +284,7 @@ class RealisasiInvestasiController extends Controller
         }
         
         if ($request->ajax()) {
-            return view('user.realisasi.partials.ajax_bagian2', compact(
+            return view('user.realisasi.partials.lokasi_sektor', compact(
                 'jenisBagian2', 'tahun2','triwulan2','topPMA','topPMDN','sektor'
             ))->render();
         }
