@@ -270,6 +270,38 @@ $(document).ready(function(){
         }
     });
 
+
+    // ===== HANDLE FORM DOWNLOAD =====
+    $('#downloadForm').submit(function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: "POST",
+            data: $(this).serialize(),
+            success: function(res){
+                if(res.success){
+                    // Tutup popup & reset form
+                    $('#popupForm').fadeOut();
+                    $('#downloadForm')[0].reset();
+
+                    // Redirect ke file download sesuai bagian
+                    let bagian = $('#bagianInput').val();
+                    if(bagian === 'Bagian 1'){
+                        window.location.href = "{{ route('realisasi.perbandingan.download1') }}";
+                    }else if(bagian === 'Bagian 2'){
+                        window.location.href = "{{ route('realisasi.perbandingan.download2') }}";
+                    }
+                }else{
+                    alert("Gagal menyimpan data pengunduh.");
+                }
+            },
+            error: function(){
+                alert("Terjadi kesalahan server.");
+            }
+        });
+    });
+
 });
 </script>
 @endpush
