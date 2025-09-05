@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Datainvestasi;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class RealisasiInvestasiController extends Controller
 {
@@ -594,4 +596,107 @@ class RealisasiInvestasiController extends Controller
             'chartData2'
         ));
     }
+
+    // Download Excel Perbandingan Bagian 1
+    public function downloadBagian1(Request $request) {
+        $tahun1 = $request->input('tahun1');
+        $tahun2 = $request->input('tahun2');
+        $jenis  = $request->input('jenis');
+
+        // Ambil data sesuai filter (mirip dengan yang dipakai di view perbandingan)
+        $dataTahun1 = DB::table('data_investasi')
+            ->where('tahun', $tahun1)
+            ->when($jenis, fn($q) => $q->where('jenis', $jenis))
+            ->get();
+
+        $dataTahun2 = DB::table('data_investasi')
+            ->where('tahun', $tahun2)
+            ->when($jenis, fn($q) => $q->where('jenis', $jenis))
+            ->get();
+
+        // Buat PDF dari blade
+        $pdf = Pdf::loadView('user.realisasi.partials.tabel_perbandingan1', [
+            'dataTahun1' => $dataTahun1,
+            'dataTahun2' => $dataTahun2,
+            'tahun1' => $tahun1,
+            'tahun2' => $tahun2,
+            'jenis'  => $jenis,
+            'chartLabels' => [], // optional
+            'chartData1' => [],
+            'chartData2' => [],
+        ]);
+
+        return $pdf->download("perbandingan-investasi-{$jenis}-{$tahun1}-{$tahun2}.pdf");
+    }
+
+    public function downloadBagian2(Request $request)
+    {
+        $tahun1   = $request->tahun1;
+        $tahun2   = $request->tahun2;
+        $periode1 = $request->periode1;
+        $periode2 = $request->periode2;
+        $jenis    = $request->jenis;
+
+        // --- ambil ulang query seperti di perbandingan2 ---
+        $dataTriwulan1 = collect();
+        $dataTriwulan2 = collect();
+        $chartLabels   = [];
+        $chartData1    = [];
+        $chartData2    = [];
+
+        if ($jenis === 'PMA') {
+            $dataTriwulan1 = DB::table('data_investasi')
+                ->where('status_penanaman_modal', 'PMA')
+                ->where('tahun', $tahun1)
+                ->where('periode', $periode1)
+                ->select(
+                    'kabupaten_kota',
+                    'status_penanaman_modal',
+                    DB::raw('COUNT(status_penanaman_modal) as proyekpma'),
+                    DB::raw('SUM(investasi_us_ribu) as total_investasi_us_ribu'),
+                    DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta')
+                )
+                ->groupBy('kabupaten_kota','status_penanaman_modal')
+                ->get();
+
+            $dataTriwulan2 = DB::table('data_investasi')
+                ->where('status_penanaman_modal', 'PMA')
+                ->where('tahun', $tahun2)
+                ->where('periode', $periode2)
+                ->select(
+                    'kabupaten_kota',
+                    'status_penanaman_modal',
+                    DB::raw('COUNT(status_penanaman_modal) as proyekpma'),
+                    DB::raw('SUM(investasi_us_ribu) as total_investasi_us_ribu'),
+                    DB::raw('SUM(investasi_rp_juta) as total_investasi_rp_juta')
+                )
+                ->groupBy('kabupaten_kota','status_penanaman_modal')
+                ->get();
+
+            $chartData1 = [$dataTriwulan1->sum('total_investasi_rp_juta')];
+            $chartData2 = [$dataTriwulan2->sum('total_investasi_rp_juta')];
+        }
+
+        // Tambahkan case untuk PMDN & PMA+PMDN seperti di perbandingan2
+
+        $chartLabels = ["$periode1 $tahun1", "$periode2 $tahun2"];
+
+        // --- buat PDF dari partial view ---
+        $pdf = Pdf::loadView('user.realisasi.partials.tabel_perbandingan2', [
+            'dataTriwulan1' => $dataTriwulan1,
+            'dataTriwulan2' => $dataTriwulan2,
+            'tahun1'        => $tahun1,
+            'tahun2'        => $tahun2,
+            'periode1'      => $periode1,
+            'periode2'      => $periode2,
+            'jenis'         => $jenis,
+            'chartLabels'   => $chartLabels,
+            'chartData1'    => $chartData1,
+            'chartData2'    => $chartData2,
+        ]);
+
+        return $pdf->download("perbandingan2-investasi-{$jenis}-{$periode1}{$tahun1}-{$periode2}{$tahun2}.pdf");
+    }
+
+     
 }

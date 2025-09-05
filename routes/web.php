@@ -44,6 +44,15 @@ Route::get('/perbandingan-investasi', [RealisasiInvestasiController::class, 'per
 Route::get('/perbandingan2-investasi', [RealisasiInvestasiController::class, 'perbandingan2'])
     ->name('realisasi.perbandingan2');
 
+// Download Excel Perbandingan Bagian 1
+Route::get('/perbandingan-investasi/download1', [RealisasiInvestasiController::class, 'downloadBagian1'])
+    ->name('realisasi.perbandingan.download1');
+
+// Download Excel Perbandingan Bagian 2
+Route::get('/perbandingan-investasi/download2', [RealisasiInvestasiController::class, 'downloadBagian2'])
+    ->name('realisasi.perbandingan.download2');
+
+
 // Route GET untuk menampilkan form upload
 Route::get('/data_investasi/upload', [DataInvestasiController::class, 'uploadForm'])->name('data_investasi.upload.form');
 
