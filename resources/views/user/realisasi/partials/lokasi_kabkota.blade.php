@@ -185,12 +185,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.m
         document.getElementById("popupFormLokasi").style.display = "none";
     });
 
-
     //Download PDF
     document.getElementById("downloadFormLokasi").addEventListener("submit", function(e) {
-        e.preventDefault(); // Prevent form submission
-        var form= this;
+        e.preventDefault(); // cegah submit default
+        var form = this;
         var formData = new FormData(form);
+
         fetch(form.action, {
             method:'POST',
             body: formData,
@@ -202,23 +202,32 @@ src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.m
         .then(response => response.json())
         .then(data => {
             if(data.success) {
-                setTimeout(function() {
-                    var element = document.querySelector('.tabel-card');
-                    html2pdf().set({
-                        margin:       10,
-                        filename:     'data_lokasi_investasi.pdf',
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true },
-                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    }).from(element).save();
-                    document.getElementById("popupFormLokasi").style.display = "none";
-                }, 300);
+                // pastikan elemen tabel ada
+                var element = document.querySelector('.tabel-card');
 
-            }else {
+                if(element && element.innerText.trim() !== "") {
+                    // kasih jeda supaya layout stabil
+                    setTimeout(function() {
+                        html2pdf().set({
+                            margin: 10,
+                            filename: 'data_lokasi_investasi.pdf',
+                            image: { type: 'jpeg', quality: 0.98 },
+                            html2canvas: { scale: 2, useCORS: true },
+                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                        }).from(element).save();
+
+                        document.getElementById("popupFormLokasi").style.display = "none";
+                    }, 500);
+                } else {
+                    alert("Tabel data lokasi kosong, tidak bisa diunduh.");
+                }
+
+            } else {
                 alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
             }
         });
     });
+
 </script>
 @endpush
 

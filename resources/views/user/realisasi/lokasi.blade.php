@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    {{-- ===== BAGIAN 2: Sektor ===== --}}
+    {{-- ===== BAGIAN 2: 5 Realisasi, 5 Proyek, Sektor ===== --}}
     <div class="card" id="bagian2-content">
         <div class="card-body">
             @include('user.realisasi.partials.lokasi_sektor')
