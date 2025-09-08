@@ -190,4 +190,14 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
+@media print {
+    #tabel-perbandingan2 {
+        page-break-inside: auto;
+    }
+    #tabel-perbandingan2 tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+}
+
 

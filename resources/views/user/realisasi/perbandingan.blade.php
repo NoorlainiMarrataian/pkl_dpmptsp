@@ -131,16 +131,17 @@
     </div>
 </div>
 
-{{-- ============ POPUP DOWNLOAD (Dipakai Bagian 1 & 2) ============ --}}
-<div id="popupForm" class="popup-overlay">
+{{-- Popup Bagian 1 --}}
+<div id="popupBagian1" class="popup-overlay">
     <div class="popup-content">
-        <h2>Data Diri</h2>
-        <p>Silahkan isi formulir untuk mengunduh file ini</p>
+        <h2>Data Diri - Bagian 1</h2>
+        <div class="warning-icon">
+            <i class="fas fa-exclamation"></i>
+        </div>
+        <p>Silahkan isi formulir untuk mengunduh Bagian 1</p>
 
-        <form id="downloadForm" method="POST" action="{{ route('log_pengunduhan.store') }}">
+        <form class="downloadForm" data-bagian="Bagian 1" method="POST" action="{{ route('log_pengunduhan.store') }}">
             @csrf
-            <input type="hidden" name="bagian" id="bagianInput">
-
             <div class="checkbox-group horizontal">
                 <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
                 <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
@@ -156,16 +157,51 @@
             </div>
             <div class="popup-buttons">
                 <button type="submit" class="btn-blue">Unduh</button>
-                <button type="button" id="closePopup" class="btn-red">Batalkan</button>
+                <button type="button" class="btn-red closePopup">Batalkan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- Popup Bagian 2 --}}
+<div id="popupBagian2" class="popup-overlay">
+    <div class="popup-content">
+        <h2>Data Diri - Bagian 2</h2>
+        <div class="warning-icon">
+            <i class="fas fa-exclamation"></i>
+        </div>
+        <p>Silahkan isi formulir untuk mengunduh Bagian 2</p>
+
+        <form class="downloadForm" data-bagian="Bagian 2" method="POST" action="{{ route('log_pengunduhan.store') }}">
+            @csrf
+            <div class="checkbox-group horizontal">
+                <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
+                <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
+            </div>
+            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
+            <input type="email" name="email_pengunduh" placeholder="Email" required>
+            <input type="text" name="telpon" placeholder="Telpon">
+            <textarea name="keperluan" placeholder="Keperluan"></textarea>
+            <div class="checkbox-group">
+                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
+                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+            </div>
+            <div class="popup-buttons">
+                <button type="submit" class="btn-blue">Unduh</button>
+                <button type="button" class="btn-red closePopup">Batalkan</button>
             </div>
         </form>
     </div>
 </div>
 @endsection
 
-
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
 <script>
 $(document).ready(function(){
     let chart1 = null;
@@ -242,64 +278,93 @@ $(document).ready(function(){
             }
         });
     });
+});
 
-
-    // ===== POPUP DOWNLOAD BAGIAN 1 & 2 =====
+$(document).ready(function(){
+    // Membuka popup
     $('#openPopupBagian1').click(function(e){
         e.preventDefault();
-        $('#bagianInput').val('Bagian 1');
-        $('#popupForm').fadeIn();
+        $('#popupBagian1').fadeIn();
     });
 
     $('#openPopupBagian2').click(function(e){
         e.preventDefault();
-        $('#bagianInput').val('Bagian 2');
-        $('#popupForm').fadeIn();
+        $('#popupBagian2').fadeIn();
     });
 
-    $('#closePopup').click(function(){
-        $('#popupForm').fadeOut();
-        $('#downloadForm')[0].reset();
+    // Menutup popup
+    $('.closePopup').click(function(){
+        $(this).closest('.popup-overlay').fadeOut();
     });
 
-    // Optional: close popup kalau klik di luar konten
-    $(document).mouseup(function(e){
-        let container = $(".popup-content");
-        if (!container.is(e.target) && container.has(e.target).length === 0) {
-            $('#popupForm').fadeOut();
-        }
+    // Tutup popup saat klik di luar konten
+    $('.popup-overlay').click(function(e){
+        if(e.target == this) $(this).fadeOut();
     });
 
-
-    // ===== HANDLE FORM DOWNLOAD =====
-    $('#downloadForm').submit(function(e){
+    // Submit form unduh PDF
+    $('.downloadForm').submit(function(e){
         e.preventDefault();
+        const bagian = $(this).data('bagian');
 
+        // Kirim log pengunduhan terlebih dahulu
         $.ajax({
             url: $(this).attr('action'),
-            method: "POST",
+            method: 'POST',
             data: $(this).serialize(),
-            success: function(res){
-                if(res.success){
-                    // Tutup popup & reset form
-                    $('#popupForm').fadeOut();
-                    $('#downloadForm')[0].reset();
+            success: function(){ console.log('Log pengunduhan tersimpan'); }
+        });
 
-                    // Redirect ke file download sesuai bagian
-                    let bagian = $('#bagianInput').val();
-                    if(bagian === 'Bagian 1'){
-                        window.location.href = "{{ route('realisasi.perbandingan.download1') }}";
-                    }else if(bagian === 'Bagian 2'){
-                        window.location.href = "{{ route('realisasi.perbandingan.download2') }}";
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const pageHeight = doc.internal.pageSize.height; // tinggi halaman
+        let startY = 20;
+
+        let containerSelector = '';
+        let chartCanvas = null;
+
+        if(bagian === 'Bagian 1'){
+            containerSelector = '#tabel-perbandingan1';
+            chartCanvas = document.getElementById('chartPerbandingan1');
+        } else if(bagian === 'Bagian 2'){
+            containerSelector = '#tabel-perbandingan2';
+            chartCanvas = document.getElementById('chartPerbandingan2');
+        }
+
+        // Loop semua tabel di dalam container
+        document.querySelectorAll(`${containerSelector} table`).forEach((tbl) => {
+            if(tbl){
+                doc.autoTable({
+                    html: tbl,
+                    startY: startY,
+                    styles: { fontSize: 8 },
+                    didDrawPage: function(data){
+                        startY = data.cursor.y + 10;
                     }
-                }else{
-                    alert("Gagal menyimpan data pengunduh.");
+                });
+                startY = doc.lastAutoTable.finalY + 10;
+
+                // Cek jika sudah mendekati halaman bawah
+                if(startY + 110 > pageHeight){ // 110mm untuk chart
+                    doc.addPage();
+                    startY = 20;
                 }
-            },
-            error: function(){
-                alert("Terjadi kesalahan server.");
             }
         });
+
+        // Tambahkan chart
+        if(chartCanvas){
+            // Jika chart tidak muat di halaman saat ini, buat halaman baru
+            if(startY + 100 > pageHeight){
+                doc.addPage();
+                startY = 20;
+            }
+            const chartImage = chartCanvas.toDataURL('image/jpeg', 1.0);
+            doc.addImage(chartImage, 'JPEG', 10, startY, 180, 100);
+        }
+
+        doc.save(`${bagian}.pdf`);
+        $(this).closest('.popup-overlay').fadeOut();
     });
 
 });
@@ -309,4 +374,5 @@ $(document).ready(function(){
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/perbandingan.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/popup.css') }}">
 @endpush
