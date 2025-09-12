@@ -3,33 +3,35 @@
 @section('title', 'Dashboard')
 
 @section('content')
+    {{-- Judul Utama --}}
     <h2>Selamat datang, {{ Auth::guard('admin')->user()->username }}</h2>
+    <p class="dashboard-subtitle">
+        Pantau perkembangan data investasi dan aktivitas pengunduhan secara real-time melalui dashboard ini.
+    </p>
 
-    {{-- ✅ Statistik ringkas --}}
-    <div class="dashboard-stats" style="display: flex; gap: 20px; margin: 20px 0; align-items: center;">
+    {{-- ✅ Statistik Ringkas + Pengantar --}}
+    <div class="dashboard-stats">
         
         {{-- Card Total Kunjungan Website --}}
-        <div class="total-visits-card">
-            <h3 style="margin: 0; font-size: 16px; color: #fff;">Total Kunjungan Website</h3>
-            <div class="card-content">
-                <div class="card-number">
-                    <p style="font-size: 32px; font-weight: bold;">{{ $totalVisits }}</p>
-                </div>
-                <div class="card-icon">
-                    <i class="fa fa-users"></i>
-                </div>
+        <div class="stat-card stat-visit">
+            <h3>Total Kunjungan Website</h3>
+            <div class="stat-content">
+                <p class="stat-value">{{ $totalVisits }}</p>
+                <i class="fa fa-users stat-icon"></i>
             </div>
         </div>
 
-        {{-- Gambar dekorasi di samping card --}}
-        <div class="decorative-side">
-            <img src="{{ asset('images/item_dashboard.png') }}" alt="side decoration">
+        {{-- Pengantar Data Pengunduh --}}
+        <div class="stat-card stat-info">
+            <h3>📊 Data Pengunduh</h3>
+            <p>Gunakan informasi ini untuk melihat siapa saja yang telah mengunduh data investasi.</p>
         </div>
     </div>
 
 
+
+
     {{-- ✅ Tabel Data Pengunduh --}}
-    <h3 style="margin-top: 30px;">Data Pengunduh</h3>
     <div style="overflow-x: auto; margin-top: 10px;">
         <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
             <thead style="background: #0A4C70; color: #fff;">

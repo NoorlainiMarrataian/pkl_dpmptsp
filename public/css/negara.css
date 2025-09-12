@@ -1,134 +1,155 @@
 /* ================================
    NEGARA INVESTOR PAGE STYLING
    ================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;600&display=swap');
 
-/* Section utama */
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f4f7fa;
+    color: #333;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ===== Section Utama ===== */
 .negara-investor {
-    padding: 60px 30px;
-    background: #f9fafb;
+    padding: 40px 12px; /* kiri-kanan lebih kecil */
     min-height: 100vh;
+    background: linear-gradient(135deg, #f9fafc 0%, #e9f1ff 100%);
 }
 
-/* Judul Halaman */
+/* ===== Judul Halaman ===== */
 .negara-investor h2 {
-    font-size: 2rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.4rem;
     font-weight: 700;
-    color: #07486a;
-    margin-top: 40px;      /* Jarak dari header */
-    margin-bottom: 30px;   /* Jarak ke filter */
+    color: #022c43;
     text-align: center;
+    margin: 25px auto;
+    position: relative;
+}
+.negara-investor h2::after {
+    content: "";
+    width: 110px;
+    height: 4px;
+    background: linear-gradient(90deg, #0A4C70, #0d6392);
+    display: block;
+    margin: 10px auto 0;
+    border-radius: 3px;
 }
 
-/* ================================
-   FILTER BAR
-   ================================ */
+/* ===== Filter Bar ===== */
 .filter-bar {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 30px;
     justify-content: center;
+    gap: 12px;
+    margin: 25px auto;
 }
 
-.filter-bar select,
-.filter-bar button,
-.filter-bar .btn-download {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background: white;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-
-/* Dropdown Tahun */
 .filter-bar select {
+    padding: 10px 16px;
     min-width: 150px;
+    border: 1px solid #c8d9f0;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+.filter-bar select:hover {
+    border-color: #0d6392;
 }
 
-/* Tombol Periode */
 .filter-bar button {
-    background: #e6f2f8;
-    color: #07486a;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    background: #e6efff;
+    color: #0040a0;
     font-weight: 600;
-    border: 1px solid #b3d9ec;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 .filter-bar button:hover {
-    background: #cce7f5;
+    background: #d0e2ff;
+    transform: translateY(-2px);
+}
+.filter-bar button.active {
+    background: linear-gradient(135deg, #0A4C70, #0d6392);
+    color: white;
 }
 
-/* Tombol Download */
 .filter-bar .btn-download {
-    background: #07486a;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #0A4C70, #0d6392);
     color: white;
-    text-decoration: none;
-    display: inline-flex;
+    font-weight: 600;
+    display: flex;
     align-items: center;
     gap: 6px;
+    text-decoration: none;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
 }
 .filter-bar .btn-download:hover {
-    background: #056299;
+    background: linear-gradient(135deg, #0A4C70, #0d6392);
+    transform: translateY(-2px);
 }
 
-/* ================================
-   GRAFIK CARD
-   ================================ */
-/* Grafik lebih kecil */
-.grafik-card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    margin: 0 auto 30px auto;  /* biar center */
-    max-width: 900px;          /* ukuran grafik dibatasi */
-}
-
-
-/* ================================
-   TABEL CARD
-   ================================ */
+/* ===== Card (Grafik & Tabel) ===== */
+.grafik-card,
 .tabel-card {
-    background: white;
-    padding: 24px;
+    background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    overflow-x: auto;
+    padding: 20px;
+    margin: 0 auto 30px auto;
+    width: 95%;             /* rapat kiri-kanan */
+    max-width: 1200px;      /* lebih besar biar nggak sempit */
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+.grafik-card:hover,
+.tabel-card:hover {
+    transform: translateY(-3px);
 }
 
-/* Judul Tabel */
 .judul-tabel {
     font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 16px;
-    color: #07486a;
-    text-align: center; /* judul rata tengah */
+    margin-bottom: 15px;
+    color: #003580;
+    text-align: center;
 }
 
-
-/* Tabel */
+/* ===== Tabel ===== */
 .tabel-negara {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .tabel-negara thead {
-    background: #07486a;
+    background: linear-gradient(90deg, #003580, #0d6392);
     color: white;
 }
 .tabel-negara th,
 .tabel-negara td {
     padding: 12px 14px;
-    border: 1px solid #ddd;
+    border: 1px solid #e3e9f0;
     text-align: center;
 }
 .tabel-negara tbody tr:nth-child(even) {
-    background: #f5f9fc;
+    background: #f5faff;
 }
 .tabel-negara tbody tr:hover {
-    background: #eaf4fb;
+    background: #e2f0ff;
+    transition: 0.25s;
 }
 .tabel-negara .text-center {
     text-align: center;
@@ -136,119 +157,28 @@
     color: #777;
 }
 
-/* ================================
-   POPUP (modal.css bisa dipisah di popup.css)
-   ================================ */
-.popup-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
-    display: none;  /* default hidden */
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-}
-
-.popup-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    text-align: center;
-}
-
-.popup-content h2 {
-    color: #07486a;
-    margin-bottom: 15px;
-}
-
-.warning-icon {
-    font-size: 2rem;
-    color: #ff9800;
-    margin-bottom: 10px;
-}
-
-/* Input Form */
-.popup-content input,
-.popup-content textarea {
-    width: 100%;
-    padding: 10px 12px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 0.95rem;
-}
-
-/* Checkbox & Radio */
-.checkbox-group {
-    text-align: left;
-    margin: 12px 0;
-}
-.checkbox-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-}
-.checkbox-group.horizontal {
-    display: flex;
-    gap: 15px;
-}
-.checkbox-group.horizontal label {
-    margin-bottom: 0;
-}
-
-/* Tombol Popup */
-.popup-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 18px;
-}
-.popup-buttons .btn-blue {
-    background: #07486a;
-    color: white;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-.popup-buttons .btn-blue:hover {
-    background: #056299;
-}
-.popup-buttons .btn-red {
-    background: #e53935;
-    color: white;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-.popup-buttons .btn-red:hover {
-    background: #c62828;
-}
-
+/* ===== Pesan kosong ===== */
 .empty-message {
-    margin-top: 40px;
+    margin-top: 35px;
     font-style: italic;
     color: #777;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
-
-/* ================================
-   RESPONSIVE
-   ================================ */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
     .filter-bar {
         flex-direction: column;
-        align-items: stretch;
     }
     .filter-bar button,
     .filter-bar select,
     .filter-bar .btn-download {
         width: 100%;
+    }
+    .grafik-card,
+    .tabel-card {
+        width: 100%;
+        padding: 15px;
     }
 }

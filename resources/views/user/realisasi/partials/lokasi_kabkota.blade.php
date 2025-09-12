@@ -1,6 +1,5 @@
 {{-- partial: lokasi_kabkota.blade.php --}}
-<div class="card-section">
-    <h2 class="judul-lokasi">Data Realisasi Investasi Kalimantan Selatan Berdasarkan Kabupaten/Kota</h2>
+    <h2 class="judul-lokasi">Data Realisasi Investasi Berdasarkan Kabupaten/Kota</h2>
 
     {{-- Filter Tahun, Jenis, dan Periode --}}
     <form class="filter-bar" action="{{ route('realisasi.lokasi') }}" method="GET">
@@ -35,201 +34,128 @@
         </a>
     </form>
 
-    {{-- Grafik Lokasi --}}
-    <div class="grafik-card">
-        <h3 class="judul-grafik" >GRAFIK DATA LOKASI</h3>
-        <canvas id="chartLokasi" width="1000" height="400"></canvas>
-    </div>
+    {{-- === AREA UNTUK PDF: Grafik + Tabel === --}}
+    <div id="exportArea">
+        {{-- Grafik Lokasi --}}
+        <div class="grafik-card">
+            <h3 class="judul-grafik">GRAFIK DATA LOKASI</h3>
+            <div style="position: relative; height:400px; width:100%">
+            <canvas id="chartLokasi"></canvas>
+        </div>
 
-    {{-- Tabel Data Lokasi --}}
-    <div class="tabel-card">
-        <h3 class="judul-tabel">TABEL DATA LOKASI</h3>
+        {{-- Tabel Data Lokasi --}}
+        <div class="tabel-card">
+            <h3 class="judul-tabel">TABEL DATA LOKASI</h3>
 
-        @if($jenisBagian1 === 'PMA')
-            {{-- tabel PMA --}}
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Kabupaten/Kota</th>
-                        <th>Status</th>
-                        <th>Proyek</th>
-                        @if(request('triwulan') && request('triwulan') !== 'Tahun') <th>Periode</th> @endif
-                        <th>Total Investasi (USD Ribu)</th>
-                        <th>Total Investasi (Juta Rp)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($dataLokasi as $lokasi)
+            @if($jenisBagian1 === 'PMA')
+                {{-- tabel PMA --}}
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>{{ $lokasi->kabupaten_kota }}</td>
-                            <td>{{ $lokasi->status_penanaman_modal }}</td>
-                            <td>{{ $lokasi->proyekpma }}</td>
-                            @if(request('triwulan') && request('triwulan') !== 'Tahun') <td>{{ $lokasi->periode }}</td> @endif
-                            <td>{{ number_format($lokasi->total_investasi_us_ribu ?? 0, 0, ',', '.') }}</td>
-                            <td>{{ number_format($lokasi->total_investasi_rp_juta ?? 0, 0, ',', '.') }}</td>
+                            <th>Kabupaten/Kota</th>
+                            <th>Status</th>
+                            <th>Proyek</th>
+                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                <th>Periode</th> 
+                            @endif
+                            <th>Total Investasi (USD Ribu)</th>
+                            <th>Total Investasi (Juta Rp)</th>
                         </tr>
-                    @empty
-                        <tr><td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 6 : 5 }}" class="text-center">Tidak ada data</td></tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @forelse($dataLokasi as $lokasi)
+                            <tr>
+                                <td>{{ $lokasi->kabupaten_kota }}</td>
+                                <td>{{ $lokasi->status_penanaman_modal }}</td>
+                                <td>{{ $lokasi->proyekpma }}</td>
+                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                    <td>{{ $lokasi->periode }}</td> 
+                                @endif
+                                <td>{{ number_format($lokasi->total_investasi_us_ribu ?? 0, 0, ',', '.') }}</td>
+                                <td>{{ number_format($lokasi->total_investasi_rp_juta ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 6 : 5 }}" class="text-center">Tidak ada data</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
 
-        @elseif($jenisBagian1 === 'PMDN')
-            {{-- tabel PMDN --}}
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Kabupaten/Kota</th>
-                        <th>Status</th>
-                        <th>Proyek</th>
-                        @if(request('triwulan') && request('triwulan') !== 'Tahun') <th>Periode</th> @endif
-                        <th>Tambahan Investasi (Juta Rp)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($dataLokasi as $lokasi)
+            @elseif($jenisBagian1 === 'PMDN')
+                {{-- tabel PMDN --}}
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>{{ $lokasi->kabupaten_kota }}</td>
-                            <td>{{ $lokasi->status_penanaman_modal }}</td>
-                            <td>{{ $lokasi->proyekpmdn }}</td>
-                            @if(request('triwulan') && request('triwulan') !== 'Tahun') <td>{{ $lokasi->periode }}</td> @endif
-                            <td>{{ number_format($lokasi->total_investasi_rp_juta ?? 0, 0, ',', '.') }}</td>
+                            <th>Kabupaten/Kota</th>
+                            <th>Status</th>
+                            <th>Proyek</th>
+                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                <th>Periode</th> 
+                            @endif
+                            <th>Tambahan Investasi (Juta Rp)</th>
                         </tr>
-                    @empty
-                        <tr><td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 5 : 4 }}" class="text-center">Tidak ada data</td></tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @forelse($dataLokasi as $lokasi)
+                            <tr>
+                                <td>{{ $lokasi->kabupaten_kota }}</td>
+                                <td>{{ $lokasi->status_penanaman_modal }}</td>
+                                <td>{{ $lokasi->proyekpmdn }}</td>
+                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                    <td>{{ $lokasi->periode }}</td> 
+                                @endif
+                                <td>{{ number_format($lokasi->total_investasi_rp_juta ?? 0, 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 5 : 4 }}" class="text-center">Tidak ada data</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
 
-        @elseif($jenisBagian1 === 'PMA+PMDN')
-            {{-- tabel gabungan --}}
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Kabupaten/Kota</th>
-                        @if(request('triwulan') && request('triwulan') !== 'Tahun') <th>Periode</th> @endif
-                        <th>Proyek PMDN</th>
-                        <th>Total Investasi PMDN (Rp Juta)</th>
-                        <th>Proyek PMA</th>
-                        <th>Total Investasi PMA (Ribu US$)</th>
-                        <th>Total Investasi PMA (Rp Juta)</th>
-                        <th>Total Proyek (PMA + PMDN)</th>
-                        <th>Total Investasi (Rp Juta, PMA+PMDN)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($dataLokasi as $lokasi)
+            @elseif($jenisBagian1 === 'PMA+PMDN')
+                {{-- tabel gabungan --}}
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td>{{ $lokasi->kabupaten_kota }}</td>
-                            @if(request('triwulan') && request('triwulan') !== 'Tahun') <td>{{ $lokasi->periode ?? '-' }}</td> @endif
-                            <td>{{ $lokasi->proyekpmdn ?? 0 }}</td>
-                            <td>{{ number_format($lokasi->total_investasi_pmdn_rp ?? 0, 0, ',', '.') }}</td>
-                            <td>{{ $lokasi->proyekpma ?? 0 }}</td>
-                            <td>{{ number_format($lokasi->total_investasi_pma_us ?? 0, 0, ',', '.') }}</td>
-                            <td>{{ number_format($lokasi->total_investasi_pma_rp ?? 0, 0, ',', '.') }}</td>
-                            <td>{{ ($lokasi->proyekpmdn ?? 0) + ($lokasi->proyekpma ?? 0) }}</td>
-                            <td>{{ number_format(($lokasi->total_investasi_pmdn_rp ?? 0) + ($lokasi->total_investasi_pma_rp ?? 0), 0, ',', '.') }}</td>
+                            <th>Kabupaten/Kota</th>
+                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                <th>Periode</th> 
+                            @endif
+                            <th>Proyek PMDN</th>
+                            <th>Total Investasi PMDN (Rp Juta)</th>
+                            <th>Proyek PMA</th>
+                            <th>Total Investasi PMA (Ribu US$)</th>
+                            <th>Total Investasi PMA (Rp Juta)</th>
+                            <th>Total Proyek (PMA + PMDN)</th>
+                            <th>Total Investasi (Rp Juta, PMA+PMDN)</th>
                         </tr>
-                    @empty
-                        <tr><td colspan="9" class="text-center">Tidak ada data</td></tr>
-                    @endforelse
-                </tbody>
-            </table>
-        @endif
+                    </thead>
+                    <tbody>
+                        @forelse($dataLokasi as $lokasi)
+                            <tr>
+                                <td>{{ $lokasi->kabupaten_kota }}</td>
+                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                    <td>{{ $lokasi->periode ?? '-' }}</td> 
+                                @endif
+                                <td>{{ $lokasi->proyekpmdn ?? 0 }}</td>
+                                <td>{{ number_format($lokasi->total_investasi_pmdn_rp ?? 0, 0, ',', '.') }}</td>
+                                <td>{{ $lokasi->proyekpma ?? 0 }}</td>
+                                <td>{{ number_format($lokasi->total_investasi_pma_us ?? 0, 0, ',', '.') }}</td>
+                                <td>{{ number_format($lokasi->total_investasi_pma_rp ?? 0, 0, ',', '.') }}</td>
+                                <td>{{ ($lokasi->proyekpmdn ?? 0) + ($lokasi->proyekpma ?? 0) }}</td>
+                                <td>{{ number_format(($lokasi->total_investasi_pmdn_rp ?? 0) + ($lokasi->total_investasi_pma_rp ?? 0), 0, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="9" class="text-center">Tidak ada data</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            @endif
+        </div>
     </div>
-</div>
-
-{{-- Popup Modal Unduh --}}
-<div id="popupFormLokasi" class="popup-overlay">
-    <div class="popup-content">
-        <h2>Data Diri</h2>
-        <div class="warning-icon"><i class="fas fa-exclamation"></i></div>
-        <p>Silahkan isi formulir untuk mengunduh file ini</p>
-
-        <form id="downloadFormLokasi" method="POST" action="{{ route('log_pengunduhan.store') }}">
-            @csrf
-            <div class="checkbox-group horizontal">
-                <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
-                <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
-                <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
-            </div>
-            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
-            <input type="email" name="email_pengunduh" placeholder="Email" required>
-            <input type="text" name="telpon" placeholder="Telpon">
-            <textarea name="keperluan" placeholder="Keperluan"></textarea>
-            <div class="checkbox-group">
-                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
-                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
-            </div>
-            <div class="popup-buttons">
-                <button type="submit" class="btn-blue">Unduh</button>
-                <button type="button" id="closePopupLokasi" class="btn-red">Batalkan</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-
-@push('scripts')
-<script 
-src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script>
-    //Popup Form
-    document.getElementById("openPopupLokasi").addEventListener("click", function(e) {
-        e.preventDefault();
-        document.getElementById("popupFormLokasi").style.display = "flex";
-    });
-
-    document.getElementById("closePopupLokasi").addEventListener("click", function() {
-        document.getElementById("popupFormLokasi").style.display = "none";
-    });
-
-    //Download PDF
-    document.getElementById("downloadFormLokasi").addEventListener("submit", function(e) {
-        e.preventDefault(); // cegah submit default
-        var form = this;
-        var formData = new FormData(form);
-
-        fetch(form.action, {
-            method:'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': form.querySelector('input[name=_token]').value
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.success) {
-                // pastikan elemen tabel ada
-                var element = document.querySelector('.tabel-card');
-
-                if(element && element.innerText.trim() !== "") {
-                    // kasih jeda supaya layout stabil
-                    setTimeout(function() {
-                        html2pdf().set({
-                            margin: 10,
-                            filename: 'data_lokasi_investasi.pdf',
-                            image: { type: 'jpeg', quality: 0.98 },
-                            html2canvas: { scale: 2, useCORS: true },
-                            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                        }).from(element).save();
-
-                        document.getElementById("popupFormLokasi").style.display = "none";
-                    }, 500);
-                } else {
-                    alert("Tabel data lokasi kosong, tidak bisa diunduh.");
-                }
-
-            } else {
-                alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
-            }
-        });
-    });
-
-</script>
-@endpush
 
 @push('scripts')
 @if(!empty($chartLabels))
@@ -249,7 +175,17 @@ src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.m
                     borderWidth: 1
                 }]
             },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            options: {
+            responsive: true,
+            maintainAspectRatio: false, // biar fleksibel
+            aspectRatio: 2,             // lebar : tinggi
+            plugins: { 
+                legend: { display: false } 
+            },
+            scales: { 
+                y: { beginAtZero: true } 
+            }
+        }
         });
     }
 </script>
@@ -257,4 +193,3 @@ src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.m
 @endpush
 
 {{-- endpartial --}}
-

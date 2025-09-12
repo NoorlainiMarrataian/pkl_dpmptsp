@@ -41,11 +41,12 @@
             <div class="realisasi-card">
                 <a href="{{ route('realisasi.perbandingan') }}">
                     <div class="icon-wrapper">
-                        <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas fa-columns"></i>
                     </div>
                     <h4>Bandingkan Data</h4>
                 </a>
             </div>
+
 
         </div>
     </section>

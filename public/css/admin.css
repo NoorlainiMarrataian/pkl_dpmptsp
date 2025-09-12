@@ -1,11 +1,10 @@
-/* ===== Dashboard dan Layout ===== */
+/* ===== Layout ===== */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
 }
 
-/* ===== Sidebar ===== */
 .sidebar {
     width: 300px;
     background-color: #0A4C70;
@@ -50,8 +49,7 @@ body {
 }
 
 .menu {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 0 20px;
 }
 
 .menu a {
@@ -63,7 +61,7 @@ body {
     text-decoration: none;
     font-size: 14px;
     transition: background 0.3s;
-    border-bottom: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .menu a:hover,
@@ -78,8 +76,8 @@ body {
 }
 
 .logout {
-    border-bottom: 1px solid rgb(255, 255, 255);
-    margin: 0 20px 40px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 20px;
 }
 
 .logout button {
@@ -93,10 +91,10 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
+    padding: 10px;
 }
 
-.logout button:hover,
-.logout button:active {
+.logout button:hover {
     background: #fff;
     color: #0A4C70;
     font-weight: bold;
@@ -107,101 +105,98 @@ body {
     margin-right: 10px;
 }
 
-/* ===== Konten ===== */
 .content {
     margin-left: 300px;
     padding: 20px;
     width: calc(100% - 300px);
-    padding-right: 10px;
 }
 
 /* ===== Dashboard ===== */
-.dashboard h2 {
-    margin-bottom: 10px; /* rapat ke bawah */
+.dashboard-subtitle {
+    color: #0A4C70;
+    margin-bottom: 20px;
 }
 
-/* Container card + gambar dekorasi */
 .dashboard-stats {
     display: flex;
-    margin: 10px 0;      
-    align-items: center; /* vertikal sejajar */
-    flex-wrap: wrap;     /* responsive jika layar sempit */
+    gap: 30px;
+    margin: 20px 0;
+    align-items: stretch;
+    flex-wrap: wrap;
 }
 
-
-/* Card Total Kunjungan Website */
-.total-visits-card {
-    background: linear-gradient(135deg, #3498db, #0A4C70);
+.stat-card {
     padding: 20px;
     border-radius: 12px;
-    width: 320px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    border: 2px solid #fff;
+    flex: 1;
+    min-width: 280px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.card-content {
+.stat-visit {
+    background: linear-gradient(135deg, #3498db, #0A4C70);
+    color: white;
+}
+
+.stat-info {
+    background: #F7FAFC;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.stat-card h3 {
+    margin: 0 0 10px 0;
+}
+.stat-card.stat-visit h3 {
+    color: #fff;   /* judul khusus h3 putih */
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.stat-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
-    width: 100%;
 }
 
-.card-number p {
+.stat-value {
+    font-size: 32px;
+    font-weight: bold;
     margin: 0;
-    color: #fff;
-    font-size: 30px;
-    animation: pulse 1s ease-in-out infinite;
 }
 
-.card-icon i {
-    font-size: 40px;
-    color: #fff;
+.stat-icon {
+    font-size: 36px;
+    opacity: 0.9;
 }
 
-/* Animasi angka */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-/* ===== Gambar dekorasi di samping card ===== */
-.decorative-side {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center; /* vertikal sejajar card */
+/* Hover effect */
+.stat-card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s;
 }
 
-
-.decorative-side img {
-    width: 860px;   /* besar sesuai kebutuhan */
-    max-width: 110%; /* responsive */
-    height: auto;
-    margin-bottom: -240px;
-    margin-top: -200px;
-    display: block;
+/* ===== Tabel ===== */
+.table-title {
+    margin-top: 30px;
+    color: #0A4C70;
 }
 
-.dashboard table {
-    margin-top: 0;
-    border-collapse: collapse;
+.data-table {
     width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #fff;
 }
 
-.dashboard th,
-.dashboard td {
+.data-table th {
+    background: #0A4C70;
+    color: white;
     padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
+    border: 1px solid #ccc;
 }
 
-.dashboard thead {
-    background-color: #0A4C70;
-    color: #fff;
+.data-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
 }

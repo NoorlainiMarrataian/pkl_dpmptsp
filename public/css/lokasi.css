@@ -1,141 +1,182 @@
-/* ======================
-   Lokasi Investasi Page
-====================== */
+/* ================================
+   LOKASI INVESTASI PAGE STYLING
+   ================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;600&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f4f7fa;
+    color: #333;
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* ===== Section Utama ===== */
 .lokasi-investasi {
-    padding: 20px 40px;
-    font-family: Arial, sans-serif;
-    color: #333;
+    padding: 40px 12px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f9fafc 0%, #e9f1ff 100%);
 }
 
-/* Section Card */
-.card-section {
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.card-section h2 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    margin-top: 40px; /* tambahin jarak dari header */
-    color: #333;
+/* ===== Judul Halaman ===== */
+.lokasi-investasi h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #022c43;
     text-align: center;
+    margin: 25px auto;
+    position: relative;
+}
+.lokasi-investasi h2::after {
+    content: "";
+    width: 110px;
+    height: 4px;
+    background: linear-gradient(90deg, #0A4C70, #0d6392);
+    display: block;
+    margin: 10px auto 0;
+    border-radius: 3px;
 }
 
-/* Filter Bar */
+/* ===== Section Card ===== */
+.card-section,
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0 auto 30px auto;
+    width: 95%;
+    max-width: 1200px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+.card:hover,
+.card-section:hover {
+    transform: translateY(-3px);
+}
+
+/* ===== Filter Bar ===== */
 .filter-bar {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-wrap: wrap;   /* tetap bisa turun kalau layar kecil banget */
+    justify-content: center;
+    gap: 12px;
+    margin: 25px auto;
 }
 
-.filter-bar select,
-.filter-bar button,
-.filter-bar .btn-download {
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    cursor: pointer;
+
+.filter-bar select {
+    padding: 10px 16px;
+    min-width: 150px;
+    border: 1px solid #c8d9f0;
+    border-radius: 10px;
+    font-size: 0.9rem;
     background: #fff;
-    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+.filter-bar select:hover {
+    border-color: #0d6392;
 }
 
-.filter-bar select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-/* Buttons */
 .filter-bar button {
-    background: #007bff;
-    color: #fff;
+    padding: 10px 18px;
+    border-radius: 10px;
     border: none;
+    background: #e6efff;
+    color: #0040a0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    white-space: nowrap;  /* cegah teks pecah baris */
 }
-
 .filter-bar button:hover {
-    background: #0056b3;
+    background: #d0e2ff;
+    transform: translateY(-2px);
+}
+.filter-bar button.active {
+    background: linear-gradient(135deg, #0A4C70, #0d6392);
+    color: white;
 }
 
-.btn-download {
-    background: #28a745;
-    color: #fff !important;
-    text-decoration: none;
-    display: inline-flex;
+.filter-bar .btn-download {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #0A4C70, #0d6392);
+    color: white !important;
+    font-weight: 600;
+    display: flex;
     align-items: center;
     gap: 6px;
+    text-decoration: none;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+.filter-bar .btn-download:hover {
+    background: linear-gradient(135deg, #083b57, #0b5278);
+    transform: translateY(-2px);
 }
 
-.btn-download:hover {
-    background: #1e7e34;
-}
-
-/* Grafik */
+/* ===== Grafik ===== */
 .grafik-card {
-    margin: 20px 0;
-    padding: 15px;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
 }
-
 .judul-grafik {
     text-align: center;
-    margin-top: 5px;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #003580;
 }
 
-h2.mb-4 {
-    margin-top: 80px;   /* atur sesuai tinggi header */
-    text-align: center;
-}
-
-h2.judul-lokasi {
-    margin-top: 5px;
-    text-align: center;
-}
-
-/* Table */
+/* ===== Tabel ===== */
 .tabel-card,
 .table-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    align-items: center;
+    width: 95%;
+    max-width: 1200px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
     overflow-x: auto;
-    margin-top: 20px;
 }
-
 .tabel-card h3,
 .table-container h3 {
     margin-bottom: 15px;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 700;
     text-align: center;
-    color: #333;
+    color: #003580;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    overflow: hidden;
     background: #fff;
 }
 
+table thead {
+    background: linear-gradient(90deg, #003580, #0d6392);
+    color: white;
+}
 table th, table td {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 12px 14px;
+    border: 1px solid #e3e9f0;
     text-align: center;
 }
-
-table th {
-    background: #f1f1f1;
-    font-weight: bold;
-}
-
 table tbody tr:nth-child(even) {
-    background: #fafafa;
+    background: #f5faff;
+}
+table tbody tr:hover {
+    background: #e2f0ff;
+    transition: 0.25s;
 }
 
 /* Pesan Kosong */
@@ -145,33 +186,35 @@ table td.text-center,
     color: #777;
 }
 
-/* Responsive */
+.grafik-card canvas {
+    width: 100% !important;
+    max-height: 400px; /* atau 450px sesuai kebutuhan */
+    height: auto !important;
+}
+
+#exportArea {
+  width: 100%;
+  padding: 15px;
+}
+#exportArea canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
     .filter-bar {
         flex-direction: column;
-        align-items: stretch;
     }
-    .filter-bar select,
     .filter-bar button,
+    .filter-bar select,
     .filter-bar .btn-download {
         width: 100%;
     }
-}
-
-
-.popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-.popup-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 500px;
-    width: 100%;
+    .grafik-card,
+    .tabel-card {
+        width: 100%;
+        padding: 15px;
+    }
 }

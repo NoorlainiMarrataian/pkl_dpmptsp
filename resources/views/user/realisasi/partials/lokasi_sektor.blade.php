@@ -1,4 +1,3 @@
-<div id="bagian2-content" class="card-section">
     <h2 class="judul-lokasi">Data Realisasi Investasi Kalimantan</h2>
 
     {{-- Filter Tahun, Jenis Data, dan Periode --}}
@@ -215,7 +214,6 @@
         @endif
         </div>
     </div>
-</div>
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <script>

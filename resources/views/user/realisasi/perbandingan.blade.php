@@ -1,199 +1,200 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <h2 class="mb-4 text-center">Perbandingan Investasi</h2>
-    <div class="card shadow-sm p-4">
-        
+<section class="perbandingan-investasi container mt-4">
 
-        {{-- ====================== PERBANDINGAN 1: PERTAHUN ====================== --}}
+    <h2 class="mb-4">PERBANDINGAN INVESTASI</h2>
+
+    {{-- ===== BAGIAN 1: PERBANDINGAN PERTAHUN ===== --}}
+    <div class="card mb-5">
         <h4 class="mt-4">Perbandingan Pertahun</h4>
-        {{-- Filter --}}
-        <form id ="form-perbandingan1" action="{{ route('realisasi.perbandingan') }}" method="GET" class="filter-bar">
+            {{-- Filter --}}
+            <form id ="form-perbandingan1" action="{{ route('realisasi.perbandingan') }}" method="GET" class="filter-bar">
 
-            {{-- Jenis Investasi --}}
-            <div class="filter-item">
-                <select name="jenis" id="jenis" class="form-select">
-                    <option value="">Pilih Jenis</option>
-                    <option value="PMA" {{ request('jenis') == 'PMA' ? 'selected' : '' }}>PMA</option>
-                    <option value="PMDN" {{ request('jenis') == 'PMDN' ? 'selected' : '' }}>PMDN</option>
-                    <option value="PMA+PMDN" {{ request('jenis') == 'PMA+PMDN' ? 'selected' : '' }}>PMA + PMDN</option>
-                </select>
-            </div>
-
-            {{-- Tahun --}}
-            <div class="filter-item tahun-group">
-                <div class="tahun-selects">
-                    <select name="tahun1" id="tahun1" class="form-select">
-                        <option value="">Tahun 1</option>
-                        @foreach(range(date('Y'), 2010) as $th)
-                            <option value="{{ $th }}" {{ request('tahun1') == $th ? 'selected' : '' }}>{{ $th }}</option>
-                        @endforeach
-                    </select>
-                    <span class="dash">-</span>
-                    <select name="tahun2" id="tahun2" class="form-select">
-                        <option value="">Tahun 2</option>
-                        @foreach(range(date('Y'), 2010) as $th)
-                            <option value="{{ $th }}" {{ request('tahun2') == $th ? 'selected' : '' }}>{{ $th }}</option>
-                        @endforeach
+                {{-- Jenis Investasi --}}
+                <div class="filter-item">
+                    <select name="jenis" id="jenis" class="form-select">
+                        <option value="">Pilih Jenis</option>
+                        <option value="PMA" {{ request('jenis') == 'PMA' ? 'selected' : '' }}>PMA</option>
+                        <option value="PMDN" {{ request('jenis') == 'PMDN' ? 'selected' : '' }}>PMDN</option>
+                        <option value="PMA+PMDN" {{ request('jenis') == 'PMA+PMDN' ? 'selected' : '' }}>PMA + PMDN</option>
                     </select>
                 </div>
-            </div>
 
-            {{-- Tombol --}}
-            <div>
-                <button type="submit" class="btn btn-primary">Tampilkan</button>
-            </div>
-
-            <div class="col-md-2 d-flex align-items-end">
-                <a href="#" class="btn btn-success w-100" id="openPopupBagian1">
-                    <i class="fas fa-download"></i> Unduh Bagian 1
-                </a>
-            </div>
-            
-        </form>
-
-        {{-- Tabel Perbandingkan 1--}}
-        <div id="tabel-perbandingan1">
-            @include('user.realisasi.partials.tabel_perbandingan1')
-        </div>
-    </div>
-    
-    <div class="card shadow-sm p-4 mt-5">
-        {{-- ====================== PERBANDINGAN 2: PETRIWULAN ====================== --}}
-        <h4 class="mt-5">Perbandingan Petriwulan</h4>
-        {{-- Filter --}}
-        <form id="form-perbandingan2" action="{{ route('realisasi.perbandingan2') }}" method="GET" class="filter-bar mb-3">
-
-            {{-- Jenis Investasi --}}
-            <div class="filter-item">
-                <select name="jenis" id="jenis_2" class="form-select">
-                    <option value="">Pilih Jenis</option>
-                    <option value="PMA" {{ request('jenis') == 'PMA' ? 'selected' : '' }}>PMA</option>
-                    <option value="PMDN" {{ request('jenis') == 'PMDN' ? 'selected' : '' }}>PMDN</option>
-                    <option value="PMA+PMDN" {{ request('jenis') == 'PMA+PMDN' ? 'selected' : '' }}>PMA + PMDN</option>
-                </select>
-            </div>
-
-            {{-- Tahun dan Triwulan--}}
-            <div class="filter-item tahun-group">
-                <div class="tahun-selects">
-                    {{-- Tahun 1 --}}
-                    <select name="tahun1" id="tahun1_2" class="form-select">
-                        <option value="">Tahun 1</option>
-                        @foreach(range(date('Y'), 2010) as $th)
-                            <option value="{{ $th }}" {{ request('tahun1') == $th ? 'selected' : '' }}>{{ $th }}</option>
-                        @endforeach
-                    </select>
-                    {{-- Periode 1 --}}
-                    <select class="form-select" name="periode1" id="periode1">
-                        <option value="">Pilih Periode</option>
-                        <option value="Triwulan 1" {{ request('periode1') == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
-                        <option value="Triwulan 2" {{ request('periode1') == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
-                        <option value="Triwulan 3" {{ request('periode1') == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
-                        <option value="Triwulan 4" {{ request('periode1') == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
-                    </select>
-                    <span class="dash">-</span>
-                    {{-- Tahun 2 --}}
-                    <select name="tahun2" id="tahun2_2" class="form-select">
-                        <option value="">Tahun 2</option>
-                        @foreach(range(date('Y'), 2010) as $th)
-                            <option value="{{ $th }}" {{ request('tahun2') == $th ? 'selected' : '' }}>{{ $th }}</option>
-                        @endforeach
-                    </select>
-                    {{-- Periode 2 --}}
-                    <select class="form-select" name="periode2" id="periode2">
-                        <option value="">Pilih Periode</option>
-                        <option value="Triwulan 1" {{ request('periode2') == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
-                        <option value="Triwulan 2" {{ request('periode2') == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
-                        <option value="Triwulan 3" {{ request('periode2') == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
-                        <option value="Triwulan 4" {{ request('periode2') == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
-                    </select>
+                {{-- Tahun --}}
+                <div class="filter-item tahun-group">
+                    <div class="tahun-selects">
+                        <select name="tahun1" id="tahun1" class="form-select">
+                            <option value="">Tahun 1</option>
+                            @foreach(range(date('Y'), 2010) as $th)
+                                <option value="{{ $th }}" {{ request('tahun1') == $th ? 'selected' : '' }}>{{ $th }}</option>
+                            @endforeach
+                        </select>
+                        <span class="dash">-</span>
+                        <select name="tahun2" id="tahun2" class="form-select">
+                            <option value="">Tahun 2</option>
+                            @foreach(range(date('Y'), 2010) as $th)
+                                <option value="{{ $th }}" {{ request('tahun2') == $th ? 'selected' : '' }}>{{ $th }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>          
 
-            {{-- Tombol --}}
-            <div>
-                <button type="submit" class="btn btn-primary">Tampilkan</button>
+                {{-- Tombol --}}
+                <div>
+                    <button type="submit" class="btn btn-primary">Tampilkan</button>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <a href="#" class="btn btn-success w-100" id="openPopupBagian1">
+                        <i class="fas fa-download"></i> Unduh Bagian 1
+                    </a>
+                </div>
+                
+            </form>
+
+            {{-- Tabel Perbandingkan 1--}}
+            <div id="tabel-perbandingan1">
+                @include('user.realisasi.partials.tabel_perbandingan1')
             </div>
-
-             <div class="col-md-2 d-flex align-items-end">
-                <a href="#" class="btn btn-success w-100" id="openPopupBagian2">
-                    <i class="fas fa-download"></i> Unduh Bagian 2
-                </a>
-            </div>
-        </form>
-
-        {{-- Tabel Perbandingkan 2--}}
-        <div id="tabel-perbandingan2">
-            @include('user.realisasi.partials.tabel_perbandingan2')
         </div>
     </div>
-</div>
 
-{{-- Popup Bagian 1 --}}
-<div id="popupBagian1" class="popup-overlay">
-    <div class="popup-content">
-        <h2>Data Diri - Bagian 1</h2>
-        <div class="warning-icon">
-            <i class="fas fa-exclamation"></i>
+
+        <div class="card shadow-sm p-4 mt-5">
+            {{-- ====================== PERBANDINGAN 2: PETRIWULAN ====================== --}}
+            <h4 class="mt-5">Perbandingan Petriwulan</h4>
+            {{-- Filter --}}                <form id="form-perbandingan2" action="{{ route('realisasi.perbandingan2') }}" method="GET" class="filter-bar mb-3">
+                    {{-- Jenis Investasi --}}
+                    <div class="filter-item">
+                        <select name="jenis" id="jenis_2" class="form-select">
+                            <option value="">Pilih Jenis</option>
+                            <option value="PMA" {{ request('jenis') == 'PMA' ? 'selected' : '' }}>PMA</option>
+                            <option value="PMDN" {{ request('jenis') == 'PMDN' ? 'selected' : '' }}>PMDN</option>
+                            <option value="PMA+PMDN" {{ request('jenis') == 'PMA+PMDN' ? 'selected' : '' }}>PMA + PMDN</option>
+                        </select>
+                    </div>
+
+                    {{-- Tahun dan Triwulan--}}
+                    <div class="filter-item tahun-group">
+                        <div class="tahun-selects">
+                            {{-- Tahun 1 --}}
+                            <select name="tahun1" id="tahun1_2" class="form-select">
+                                <option value="">Tahun 1</option>
+                                @foreach(range(date('Y'), 2010) as $th)
+                                    <option value="{{ $th }}" {{ request('tahun1') == $th ? 'selected' : '' }}>{{ $th }}</option>
+                                @endforeach
+                            </select>
+                            {{-- Periode 1 --}}
+                            <select class="form-select" name="periode1" id="periode1">
+                                <option value="">Pilih Periode</option>
+                                <option value="Triwulan 1" {{ request('periode1') == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
+                                <option value="Triwulan 2" {{ request('periode1') == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
+                                <option value="Triwulan 3" {{ request('periode1') == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
+                                <option value="Triwulan 4" {{ request('periode1') == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
+                            </select>
+                            <span class="dash">-</span>
+                            {{-- Tahun 2 --}}
+                            <select name="tahun2" id="tahun2_2" class="form-select">
+                                <option value="">Tahun 2</option>
+                                @foreach(range(date('Y'), 2010) as $th)
+                                    <option value="{{ $th }}" {{ request('tahun2') == $th ? 'selected' : '' }}>{{ $th }}</option>
+                                @endforeach
+                            </select>
+                            {{-- Periode 2 --}}
+                            <select class="form-select" name="periode2" id="periode2">
+                                <option value="">Pilih Periode</option>
+                                <option value="Triwulan 1" {{ request('periode2') == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
+                                <option value="Triwulan 2" {{ request('periode2') == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
+                                <option value="Triwulan 3" {{ request('periode2') == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
+                                <option value="Triwulan 4" {{ request('periode2') == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
+                            </select>
+                        </div>
+                    </div>          
+
+                    {{-- Tombol --}}
+                    <div>
+                        <button type="submit" class="btn btn-primary">Tampilkan</button>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <a href="#" class="btn btn-success w-100" id="openPopupBagian2">
+                            <i class="fas fa-download"></i> Unduh Bagian 2
+                        </a>
+                    </div>
+                </form>
+
+                {{-- Tabel Perbandingkan 2--}}
+                <div id="tabel-perbandingan2">
+                    @include('user.realisasi.partials.tabel_perbandingan2')
+                </div>
+            </div>
         </div>
-        <p>Silahkan isi formulir untuk mengunduh Bagian 1</p>
+    </section>
 
-        <form class="downloadForm" data-bagian="Bagian 1" method="POST" action="{{ route('log_pengunduhan.store') }}">
-            @csrf
-            <div class="checkbox-group horizontal">
-                <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
-                <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
-                <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
+    {{-- Popup Bagian 1 --}}
+    <div id="popupBagian1" class="popup-overlay">
+        <div class="popup-content">
+            <h2>Data Diri - Bagian 1</h2>
+            <div class="warning-icon">
+                <i class="fas fa-exclamation"></i>
             </div>
-            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
-            <input type="email" name="email_pengunduh" placeholder="Email" required>
-            <input type="text" name="telpon" placeholder="Telpon">
-            <textarea name="keperluan" placeholder="Keperluan"></textarea>
-            <div class="checkbox-group">
-                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
-                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
-            </div>
-            <div class="popup-buttons">
-                <button type="submit" class="btn-blue">Unduh</button>
-                <button type="button" class="btn-red closePopup">Batalkan</button>
-            </div>
-        </form>
-    </div>
-</div>
+            <p>Silahkan isi formulir untuk mengunduh Bagian 1</p>
 
-{{-- Popup Bagian 2 --}}
-<div id="popupBagian2" class="popup-overlay">
-    <div class="popup-content">
-        <h2>Data Diri - Bagian 2</h2>
-        <div class="warning-icon">
-            <i class="fas fa-exclamation"></i>
+            <form class="downloadForm" data-bagian="Bagian 1" method="POST" action="{{ route('log_pengunduhan.store') }}">
+                @csrf
+                <div class="checkbox-group horizontal">
+                    <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
+                    <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
+                    <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
+                </div>
+                <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
+                <input type="email" name="email_pengunduh" placeholder="Email" required>
+                <input type="text" name="telpon" placeholder="Telpon">
+                <textarea name="keperluan" placeholder="Keperluan"></textarea>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
+                    <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+                </div>
+                <div class="popup-buttons">
+                    <button type="submit" class="btn-blue">Unduh</button>
+                    <button type="button" class="btn-red closePopup">Batalkan</button>
+                </div>
+            </form>
         </div>
-        <p>Silahkan isi formulir untuk mengunduh Bagian 2</p>
-
-        <form class="downloadForm" data-bagian="Bagian 2" method="POST" action="{{ route('log_pengunduhan.store') }}">
-            @csrf
-            <div class="checkbox-group horizontal">
-                <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
-                <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
-                <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
-            </div>
-            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
-            <input type="email" name="email_pengunduh" placeholder="Email" required>
-            <input type="text" name="telpon" placeholder="Telpon">
-            <textarea name="keperluan" placeholder="Keperluan"></textarea>
-            <div class="checkbox-group">
-                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
-                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
-            </div>
-            <div class="popup-buttons">
-                <button type="submit" class="btn-blue">Unduh</button>
-                <button type="button" class="btn-red closePopup">Batalkan</button>
-            </div>
-        </form>
     </div>
-</div>
+
+    {{-- Popup Bagian 2 --}}
+    <div id="popupBagian2" class="popup-overlay">
+        <div class="popup-content">
+            <h2>Data Diri - Bagian 2</h2>
+            <div class="warning-icon">
+                <i class="fas fa-exclamation"></i>
+            </div>
+            <p>Silahkan isi formulir untuk mengunduh Bagian 2</p>
+
+            <form class="downloadForm" data-bagian="Bagian 2" method="POST" action="{{ route('log_pengunduhan.store') }}">
+                @csrf
+                <div class="checkbox-group horizontal">
+                    <label><input type="radio" name="kategori_pengunduh" value="Individu" required> Individu</label>
+                    <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
+                    <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
+                </div>
+                <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
+                <input type="email" name="email_pengunduh" placeholder="Email" required>
+                <input type="text" name="telpon" placeholder="Telpon">
+                <textarea name="keperluan" placeholder="Keperluan"></textarea>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
+                    <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+                </div>
+                <div class="popup-buttons">
+                    <button type="submit" class="btn-blue">Unduh</button>
+                    <button type="button" class="btn-red closePopup">Batalkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
