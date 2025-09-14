@@ -9,9 +9,7 @@
     <section class="grafik-section">
         <h2>TREN REALISASI INVESTASI</h2>
         <div class="grafik-card">
-            {{-- nanti bisa ganti dengan chart.js --}}
-            <img src="https://via.placeholder.com/1000x400?text=Grafik+Realisasi+Investasi" 
-                 alt="Grafik Realisasi Investasi">
+            <canvas id="chartRealisasi" width="1000" height="400"></canvas>
         </div>
     </section>
 
@@ -58,3 +56,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/realisasi.css') }}">
 @endpush
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let ctx = document.getElementById('chartRealisasi').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @json($labels),
+            datasets: [{
+                label: 'Total Investasi (Rp Juta)',
+                data: @json($data),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true, position: 'top' }
+            },
+            scales: {
+                y: { beginAtZero: true },
+                x: {
+                grid: {
+                    display: false // ✅ hilangkan garis vertikal
+                }
+            }
+            }
+        }
+    });
+});
+</script>
+
+@endpush
+
+
+
