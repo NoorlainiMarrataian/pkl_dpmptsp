@@ -10,10 +10,10 @@
         </ul>
     </nav>
 
-    <div class="search-box">
+    <!-- <div class="search-box">
         <input type="text" placeholder="Cari">
         <button type="submit"><i class="fas fa-search"></i></button>
-    </div>
+    </div> -->
 </header>
 
 <script>
