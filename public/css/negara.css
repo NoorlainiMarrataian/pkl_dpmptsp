@@ -82,12 +82,12 @@ body {
 }
 
 .filter-bar .btn-download {
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 8px 16px;
+    border-radius: 8px;
     border: none;
     background: linear-gradient(135deg, #0A4C70, #0d6392);
     color: white;
-    font-weight: 600;
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -98,6 +98,10 @@ body {
 .filter-bar .btn-download:hover {
     background: linear-gradient(135deg, #0A4C70, #0d6392);
     transform: translateY(-2px);
+}
+
+.filter-bar .btn-download i {
+    font-size: 16px; /* ukuran icon Bootstrap pas */
 }
 
 /* ===== Card (Grafik & Tabel) ===== */
@@ -181,4 +185,28 @@ body {
         width: 100%;
         padding: 15px;
     }
+}
+
+/* ===== Tombol Periode ===== */
+.btn-periode {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    background: #e6efff; /* biru muda */
+    color: #0040a0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.btn-periode:hover {
+    background: #d0e2ff;
+    transform: translateY(-2px);
+}
+
+/* Aktif = biru malam */
+.btn-periode.active {
+    background: linear-gradient(135deg, #0A4C70, #0d6392);
+    color: white;
 }

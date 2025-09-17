@@ -3,11 +3,11 @@
 @section('content')
 <section class="perbandingan-investasi container mt-4">
 
-    <h2 class="mb-4">PERBANDINGAN INVESTASI</h2>
+    <h2 class="mb-4">PERBANDINGAN REALISASI INVESTASI</h2>
 
     {{-- ===== BAGIAN 1: PERBANDINGAN PERTAHUN ===== --}}
     <div class="card mb-5">
-        <h4 class="mt-4">Perbandingan Pertahun</h4>
+        <h3 class="mt-4">Perbandingan Pertahun</h3>
             {{-- Filter --}}
             <form id ="form-perbandingan1" action="{{ route('realisasi.perbandingan') }}" method="GET" class="filter-bar">
 
@@ -46,8 +46,8 @@
                 </div>
 
                 <div class="col-md-2 d-flex align-items-end">
-                    <a href="#" class="btn btn-success w-100" id="openPopupBagian1">
-                        <i class="fas fa-download"></i> Unduh Bagian 1
+                    <a href="#" class="download-btn" id="openPopupBagian1">
+                        <i class="bi bi-download"></i>
                     </a>
                 </div>
                 
@@ -63,7 +63,7 @@
 
         <div class="card shadow-sm p-4 mt-5">
             {{-- ====================== PERBANDINGAN 2: PETRIWULAN ====================== --}}
-            <h4 class="mt-5">Perbandingan Petriwulan</h4>
+            <h3 class="mt-5">Perbandingan Petriwulan</h3>
             {{-- Filter --}}                <form id="form-perbandingan2" action="{{ route('realisasi.perbandingan2') }}" method="GET" class="filter-bar mb-3">
                     {{-- Jenis Investasi --}}
                     <div class="filter-item">
@@ -118,8 +118,8 @@
                     </div>
 
                     <div class="col-md-2 d-flex align-items-end">
-                        <a href="#" class="btn btn-success w-100" id="openPopupBagian2">
-                            <i class="fas fa-download"></i> Unduh Bagian 2
+                        <a href="#" class="download-btn" id="openPopupBagian2">
+                            <i class="bi bi-download"></i>
                         </a>
                     </div>
                 </form>
@@ -376,4 +376,6 @@ $(document).ready(function(){
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/perbandingan.css') }}">
     <link rel="stylesheet" href="{{ asset('css/popup.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
 @endpush

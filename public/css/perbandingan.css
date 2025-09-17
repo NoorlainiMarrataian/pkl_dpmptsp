@@ -51,7 +51,7 @@ body {
     margin-top: 2rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-.card h2, .card h4 {
+.card h2, .card h3 {
     text-align: center;
     font-weight: 600;
     margin-bottom: 1.5rem;
@@ -249,4 +249,25 @@ body {
     margin: 10px auto !important;
     text-align: center;
     float: none !important;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: #27A9F7; /* biru normal */
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease; /* animasi halus */
+}
+
+.download-btn:hover {
+    background-color: #0040a0; /* biru lebih gelap saat hover */
+}
+
+.download-btn i {
+    font-size: 22px;     /* ukuran ikon */
+    color: white;        /* warna ikon */
 }

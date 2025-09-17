@@ -19,7 +19,7 @@
         <button type="submit" name="triwulan" value="Triwulan 4" class="btn-periode" disabled>Triwulan 4</button>
 
         <a href="#" class="btn-download" id="openPopup">
-            <i class="fas fa-download"></i> Download
+            <i class="bi bi-download"></i>
         </a>
     </form>
 
@@ -33,14 +33,12 @@
     {{-- Tabel --}}
     @if($data_investasi->isNotEmpty())
         <div class="tabel-card">
-            <h3 class="judul-tabel">PMA</h3>
+            <h3 class="judul-tabel">PMA - {{ $tahun }}</h3>
             <table class="tabel-negara">
                 <thead>
                     <tr>
                         <th>Negara</th>
-                        <th>Status Penanaman Modal</th>
-                        <th>Jenis PM</th>
-                        <th>Tahun</th>
+                        <th>Proyek</th>
                         <th>Periode</th>
                         <th>Tambahan Investasi (US$ Ribu)</th>
                         <th>Tambahan Investasi (Rp Juta)</th>
@@ -50,18 +48,16 @@
                     @foreach ($data_investasi as $data)
                     <tr>
                         <td>{{ $data->negara ?? '-' }}</td>
-                        <td>{{ $data->status_penanaman_modal ?? '-' }}</td>
                         <td>{{ $data->jumlah_pma ?? '-' }}</td> 
-                        <td>{{ $data->tahun ?? '-' }}</td>
                         <td>{{ $data->periode ?? '-' }}</td>
                         <td>{{ isset($data->total_investasi_us_ribu) ? number_format($data->total_investasi_us_ribu, 2, ',', '.') : '-' }}</td>
                         <td>{{ isset($data->total_investasi_rp_juta) ? number_format($data->total_investasi_rp_juta, 2, ',', '.') : '-' }}</td>
                     </tr>
                     @endforeach
                     <tr class="total-row">
-                        <td colspan="2"><strong>Total</strong></td>
+                        <td colspan="1"><strong>Total</strong></td>
                         <td><strong>{{ $total['jumlah_pma'] ?? '-' }}</strong></td>
-                        <td colspan="2"></td>
+                        <td colspan="1"></td>
                         <td><strong>{{ isset($total['total_investasi_us_ribu']) ? number_format($total['total_investasi_us_ribu'], 2, ',', '.') : '-' }}</strong></td>
                         <td><strong>{{ isset($total['total_investasi_rp_juta']) ? number_format($total['total_investasi_rp_juta'], 2, ',', '.') : '-' }}</strong></td>
                 </tbody>
@@ -113,6 +109,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/negara.css') }}">
 <link rel="stylesheet" href="{{ asset('css/popup.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 @endpush
 
 @push('scripts')
@@ -197,5 +194,29 @@
         }
     });
     @endif
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const periodeButtons = document.querySelectorAll(".btn-periode");
+
+    // Klik tombol: hanya set class active — biarkan form submit secara normal
+    periodeButtons.forEach(btn => {
+        btn.addEventListener("click", function () {
+            periodeButtons.forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+            // jangan call e.preventDefault() => biarkan form submit
+        });
+    });
+
+    // (Opsional) Kalau mau tombol tetap tampak active setelah reload,
+    // tambahkan class berdasarkan request param (blade)
+    const selectedTriwulan = @json(request('triwulan'));
+    if (selectedTriwulan) {
+        const activeBtn = Array.from(periodeButtons).find(b => b.value === selectedTriwulan);
+        if (activeBtn) {
+            periodeButtons.forEach(b => b.classList.remove("active"));
+            activeBtn.classList.add("active");
+        }
+    }
+});
 </script>
 @endpush
