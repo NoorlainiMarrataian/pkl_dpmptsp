@@ -17,17 +17,27 @@
 
         <div class="form-group">
           <label for="tahun">Tahun</label>
-          <input type="text" class="form-control" id="tahun" name="tahun" required> 
+          <input type="text"  class="form-control" id="tahun" name="tahun" inputmode="numeric" pattern="[0-9]*" required>
         </div>
 
         <div class="form-group">
           <label for="periode">Periode</label>
-          <input type="text" class="form-control" id="periode" name="periode" required>
+          <select class="form-control" id="periode" name="periode" required>
+            <option value="" disabled selected>Pilih Periode</option>
+            <option value="Triwulan 1">Triwulan 1</option>
+            <option value="Triwulan 2">Triwulan 2</option>
+            <option value="Triwulan 3">Triwulan 3</option>
+            <option value="Triwulan 4">Triwulan 4</option>
+          </select>
         </div>
 
         <div class="form-group">
           <label for="status_penanaman_modal">Status Penanaman Modal</label>
-          <input type="text" class="form-control" id="status_penanaman_modal" name="status_penanaman_modal" required>
+          <select class="form-control" id="status_penanaman_modal" name="status_penanaman_modal" required>
+            <option value="" disabled selected>Pilih Status</option>
+            <option value="PMA">PMA</option>
+            <option value="PMDN">PMDN</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -42,7 +52,12 @@
 
         <div class="form-group">
           <label for="sektor_utama">Sektor Utama</label>
-          <input type="text" class="form-control" id="sektor_utama" name="sektor_utama" required>
+          <select class="form-control" id="sektor_utama" name="sektor_utama" required>
+            <option value="" disabled selected>Pilih Sektor</option>
+            <option value="Primer">Sektor Primer</option>
+            <option value="Sekunder">Sektor Sekunder</option>
+            <option value="Tersier">Sektor Tersier</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -77,17 +92,17 @@
 
         <div class="form-group">
           <label for="investasi_rp_juta">Investasi Rp Juta</label>
-          <input type="text" class="form-control" id="investasi_rp_juta" name="investasi_rp_juta" required>
+          <input type="text" class="form-control" id="investasi_rp_juta" name="investasi_rp_juta" inputmode="numeric" pattern="[0-9]*" required>
         </div>
 
         <div class="form-group">
           <label for="investasi_us_ribu">Investasi US Ribu</label>
-          <input type="text" class="form-control" id="investasi_us_ribu" name="investasi_us_ribu" required>
+          <input type="text" class="form-control" id="investasi_us_ribu" name="investasi_us_ribu" inputmode="numeric" pattern="[0-9]*"  required>
         </div>
 
         <div class="form-group">
           <label for="jumlah_tki">Jumlah TKI</label>
-          <input type="text" class="form-control" id="jumlah_tki" name="jumlah_tki" required>
+          <input type="text" class="form-control" id="jumlah_tki" name="jumlah_tki" inputmode="numeric" pattern="[0-9]*"  required>
         </div>
 
         <!-- Tombol Aksi -->
