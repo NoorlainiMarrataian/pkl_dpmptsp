@@ -9,6 +9,17 @@
 @section('content')
 <div class="container mt-4">
     <h3 class="mb-4">Update Data Realisasi Investasi</h3>
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <strong>Periksa kembali data yang kamu isi!</strong>
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     
     <form action="{{ route('data_investasi.update', $data_investasi->id) }}" method="post">
         @csrf
@@ -22,19 +33,26 @@
         <div class="form-group">
           <label for="tahun">Tahun</label>
           <input type="text" class="form-control" id="tahun" name="tahun"
-                 value="{{ $data_investasi->tahun }}" required> 
+                 value="{{ $data_investasi->tahun }}" 
+                 inputmode="numeric" pattern="[0-9]*" required>
         </div>
 
         <div class="form-group">
           <label for="periode">Periode</label>
-          <input type="text" class="form-control" id="periode" name="periode" 
-                 value="{{ $data_investasi->periode }}" required>
+          <select class="form-control" id="periode" name="periode" required>
+            <option value="Triwulan 1" {{ $data_investasi->periode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
+            <option value="Triwulan 2" {{ $data_investasi->periode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
+            <option value="Triwulan 3" {{ $data_investasi->periode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
+            <option value="Triwulan 4" {{ $data_investasi->periode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
+          </select>
         </div>
 
         <div class="form-group">
           <label for="status_penanaman_modal">Status Penanaman Modal</label>
-          <input type="text" class="form-control" id="status_penanaman_modal" name="status_penanaman_modal" 
-                 value="{{ $data_investasi->status_penanaman_modal }}" required>
+          <select class="form-control" id="status_penanaman_modal" name="status_penanaman_modal" required>
+            <option value="PMA" {{ $data_investasi->status_penanaman_modal == 'PMA' ? 'selected' : '' }}>PMA</option>
+            <option value="PMDN" {{ $data_investasi->status_penanaman_modal == 'PMDN' ? 'selected' : '' }}>PMDN</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -51,8 +69,11 @@
 
         <div class="form-group">
           <label for="sektor_utama">Sektor Utama</label>
-          <input type="text" class="form-control" id="sektor_utama" name="sektor_utama" 
-                 value="{{ $data_investasi->sektor_utama }}" required>
+          <select class="form-control" id="sektor_utama" name="sektor_utama" required>
+            <option value="Primer" {{ $data_investasi->sektor_utama == 'Primer' ? 'selected' : '' }}>Sektor Primer</option>
+            <option value="Sekunder" {{ $data_investasi->sektor_utama == 'Sekunder' ? 'selected' : '' }}>Sektor Sekunder</option>
+            <option value="Tersier" {{ $data_investasi->sektor_utama == 'Tersier' ? 'selected' : '' }}>Sektor Tersier</option>
+          </select>
         </div>
 
         <div class="form-group">
