@@ -46,6 +46,7 @@
 /* Form Input */
 .popup-overlay .popup-content input[type="text"],
 .popup-overlay .popup-content input[type="email"],
+.popup-overlay .popup-content input[type="tel"],
 .popup-overlay .popup-content textarea {
     width: 100%;
     margin: 6px 0;
