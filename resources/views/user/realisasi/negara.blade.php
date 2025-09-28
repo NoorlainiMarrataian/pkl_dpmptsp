@@ -91,8 +91,8 @@
             </div>
             <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
             <input type="email" name="email_pengunduh" placeholder="Email" required>
-            <input type="text" name="telpon" placeholder="Telpon">
-            <textarea name="keperluan" placeholder="Keperluan"></textarea>
+            <input type="tel" name="telpon" placeholder="Telpon" pattern="[0-9]+" inputmode="numeric" required>
+            <textarea name="keperluan" placeholder="Keperluan" required></textarea>
             <div class="checkbox-group">
                 <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
                 <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
