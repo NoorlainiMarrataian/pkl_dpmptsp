@@ -104,6 +104,23 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
 
             var form = this;
+
+
+            // ✅ Tambahan: deteksi emoji di semua input
+            const emojiRegex = /([\u203C-\u3299]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+            let hasEmoji = false;
+
+            form.querySelectorAll('input[type=text], input[type=email], input[type=tel], textarea').forEach(el => {
+                if (emojiRegex.test(el.value)) {
+                    hasEmoji = true;
+                }
+            });
+
+            if (hasEmoji) {
+                alert("Input tidak boleh mengandung emoji.");
+                return; // 🚫 hentikan submit
+            }
+
             var formData = new FormData(form);
             var csrfToken = form.querySelector('input[name="_token"]') ? form.querySelector('input[name="_token"]').value : '';
 
