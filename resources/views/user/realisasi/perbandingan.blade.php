@@ -306,6 +306,23 @@ $(document).ready(function(){
     // Submit form unduh PDF
     $('.downloadForm').submit(function(e){
         e.preventDefault();
+
+        const emojiRegex = /([\u203C-\u3299]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+        let hasEmoji = false;
+
+        $(this).find('input[type=text], input[type=email], input[type=tel], textarea').each(function(){
+            if (emojiRegex.test($(this).val())) {
+                hasEmoji = true;
+            }
+        });
+
+        if (hasEmoji) {
+            alert("Input tidak boleh mengandung emoji.");
+            return;
+        }
+
+
+
         const bagian = $(this).data('bagian');
 
         // Kirim log pengunduhan terlebih dahulu
