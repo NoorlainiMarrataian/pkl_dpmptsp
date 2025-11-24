@@ -79,6 +79,19 @@
                                 <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 6 : 5 }}" class="text-center">Tidak ada data</td>
                             </tr>
                         @endforelse
+
+                        {{-- Baris Total untuk PMA --}}
+                        @if(count($dataLokasi) > 0 && $jenisBagian1 === 'PMA')
+                            <tr style="font-weight:bold; background:#f2f2f2;">
+                                <td colspan="2">Total</td>
+                                <td>{{ $dataLokasi->sum('proyekpma') }}</td>
+                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                    <td></td>
+                                @endif
+                                <td>{{ number_format($dataLokasi->sum('total_investasi_us_ribu'), 0, ',', '.') }}</td>
+                                <td>{{ number_format($dataLokasi->sum('total_investasi_rp_juta'), 0, ',', '.') }}</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
 
@@ -112,6 +125,18 @@
                                 <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 5 : 4 }}" class="text-center">Tidak ada data</td>
                             </tr>
                         @endforelse
+
+                        {{-- Baris Total untuk PMDN --}}
+                        @if(count($dataLokasi) > 0 && $jenisBagian1 === 'PMDN')
+                            <tr style="font-weight:bold; background:#f2f2f2;">
+                                <td colspan="2">Total</td>
+                                <td>{{ $dataLokasi->sum('proyekpmdn') }}</td>
+                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                    <td></td>
+                                @endif
+                                <td>{{ number_format($dataLokasi->sum('total_investasi_rp_juta'), 0, ',', '.') }}</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
 
@@ -151,6 +176,34 @@
                         @empty
                             <tr><td colspan="9" class="text-center">Tidak ada data</td></tr>
                         @endforelse
+
+                        {{-- Baris Total --}}
+                        @if(count($dataLokasi) > 0)
+                            <tr style="font-weight:bold; background:#f2f2f2;">
+                                <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 2 : 1 }}">Total</td>
+                                <td>
+                                    {{ $dataLokasi->sum('proyekpmdn') }}
+                                </td>
+                                <td>
+                                    {{ number_format($dataLokasi->sum('total_investasi_pmdn_rp'), 0, ',', '.') }}
+                                </td>
+                                <td>
+                                    {{ $dataLokasi->sum('proyekpma') }}
+                                </td>
+                                <td>
+                                    {{ number_format($dataLokasi->sum('total_investasi_pma_us'), 0, ',', '.') }}
+                                </td>
+                                <td>
+                                    {{ number_format($dataLokasi->sum('total_investasi_pma_rp'), 0, ',', '.') }}
+                                </td>
+                                <td>
+                                    {{ $dataLokasi->sum('proyekpmdn') + $dataLokasi->sum('proyekpma') }}
+                                </td>
+                                <td>
+                                    {{ number_format($dataLokasi->sum('total_investasi_pmdn_rp') + $dataLokasi->sum('total_investasi_pma_rp'), 0, ',', '.') }}
+                                </td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             @endif

@@ -91,8 +91,8 @@
             </div>
             <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
             <input type="email" name="email_pengunduh" placeholder="Email" required>
-            <input type="text" name="telpon" placeholder="Telpon">
-            <textarea name="keperluan" placeholder="Keperluan"></textarea>
+            <input type="tel" name="telpon" placeholder="Telpon" pattern="[0-9]+" inputmode="numeric" required>
+            <textarea name="keperluan" placeholder="Keperluan" required></textarea>
             <div class="checkbox-group">
                 <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
                 <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
@@ -142,6 +142,22 @@
     document.getElementById('downloadForm').addEventListener('submit', function(e){
         e.preventDefault();
         var form = this;
+
+        // ✅ Tambahkan blok validasi emoji di sini
+        const emojiRegex = /([\u203C-\u3299]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+
+        let hasEmoji = false;
+        form.querySelectorAll('input[type=text], input[type=email], input[type=tel], textarea').forEach(el => {
+            if (emojiRegex.test(el.value)) {
+                hasEmoji = true;
+            }
+        });
+
+        if (hasEmoji) {
+            alert("Input tidak boleh mengandung emoji.");
+            return; // 🚫 hentikan proses unduh
+        }
+
         var formData = new FormData(form);
         fetch(form.action, {
             method: 'POST',

@@ -1,4 +1,4 @@
-    <h2 class="judul-lokasi">Data Realisasi Investasi Kalimantan</h2>
+<h2 class="judul-lokasi">Data Realisasi Investasi Kalimantan</h2>
 
     {{-- Filter Tahun, Jenis Data, dan Periode --}}
     <form id="form-bagian2" class="filter-bar" action="{{ route('realisasi.lokasi') }}" method="GET">
@@ -169,19 +169,14 @@
                 <thead>
                     <tr>
                         <th>Nama Sektor</th>
-                        {{-- tampilkan kolom periode hanya kalau bukan filter Tahun --}}
-                        @if(!isset($triwulan2) || $triwulan2 !== 'Tahun')
+                        @if(isset($triwulan2) && $triwulan2 !== 'Tahun')
                             <th>Periode</th>
                         @endif
                         <th>Proyek (PMDN)</th>
                         <th>Total Investasi RP (PMDN)</th>
-
-                        {{-- PMA --}}
                         <th>Proyek (PMA)</th>
                         <th>Total Investasi RP (PMA)</th>
                         <th>Total Investasi US (PMA)</th>
-
-                        {{-- Gabungan --}}
                         <th>Total Proyek (PMDN + PMA)</th>
                         <th>Total Investasi RP (ALL)</th>
                     </tr>
@@ -195,20 +190,34 @@
                             @endif
                             <td>{{ $data->proyek_pmdn }}</td>
                             <td>{{ number_format($data->total_investasi_rp_pmdn, 0, ',', '.') }}</td>
-
-                            {{-- PMA --}}
                             <td>{{ $data->proyek_pma }}</td>
                             <td>{{ number_format($data->total_investasi_rp_pma, 0, ',', '.') }}</td>
                             <td>{{ number_format($data->total_investasi_us_pma, 0, ',', '.') }}</td>
-
-                            {{-- Gabungan --}}
                             <td>{{ $data->total_proyek }}</td>
                             <td>{{ number_format($data->total_investasi_rp_all, 0, ',', '.') }}</td>
-
                         </tr>
                     @empty
-                        <tr><td colspan="10">Tidak ada data sektor.</td></tr>
+                        <tr>
+                            <td colspan="{{ (isset($triwulan2) && $triwulan2 !== 'Tahun') ? 9 : 8 }}">Tidak ada data sektor.</td>
+                        </tr>
                     @endforelse
+
+                    {{-- Baris Total --}}
+                    @if(count($sektor) > 0)
+                        <tr style="font-weight:bold; background:#f2f2f2;">
+                            <td>Total</td>
+                            @if(isset($triwulan2) && $triwulan2 !== 'Tahun')
+                                <td></td>
+                            @endif
+                            <td>{{ $sektor->sum('proyek_pmdn') }}</td>
+                            <td>{{ number_format($sektor->sum('total_investasi_rp_pmdn'), 0, ',', '.') }}</td>
+                            <td>{{ $sektor->sum('proyek_pma') }}</td>
+                            <td>{{ number_format($sektor->sum('total_investasi_rp_pma'), 0, ',', '.') }}</td>
+                            <td>{{ number_format($sektor->sum('total_investasi_us_pma'), 0, ',', '.') }}</td>
+                            <td>{{ $sektor->sum('total_proyek') }}</td>
+                            <td>{{ number_format($sektor->sum('total_investasi_rp_all'), 0, ',', '.') }}</td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
         @endif
