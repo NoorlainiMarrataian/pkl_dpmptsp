@@ -29,14 +29,17 @@
 }
 
 /* LOGO */
-.navbar .logo {
+.navbar .logo-top {
     display: flex;
     align-items: flex-start;
     margin: 0;
     padding: 0;
+    top: 0;               /* paling atas */
+    z-index: 2000;        /* biar di atas navbar */
+    background: transparent;
 }
 
-.navbar .logo img {
+.navbar .logo-top img {
     height: 80px;
     margin: 0;
     padding: 0;
@@ -44,19 +47,23 @@
 }
 
 /* MENU */
+
 .navbar nav {
     display: flex;
-    justify-content: center;
-    margin-left: -30px;   /* 🔥 geser menu sedikit ke kiri */
+    justify-content: center; /* menu ke tengah */
+    flex: 1;                 /* biar ambil ruang penuh di tengah */
+    margin-left: 0;          /* hapus margin kiri negatif */
 }
+
 
 .navbar nav ul {
     display: flex;
     list-style: none;
     gap: 40px;
-    margin: 0;
+    margin: 0 auto;   /* auto agar posisinya rata tengah */
     padding: 0;
 }
+
 
 .navbar nav ul li a {
     color: #fff;

@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         data: {
             labels: @json($labels),
             datasets: [{
-                label: 'Total Investasi (Rp Juta)',
+                label: 'Total Investasi Rp',
                 data: @json($data),
                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 y: { beginAtZero: true },
                 x: {
                 grid: {
-                    display: false // ✅ hilangkan garis vertikal
+                    display: false 
                 }
             }
             }

@@ -13,7 +13,7 @@
                 <p>
                     Selamat datang di Website Realisasi Investasi DPMPTSP Provinsi Kalimantan Selatan. 
                     Website ini dikelola oleh Dinas Penanaman <br> Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP) 
-                    Provinsi <br> Kalimantan Selatan sebagai wadah resmi untuk menyajikan data <br> dan informasi terkini terkait perkembangan realisasi investasi di <br>c daerah.
+                    Provinsi <br> Kalimantan Selatan sebagai wadah resmi untuk menyajikan data <br> dan informasi terkini terkait perkembangan realisasi investasi di <br>daerah.
                 </p>
                 
                 <!-- Tombol -->

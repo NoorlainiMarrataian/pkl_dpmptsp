@@ -1,14 +1,14 @@
 <header class="navbar">
-    <div class="logo">
+    <div class="logo-top">
         <img src="{{ asset('images/logo-darisimantan.png') }}" alt="Logo DARRISIMANTAN">
     </div>
 
-    <nav>
-        <ul>
-            <li><a href="{{ route('home') }}">Beranda</a></li>
-            <li><a href="{{ route('realisasi.realisasiinvestasi') }}">Realisasi Investasi</a></li>
-        </ul>
-    </nav>
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{ route('home') }}">Beranda</a></li>
+                <li><a href="{{ route('realisasi.realisasiinvestasi') }}">Realisasi Investasi</a></li>
+            </ul>
+        </nav>
 
 </header>
 

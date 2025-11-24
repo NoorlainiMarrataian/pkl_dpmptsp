@@ -24,10 +24,10 @@
             
         {{-- Tombol filter berdasarkan jenis --}}
         <button type="button" name="jenisBagian2" value="5 Realisasi Investasi Terbesar Berdasarkan Kab Kota" class="btn btn-secondary">
-            5 Realisasi Investasi Terbesar Berdasarkan Kab Kota
+            5 Realisasi Investasi Terbesar
         </button>
         <button type="button" name="jenisBagian2" value="5 Proyek Terbesar Berdasarkan Kab Kota" class="btn btn-secondary">
-            5 Proyek Terbesar Berdasarkan Kab Kota
+            5 Proyek Terbesar
         </button>
         <button type="button" name="jenisBagian2" value="sektor" class="btn btn-secondary">
             Berdasarkan Sektor

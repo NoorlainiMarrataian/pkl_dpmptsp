@@ -224,7 +224,7 @@ $(document).ready(function(){
                     data: {
                         labels: response.chartLabels,
                         datasets: [{
-                            label: 'Total Investasi (Rp Juta)',
+                            label: 'Total Investasi Rp',
                             data: response.chartData1.concat(response.chartData2),
                             backgroundColor: [
                                 'rgba(75, 192, 192, 0.5)',

@@ -168,7 +168,7 @@
             data: {
                 labels: @json($chartLabels),
                 datasets: [{
-                    label: 'Investasi (Rp Juta)',
+                    label: 'Investasi Rp',
                     data: @json($chartData),
                     backgroundColor: 'rgba(75, 192, 192, 0.5)',
                     borderColor: 'rgba(75, 192, 192, 1)',

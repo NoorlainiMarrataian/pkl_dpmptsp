@@ -180,7 +180,7 @@
             labels: @json($data_investasi->pluck('negara')),
             datasets: [
                 {
-                    label: 'Investasi Rp (juta)',
+                    label: 'Investasi Rp',
                     data: @json($data_investasi->pluck('total_investasi_rp_juta')),
                     backgroundColor: 'rgba(255, 0, 0, 1)',
                     borderColor: 'rgba(255, 0, 0, 1)',
