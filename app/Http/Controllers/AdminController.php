@@ -16,16 +16,32 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        // Validasi format username
+        $request->validate([
+            'username' => ['required', 'regex:/^[a-zA-Z0-9_]+$/'],
+            'password' => 'required',
+        ], [
+            'username.regex' => 'Gunakan format yang benar',
+        ]);
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard');
+        $username = $request->username;
+        $password = $request->password;
+
+        // Case-sensitive login
+        $admin = \App\Models\Admin::whereRaw('BINARY username = ?', [$username])->first();
+
+        if (! $admin || ! \Hash::check($password, $admin->password)) {
+            return back()->withErrors([
+                'username' => 'Username atau password salah',
+            ]);
         }
 
-        return back()->withErrors([
-            'username' => 'Username atau password salah',
-        ]);
+        Auth::guard('admin')->login($admin);
+
+        return redirect()->route('admin.dashboard');
     }
+
+
 
     public function dashboard()
     {
