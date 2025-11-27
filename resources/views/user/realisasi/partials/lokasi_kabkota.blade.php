@@ -34,6 +34,17 @@
         </a>
     </form>
 
+    {{-- Modal Peringatan Validasi --}}
+    <div id="validationModal" class="validation-modal-overlay" style="display:none;">
+        <div class="validation-modal-content">
+            <div class="validation-warning-icon">
+                <i class="fas fa-exclamation"></i>
+            </div>
+            <h2 id="validationModalTitle">Harap pilih tahun</h2>
+            <button type="button" id="validationModalOkBtn" class="validation-modal-ok-btn">OK</button>
+        </div>
+    </div>
+
     {{-- === AREA UNTUK PDF: Grafik + Tabel === --}}
     <div id="exportArea">
         {{-- Grafik Lokasi --}}
@@ -210,6 +221,10 @@
         </div>
     </div>
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/lokasi.css') }}">
+@endpush
+
 @push('scripts')
 @if(!empty($chartLabels))
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -243,6 +258,67 @@
     }
 </script>
 @endif
+
+<script>
+// Validasi klik tombol periode: pastikan Tahun dan Jenis sudah dipilih
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form.filter-bar');
+    if (!form) return;
+
+    const yearSelect = form.querySelector('select.dropdown-tahun');
+    const jenisSelect = form.querySelector('select.dropdown-jenis');
+    const periodButtons = form.querySelectorAll('button[name="triwulan"]');
+    const modal = document.getElementById('validationModal');
+    const modalTitle = document.getElementById('validationModalTitle');
+    const modalOkBtn = document.getElementById('validationModalOkBtn');
+    let focusElement = null;
+
+    // Fungsi untuk tampilkan modal
+    function showValidationModal(message, focusEl) {
+        modalTitle.textContent = message;
+        focusElement = focusEl;
+        modal.style.display = 'flex';
+    }
+
+    // Close modal saat klik OK
+    if (modalOkBtn) {
+        modalOkBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            if (focusElement) focusElement.focus();
+        });
+    }
+
+    // Close modal saat klik di luar modal
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                if (focusElement) focusElement.focus();
+            }
+        });
+    }
+
+    periodButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const year = yearSelect ? yearSelect.value.trim() : '';
+            const jenis = jenisSelect ? jenisSelect.value.trim() : '';
+
+            if (!year) {
+                e.preventDefault();
+                showValidationModal('Harap Pilih Tahun', yearSelect);
+                return;
+            }
+
+            if (!jenis) {
+                e.preventDefault();
+                showValidationModal('Harap Pilih Status', jenisSelect);
+                return;
+            }
+            // jika valid, biarkan submit normal
+        });
+    });
+});
+</script>
 @endpush
 
 {{-- endpartial --}}
