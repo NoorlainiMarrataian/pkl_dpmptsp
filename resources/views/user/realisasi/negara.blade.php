@@ -67,9 +67,15 @@
 
     {{-- Pesan kosong --}}
     @if($data_investasi->isEmpty())
-        <p class="text-center" style="margin-top:20px; font-style:italic; color:#777;">
-            Silakan pilih <b>Tahun</b> dan <b>Periode</b> terlebih dahulu untuk melihat data.
-        </p>
+        @if(!request('tahun') || !request('triwulan'))
+            <p class="text-center" style="margin-top:20px; font-style:italic; color:#777;">
+                Silahkan Pilih Tahun dan Periode Untuk Melihat Data
+            </p>
+        @else
+            <p class="text-center" style="margin-top:20px; font-style:italic; color:#777;">
+                Data belum ada
+            </p>
+        @endif
     @endif
 </section>
 
@@ -89,9 +95,18 @@
                 <label><input type="radio" name="kategori_pengunduh" value="Perusahaan"> Perusahaan</label>
                 <label><input type="radio" name="kategori_pengunduh" value="Lainnya"> Lainnya</label>
             </div>
-            <input type="text" name="nama_instansi" placeholder="Nama Lengkap/Instansi" required>
+            <div style="position: relative;">
+                <input type="text" name="nama_instansi" id="namaInstansi" placeholder="Nama Lengkap/Instansi" maxlength="100" required>
+                <small id="charCount" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #999; font-size: 12px;">0/100</small>
+            </div>
+            <span id="charWarning" style="color: red; font-size: 12px; display: none; margin-top: 5px;">Maaf, karakter yang anda masukkan lebih 100</span>
             <input type="email" name="email_pengunduh" placeholder="Email" required>
-            <input type="tel" name="telpon" placeholder="Telpon" pattern="[0-9]+" inputmode="numeric" required>
+            <div style="position: relative;">
+                <input type="tel" name="telpon" id="telponInput" placeholder="Telpon" pattern="[0-9]+" inputmode="numeric" maxlength="20" required>
+            </div>
+            <div style="margin-top:6px;">
+                <span id="telWarning" style="color: red; font-size:12px; display:none;">Mohon masukkan nomor telepon dengan 5–20 digit.</span>
+            </div>
             <textarea name="keperluan" placeholder="Keperluan" required></textarea>
             <div class="checkbox-group">
                 <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
@@ -138,10 +153,95 @@
         document.getElementById("popupForm").style.display = "none";
     });
 
+    // Validasi karakter input nama_instansi
+    const namaInstansiInput = document.getElementById('namaInstansi');
+    const charCount = document.getElementById('charCount');
+    const charWarning = document.getElementById('charWarning');
+    
+    if (namaInstansiInput) {
+        namaInstansiInput.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = length + '/100';
+            
+            if (length >= 100) {
+                charWarning.style.display = 'block';
+            } else {
+                charWarning.style.display = 'none';
+            }
+        });
+    }
+
+    // Validasi input telpon (real-time) - hanya angka, dengan satu peringatan
+    const telInput = document.getElementById('telponInput');
+    const telWarning = document.getElementById('telWarning');
+    if (telInput && telWarning) {
+        // Prevent non-digit key presses (allow control/navigation keys)
+        telInput.addEventListener('keydown', function(e) {
+            const allowedKeys = [8,9,13,27,35,36,37,38,39,40,46]; // backspace, tab, enter, esc, home,end,arrows,delete
+            if (allowedKeys.includes(e.keyCode) || e.ctrlKey || e.metaKey) return;
+            // Allow digits only
+            if (/^[0-9]$/.test(e.key)) return;
+            e.preventDefault();
+        });
+
+        // On input: sanitize (remove non-digits) and show/hide warning
+        telInput.addEventListener('input', function() {
+            const onlyDigits = this.value.replace(/\D/g, '');
+            if (this.value !== onlyDigits) this.value = onlyDigits;
+            if (onlyDigits.length < 5 || onlyDigits.length > 20) {
+                telWarning.style.display = 'inline-block';
+            } else {
+                telWarning.style.display = 'none';
+            }
+        });
+
+        // On paste: sanitize pasted content to digits only
+        telInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const paste = (e.clipboardData || window.clipboardData).getData('text');
+            const digits = paste.replace(/\D/g, '');
+            // Insert digits at cursor position
+            const start = this.selectionStart || 0;
+            const end = this.selectionEnd || 0;
+            const before = this.value.slice(0, start);
+            const after = this.value.slice(end);
+            let newVal = before + digits + after;
+            newVal = newVal.replace(/\D/g, '').slice(0, 20); // enforce maxlength
+            this.value = newVal;
+            if (newVal.length < 5 || newVal.length > 20) telWarning.style.display = 'inline-block'; else telWarning.style.display = 'none';
+        });
+    }
+
     // Download
     document.getElementById('downloadForm').addEventListener('submit', function(e){
         e.preventDefault();
         var form = this;
+
+        // 1) Pastikan user sudah memilih Tahun dan Periode sebelum mengunduh
+        var tahunVal = document.getElementById('tahunSelect') ? document.getElementById('tahunSelect').value : '';
+        var selectedTriwulanBtn = document.querySelector('.btn-periode.active');
+        if (!tahunVal || !selectedTriwulanBtn) {
+            alert('Silakan pilih tahun dan periode terlebih dahulu sebelum mengunduh data.');
+            return;
+        }
+
+        // 2) Jika sudah memilih tetapi tidak ada data, tampilkan pesan "Data belum ada"
+        var tabelCard = document.querySelector('.tabel-card');
+        if (!tabelCard) {
+            alert('Tidak ada data yang diunduh. Silahkan pilih tahun dan periode valid');
+            return;
+        }
+
+        // 3) Validasi panjang telepon sebelum submit (digit only)
+        var telEl = document.getElementById('telponInput');
+        if (telEl) {
+            var telDigits = telEl.value.replace(/\D/g, '');
+            if (telDigits.length < 5 || telDigits.length > 20) {
+                document.getElementById('telWarning').style.display = 'inline-block';
+                telEl.focus();
+                return; // hentikan submit
+            }
+        }
 
         // ✅ Tambahkan blok validasi emoji di sini
         const emojiRegex = /([\u203C-\u3299]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
