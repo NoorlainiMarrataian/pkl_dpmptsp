@@ -14,6 +14,11 @@ use App\Http\Controllers\RealisasiInvestasiController;
 |--------------------------------------------------------------------------
 */
 
+// Cek ID data investasi (untuk AJAX delete/edit)
+Route::get('/data_investasi/check/{id}', [DataInvestasiController::class, 'check'])
+    ->name('data_investasi.check');
+
+
 // ✅ resource otomatis sudah berisi index, create, store, show, edit, update, destroy
 Route::resource('data_investasi', DataInvestasiController::class);
 

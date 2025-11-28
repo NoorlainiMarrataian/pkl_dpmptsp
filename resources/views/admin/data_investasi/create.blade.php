@@ -17,8 +17,17 @@
 
         <div class="form-group">
           <label for="tahun">Tahun</label>
-          <input type="text"  class="form-control" id="tahun" name="tahun" inputmode="numeric" pattern="[0-9]*" required>
+          <input
+            type="number"
+            class="form-control @error('tahun') is-invalid @enderror" id="tahun" name="tahun" value="{{ old('tahun') }}"
+            inputmode="numeric" pattern="^\d{4}$" min="2010" max="9999" maxlength="4" required>
+          @error('tahun')
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
+          @enderror
         </div>
+
 
         <div class="form-group">
           <label for="periode">Periode</label>

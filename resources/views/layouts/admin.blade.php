@@ -52,11 +52,11 @@
 
         <!-- Tombol Keluar -->
         <div class="logout">
-            <form method="POST" action="{{ route('admin.logout') }}">
-                @csrf
-                <button type="submit"><i class="fas fa-sign-out-alt"></i> Keluar</button>
-            </form>
+            <button type="button" id="btnLogoutSidebar">
+                <i class="fas fa-sign-out-alt"></i> Keluar
+            </button>
         </div>
+
     </div>
 
     <!-- Konten -->
@@ -68,5 +68,42 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Modal Konfirmasi Logout -->
+    <div class="modal fade" id="logoutConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Konfirmasi Logout</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    Apakah Anda yakin ingin keluar dari akun admin?
+                </div>
+
+                <div class="modal-footer">
+                    <form action="{{ route('admin.logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Ya, Logout</button>
+                    </form>
+                    <button class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#btnLogoutSidebar').on('click', function(e) {
+            e.preventDefault();
+            $('#logoutConfirmModal').modal('show');
+        });
+    </script>
+
+
 </body>
 </html>

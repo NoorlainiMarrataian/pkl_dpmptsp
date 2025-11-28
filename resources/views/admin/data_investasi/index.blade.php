@@ -13,6 +13,11 @@
                     <i class="fa fa-search"></i>
                 </button>
             </form>
+            @if ($errors->has('search'))
+                <div class="alert alert-danger mt-2" style="padding:8px; font-size:14px;">
+                    {{ $errors->first('search') }}
+                </div>
+            @endif
         </div>
         <div class="investasi-actions">
             <button type="button" class="btn investasi-btn-round investasi-btn-plus" data-toggle="modal" data-target="#tambahDataModal">
@@ -301,11 +306,33 @@
         // edit cari ID
         document.getElementById('editDataForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            var id = document.getElementById('editDataInput').value;
-            if (id) {
-                window.location.href = "/data_investasi/" + id + "/edit";
+            var id = document.getElementById('editDataInput').value.trim();
+
+            if (!id) {
+                alert("Isi Nomor ID terlebih dahulu!");
+                return;
             }
+
+            if (!/^\d+$/.test(id)) {
+                alert("Nomor ID hanya boleh berisi angka!");
+                return;
+            }
+
+            // Cek apakah ID ada dengan HEAD request
+            fetch("/data_investasi/" + id + "/edit", {
+                method: "HEAD"
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    // Jika ID ditemukan → redirect
+                    window.location.href = "/data_investasi/" + id + "/edit";
+                } else {
+                    // Jika ID tidak ada
+                    alert("Data dengan Nomor ID tersebut tidak ada di sistem!");
+                }
+            })
         });
+
 
         // hapus via tombol table
         document.querySelectorAll('.btn-table-delete').forEach(function(btn) {
@@ -342,17 +369,61 @@
         const confirmDeleteModal = $('#confirmDeleteModal');
         document.getElementById('showConfirmDelete').addEventListener('click', function(e) {
             e.preventDefault();
-            var id = document.getElementById('deleteDataInput').value;
-            if (id) {
-                deleteId = id;
-                document.querySelector('#confirmDeleteModal h5').innerText = 'Nomor ID Data ' + id + ' akan dihapus';
-                deleteModal.modal('hide');
-                deleteModal.on('hidden.bs.modal', function(){
-                    confirmDeleteModal.modal('show');
-                    deleteModal.off('hidden.bs.modal');
-                });
+
+            let id = document.getElementById('deleteDataInput').value.trim();
+
+            // Validasi: kosong
+            if (!id) {
+                alert("Nomor ID harus diisi!");
+                return;
             }
+
+            // Validasi: hanya angka
+            if (!/^\d+$/.test(id)) {
+                alert("Nomor ID hanya boleh berisi angka!");
+                return;
+            }
+
+            // 🔍 Cek ID ke database
+            fetch(`/data_investasi/check/${id}`)
+                .then(response => response.json())
+                .then(data => {
+
+                    // ❌ ID tidak ada → tampilkan alert
+                    if (!data.exists) {
+                        alert("Nomor ID tidak ditemukan di database!");
+                        return;
+                    }
+
+                    // ⭐ ID ADA → tampilkan modal konfirmasi hapus
+                    deleteId = id;
+
+                    // Update isi modal
+                    const title = document.querySelector('#confirmDeleteModal h5');
+                    if (title) {
+                        title.innerText = `Data dengan Nomor ID ${id} akan dihapus`;
+                    }
+
+                    // Tutup modal input → buka modal konfirmasi
+                    deleteModal.modal('hide');
+
+                    // Hapus event sebelumnya agar tidak dobel
+                    deleteModal.off('hidden.bs.modal');
+
+                    // Setelah modal input tertutup → buka modal konfirmasi
+                    deleteModal.on('hidden.bs.modal', function() {
+                        confirmDeleteModal.modal('show');
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Terjadi kesalahan. Coba lagi.");
+                });
         });
+
+
+
+
 
         // pindah Tambah Data → Upload Excel mulus
         const tambahDataModal = $('#tambahDataModal');
