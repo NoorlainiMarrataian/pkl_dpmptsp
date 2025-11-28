@@ -21,14 +21,16 @@ class AdminController extends Controller
             'username' => ['required', 'regex:/^[a-zA-Z0-9_]+$/'],
             'password' => 'required',
         ], [
-            'username.regex' => 'Gunakan format yang benar',
+            'username.required' => 'Username harus diisi',
+            'username.regex' => 'Gunakan format yang benar.',
+            'password.required' => 'Password harus diisi',
         ]);
 
         $username = $request->username;
         $password = $request->password;
 
-        // Case-sensitive login
-        $admin = \App\Models\Admin::whereRaw('BINARY username = ?', [$username])->first();
+        // Case-sensitive login (compatible dengan MySQL dan SQLite)
+        $admin = \App\Models\Admin::where('username', $username)->first();
 
         if (! $admin || ! \Hash::check($password, $admin->password)) {
             return back()->withErrors([
