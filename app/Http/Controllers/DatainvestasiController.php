@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Datainvestasi;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataInvestasiImport;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+use Throwable;
 
 class DatainvestasiController extends Controller
 {
@@ -148,6 +151,7 @@ class DatainvestasiController extends Controller
         return view('admin.data_investasi.upload');
     }
 
+
     public function upload(Request $request)
     {
         $request->validate([
@@ -158,16 +162,68 @@ class DatainvestasiController extends Controller
             'file.max'      => 'Ukuran file maksimal 5 MB.',
         ]);
 
+        /** @var UploadedFile $file */
+        $file = $request->file('file');
+
+        // BACA KE ARRAY dulu (tanpa melakukan import)
         try {
-            \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\DataInvestasiImport, $request->file('file'));
+            $sheets = Excel::toArray([], $file); // [] karena kita cuma mau array
+        } catch (Throwable $e) {
+            return redirect()
+                ->route('data_investasi.index')
+                ->with('error', 'Gagal membaca file Excel: '.$e->getMessage());
+        }
+
+        // Ambil sheet pertama
+        if (!isset($sheets[0]) || !is_array($sheets[0])) {
+            return redirect()->route('data_investasi.index')
+                ->with('error', 'File Excel kosong atau tidak dapat dibaca.');
+        }
+
+        $sheet = $sheets[0];
+
+        // Jika file hanya ada header / kosong -> tolak
+        // Asumsi: header ada di baris 0, data mulai baris 1 (sesuaikan kalau berbeda)
+        if (count($sheet) <= 1) {
+            return redirect()->route('data_investasi.index')
+                ->with('error', 'Isi file Excel kosong. Pastikan file sesuai template dan memiliki data.');
+        }
+
+        // Cek minimal satu baris data valid.
+        $foundValidRow = false;
+        foreach ($sheet as $index => $row) {
+            // lewati indeks header (biasanya 0)
+            if ($index === 0) continue;
+
+            // Pastikan kolom pertama (tahun) ada dan numeric (ubah index jika struktur berbeda)
+            if (isset($row[0]) && is_numeric($row[0]) && trim((string)$row[0]) !== '') {
+                // contoh tambahan: periksa 4 digit tahun
+                $tahun = (string)trim($row[0]);
+                if (preg_match('/^\d{4}$/', $tahun)) {
+                    $foundValidRow = true;
+                    break;
+                }
+            }
+        }
+
+        if (! $foundValidRow) {
+            return redirect()->route('data_investasi.index')
+                ->with('error', 'Tidak ditemukan baris data yang valid pada file. Pastikan template dan kolom Tahun terisi dengan benar (4 digit).');
+        }
+
+        // Semua ok -> lakukan import menggunakan Import class kamu
+        try {
+            Excel::import(new DataInvestasiImport, $file);
 
             return redirect()
                 ->route('data_investasi.index')
                 ->with('success', 'Data Excel berhasil diimpor.');
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
+            // Bila import melempar error (format baris salah, exception), tolak dan tampilkan pesan
             return redirect()
                 ->route('data_investasi.index')
                 ->with('error', 'Gagal mengimpor: '.$e->getMessage());
         }
     }
+
 }
