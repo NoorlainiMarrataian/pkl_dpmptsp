@@ -32,8 +32,9 @@ class DatainvestasiController extends Controller
 
     public function store(Request $request)
     {
+        // di DataInvestasiController.php (store)
         $validated = $request->validate([
-            'tahun'                     => 'required|digits:4|integer',
+            'tahun'                     => ['required', 'digits:4', 'regex:/^\d{4}$/'],
             'periode'                   => 'required|string|max:50',
             'status_penanaman_modal'    => 'required|string|max:10',
             'regional'                  => 'nullable|string|max:100',
@@ -48,7 +49,12 @@ class DatainvestasiController extends Controller
             'investasi_rp_juta'         => 'nullable|numeric',
             'investasi_us_ribu'         => 'nullable|numeric',
             'jumlah_tki'                => 'nullable|integer',
+        ], [
+            'tahun.required' => 'Kolom Tahun wajib diisi.',
+            'tahun.digits'   => 'Tahun harus terdiri dari 4 digit angka.',
+            'tahun.regex'    => 'Format Tahun tidak valid. Masukkan 4 digit angka, contoh: 2024.',
         ]);
+
 
         Datainvestasi::create($validated);
 
@@ -116,6 +122,16 @@ class DatainvestasiController extends Controller
         return view('admin.data_investasi.edit', compact('data_investasi'));
     }
 
+    public function check($id)
+    {
+        // cek apakah data dengan ID tersebut ada
+        $exists = Datainvestasi::where('id', $id)->exists();
+
+        return response()->json([
+            'exists' => $exists
+        ]);
+    }
+
     // DataInvestasiController.php
     public function uploadForm()
     {
@@ -124,25 +140,25 @@ class DatainvestasiController extends Controller
     }
 
     public function upload(Request $request)
-{
-    $request->validate([
-        'file' => 'required|mimes:xlsx,xls,csv|max:5120',
-    ], [
-        'file.required' => 'Silakan pilih file Excel terlebih dahulu.',
-        'file.mimes'    => 'Format harus .xlsx / .xls / .csv',
-        'file.max'      => 'Ukuran file maksimal 5 MB.',
-    ]);
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:5120',
+        ], [
+            'file.required' => 'Silakan pilih file Excel terlebih dahulu.',
+            'file.mimes'    => 'Format harus .xlsx / .xls / .csv',
+            'file.max'      => 'Ukuran file maksimal 5 MB.',
+        ]);
 
-    try {
-        \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\DataInvestasiImport, $request->file('file'));
+        try {
+            \Maatwebsite\Excel\Facades\Excel::import(new \App\Imports\DataInvestasiImport, $request->file('file'));
 
-        return redirect()
-            ->route('data_investasi.index')
-            ->with('success', 'Data Excel berhasil diimpor.');
-    } catch (\Throwable $e) {
-        return redirect()
-            ->route('data_investasi.index')
-            ->with('error', 'Gagal mengimpor: '.$e->getMessage());
-    }
+            return redirect()
+                ->route('data_investasi.index')
+                ->with('success', 'Data Excel berhasil diimpor.');
+        } catch (\Throwable $e) {
+            return redirect()
+                ->route('data_investasi.index')
+                ->with('error', 'Gagal mengimpor: '.$e->getMessage());
+        }
     }
 }
