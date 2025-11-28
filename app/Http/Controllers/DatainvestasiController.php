@@ -13,21 +13,30 @@ class DatainvestasiController extends Controller
     {
         $query = Datainvestasi::query();
 
-        // jika ada parameter search
+        // Jika ada input search
         if ($request->has('search') && $request->search != '') {
-            // filter berdasarkan kolom id
+
+            // Cek apakah isinya angka (id harus numeric)
+            if (!ctype_digit($request->search)) {
+                return redirect()
+                    ->route('data_investasi.index')
+                    ->with('error', 'ID harus berupa angka.');
+            }
+
+            // Baru lakukan filter jika valid angka
             $query->where('id', $request->search);
         }
 
-        // Jika ada parameter 'all', tampilkan semua data tanpa pagination
+        // Jika ada parameter 'all', tampilkan tanpa pagination
         if ($request->has('all')) {
-            $data_investasi = $query->paginate(10000); // Tetap gunakan paginator agar view tidak error
+            $data_investasi = $query->paginate(10000);
         } else {
             $data_investasi = $query->paginate(10);
         }
 
         return view('admin.data_investasi.index', compact('data_investasi'));
     }
+
 
 
     public function store(Request $request)
