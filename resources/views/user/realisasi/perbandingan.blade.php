@@ -210,10 +210,33 @@ $(document).ready(function(){
     // ===== PERBANDINGAN 1 =====
     $('#form-perbandingan1').submit(function(e){
         e.preventDefault();
+
+        // VALIDASI FILTER JENIS
+        let jenis = $('#jenis').val();
+        let tahun1 = $('#tahun1').val();
+        let tahun2 = $('#tahun2').val();
+
+        if(jenis === ""){
+            alert("Harap pilih filter Jenis.");
+            return;
+        }
+
+        if(tahun1 === ""){
+            alert("Harap pilih Tahun 1.");
+            return;
+        }
+
+        if(tahun2 === ""){
+            alert("Harap pilih Tahun 2.");
+            return;
+        }
+
+
         $.ajax({
             url: "{{ route('realisasi.perbandingan') }}",
             type: "GET",
             data: $(this).serialize(),
+
             success: function(response){
                 $('#tabel-perbandingan1').html(response.html);
 
@@ -239,7 +262,16 @@ $(document).ready(function(){
                     },
                     options: { responsive: true, maintainAspectRatio: false }
                 });
+            },
+
+            error: function(xhr){
+                if(xhr.responseJSON && xhr.responseJSON.error){
+                    alert(xhr.responseJSON.error);
+                } else {
+                    alert("Terjadi kesalahan pada server.");
+                }
             }
+
         });
     });
 
@@ -247,6 +279,40 @@ $(document).ready(function(){
     let chart2 = null;
     $('#form-perbandingan2').submit(function(e){
         e.preventDefault();
+
+        // ========== VALIDASI PERBANDINGAN 2 ==========
+        let jenis = $('#jenis_2').val();
+        let tahun1 = $('#tahun1_2').val();
+        let tahun2 = $('#tahun2_2').val();
+        let periode1 = $('#periode1').val();
+        let periode2 = $('#periode2').val();
+
+        if(jenis === ""){
+            alert("Harap pilih Jenis Investasi.");
+            return;
+        }
+
+        if(tahun1 === ""){
+            alert("Harap pilih Tahun 1.");
+            return;
+        }
+
+        if(periode1 === ""){
+            alert("Harap pilih Periode 1.");
+            return;
+        }
+
+        if(tahun2 === ""){
+            alert("Harap pilih Tahun 2.");
+            return;
+        }
+
+        if(periode2 === ""){
+            alert("Harap pilih Periode 2.");
+            return;
+        }
+
+        // ========== JIKA LOLOS VALIDASI → KIRIM AJAX ==========
         $.ajax({
             url: "{{ route('realisasi.perbandingan2') }}",
             type: "GET",
@@ -262,16 +328,7 @@ $(document).ready(function(){
                         labels: response.chartLabels,
                         datasets: [{
                             label: 'Total Investasi (Rp Juta)',
-                            data: response.chartData1.concat(response.chartData2),
-                            backgroundColor: [
-                                'rgba(255, 159, 64, 0.5)',
-                                'rgba(54, 162, 235, 0.5)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 159, 64, 1)',
-                                'rgba(54, 162, 235, 1)'
-                            ],
-                            borderWidth: 1
+                            data: response.chartData1.concat(response.chartData2)
                         }]
                     },
                     options: { responsive: true, maintainAspectRatio: false }
@@ -279,6 +336,7 @@ $(document).ready(function(){
             }
         });
     });
+
 });
 
 $(document).ready(function(){

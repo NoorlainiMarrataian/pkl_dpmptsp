@@ -298,6 +298,28 @@ class RealisasiInvestasiController extends Controller
 
     public function perbandingan(Request $request)
     {
+        // Validasi khusus AJAX (saat tombol Tampilkan ditekan)
+        if ($request->ajax()) {
+
+            if (!$request->jenis) {
+                return response()->json([
+                    'error' => 'Harap pilih filter Jenis.'
+                ], 400);
+            }
+
+            if (!$request->tahun1) {
+                return response()->json([
+                    'error' => 'Harap pilih Tahun 1.'
+                ], 400);
+            }
+
+            if (!$request->tahun2) {
+                return response()->json([
+                    'error' => 'Harap pilih Tahun 2.'
+                ], 400);
+            }
+        }
+
         $tahun1 = $request->tahun1;
         $tahun2 = $request->tahun2;
         $jenis  = $request->jenis; // jenis sama untuk kedua tahun
@@ -451,6 +473,7 @@ class RealisasiInvestasiController extends Controller
     // Halaman Perbandingan 2 (Petriwulan)
     public function perbandingan2(Request $request)
     {
+        
         $tahun1 = $request->tahun1;
         $tahun2 = $request->tahun2;
         $periode1 = $request->periode1; // triwulan tahun 1
