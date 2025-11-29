@@ -188,5 +188,4 @@ class AdminLoginTest extends TestCase
         // User tetap guest
         $this->assertGuest('admin');
     }
-
 }

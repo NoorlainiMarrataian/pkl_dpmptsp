@@ -23,7 +23,8 @@ class DatainvestasiController extends Controller
             if (!ctype_digit($request->search)) {
                 return redirect()
                     ->route('data_investasi.index')
-                    ->with('error', 'ID harus berupa angka.');
+                    ->withErrors(['search' => 'ID harus berupa angka.'])
+                    ->withInput();
             }
 
             // Baru lakukan filter jika valid angka
@@ -58,9 +59,9 @@ class DatainvestasiController extends Controller
             'kabupaten_kota'            => 'required|string|max:100',
             'wilayah_jawa'              => 'required|string|max:40',
             'pulau'                     => 'required|string|max:50',
-            'investasi_rp_juta'         => 'nullable|numeric',
-            'investasi_us_ribu'         => 'nullable|numeric',
-            'jumlah_tki'                => 'nullable|integer',
+            'investasi_rp_juta'         => 'nullable|numeric|min:0',
+            'investasi_us_ribu'         => 'nullable|numeric|min:0',
+            'jumlah_tki'                => 'nullable|integer|min:0',
         ], [
             'tahun.required' => 'Kolom Tahun wajib diisi.',
             'tahun.digits'   => 'Tahun harus terdiri dari 4 digit angka.',
@@ -95,9 +96,9 @@ class DatainvestasiController extends Controller
             'kabupaten_kota'            => 'required|string|max:100',
             'wilayah_jawa'              => 'required|string|max:40',
             'pulau'                     => 'required|string|max:50',
-            'investasi_rp_juta'         => 'nullable|numeric',
-            'investasi_us_ribu'         => 'nullable|numeric',
-            'jumlah_tki'                => 'nullable|integer',
+            'investasi_rp_juta'         => 'nullable|numeric|min:0',
+            'investasi_us_ribu'         => 'nullable|numeric|min:0',
+            'jumlah_tki'                => 'nullable|integer|min:0',
         ]);
 
         $data = Datainvestasi::findOrFail($id);

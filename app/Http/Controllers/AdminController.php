@@ -29,10 +29,13 @@ class AdminController extends Controller
         $username = $request->username;
         $password = $request->password;
 
-        // Case-sensitive login (compatible dengan MySQL dan SQLite)
+        // Fetch admin by username (DB may be case-insensitive). Enforce exact
+        // case match in application logic to ensure 'admin' != 'ADMIN'. This
+        // approach is portable across DB engines (avoids MySQL-specific BINARY).
         $admin = \App\Models\Admin::where('username', $username)->first();
 
-        if (! $admin || ! \Hash::check($password, $admin->password)) {
+        // Enforce exact-case username match and verify password
+        if (! $admin || $admin->username !== $username || ! \Hash::check($password, $admin->password)) {
             return back()->withErrors([
                 'username' => 'Username atau password salah',
             ]);
