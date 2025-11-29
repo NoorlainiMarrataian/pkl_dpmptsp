@@ -18,6 +18,11 @@
                     {{ $errors->first('search') }}
                 </div>
             @endif
+            @if ($errors->has('edit'))
+                <div class="alert alert-danger mt-2" style="padding:8px; font-size:14px;">
+                    {{ $errors->first('edit') }}
+                </div>
+            @endif
         </div>
         <div class="investasi-actions">
             <button type="button" class="btn investasi-btn-round investasi-btn-plus" data-toggle="modal" data-target="#tambahDataModal">
@@ -420,10 +425,6 @@
                     alert("Terjadi kesalahan. Coba lagi.");
                 });
         });
-
-
-
-
 
         // pindah Tambah Data → Upload Excel mulus
         const tambahDataModal = $('#tambahDataModal');

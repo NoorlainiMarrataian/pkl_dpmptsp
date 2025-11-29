@@ -89,5 +89,7 @@ Route::prefix('admin')->group(function () {
 
         // ✅ Data Laporan: langsung arahkan ke data_investasi.index
         Route::get('/laporan', [DataInvestasiController::class, 'index'])->name('admin.laporan.index');
+
+        Route::resource('data_investasi', DataInvestasiController::class);
     });
 });

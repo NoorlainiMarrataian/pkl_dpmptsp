@@ -23,7 +23,7 @@ class DatainvestasiController extends Controller
             if (!ctype_digit($request->search)) {
                 return redirect()
                     ->route('data_investasi.index')
-                    ->withErrors(['search' => 'ID harus berupa angka.'])
+                    ->withErrors(['search' => 'Nomor ID harus berupa angka.'])
                     ->withInput();
             }
 
@@ -131,7 +131,21 @@ class DatainvestasiController extends Controller
 
     public function edit($id)
     {
+        // Validasi ID harus berupa angka
+        if (!ctype_digit($id)) {
+            return redirect()
+                ->route('data_investasi.index')
+                ->withErrors(['edit' => 'Nomor ID harus berupa angka.']);
+        }
+
         $data_investasi = Datainvestasi::find($id);
+
+        if (!$data_investasi) {
+            return redirect()
+                ->route('data_investasi.index')
+                ->withErrors(['edit' => 'Data dengan Nomor ID tersebut tidak ada di sistem.']);
+        }
+
         return view('admin.data_investasi.edit', compact('data_investasi'));
     }
 
