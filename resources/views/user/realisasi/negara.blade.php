@@ -109,8 +109,8 @@
             </div>
             <textarea name="keperluan" placeholder="Keperluan" required></textarea>
             <div class="checkbox-group">
-                <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
-                <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+                <label><input type="checkbox" name="persetujuan_tanggung_jawab" value="1" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
+                <label><input type="checkbox" name="persetujuan_dpmptsp" value="1" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
             </div>
             <div class="popup-buttons">
                 <button type="submit" class="btn-blue">Unduh</button>
@@ -217,7 +217,16 @@
         e.preventDefault();
         var form = this;
 
-        // 1) Pastikan user sudah memilih Tahun dan Periode sebelum mengunduh
+        // 1) Validasi checkbox persetujuan
+        var checkbox1 = form.querySelector('input[name="persetujuan_tanggung_jawab"]');
+        var checkbox2 = form.querySelector('input[name="persetujuan_dpmptsp"]');
+        
+        if (!checkbox1.checked || !checkbox2.checked) {
+            alert('Anda harus mencentang kedua checkbox persetujuan sebelum mengunduh.');
+            return;
+        }
+
+        // 2) Pastikan user sudah memilih Tahun dan Periode sebelum mengunduh
         var tahunVal = document.getElementById('tahunSelect') ? document.getElementById('tahunSelect').value : '';
         var selectedTriwulanBtn = document.querySelector('.btn-periode.active');
         if (!tahunVal || !selectedTriwulanBtn) {
@@ -225,14 +234,14 @@
             return;
         }
 
-        // 2) Jika sudah memilih tetapi tidak ada data, tampilkan pesan "Data belum ada"
+        // 3) Jika sudah memilih tetapi tidak ada data, tampilkan pesan "Data belum ada"
         var tabelCard = document.querySelector('.tabel-card');
         if (!tabelCard) {
             alert('Tidak ada data yang diunduh. Silahkan pilih tahun dan periode valid');
             return;
         }
 
-        // 3) Validasi panjang telepon sebelum submit (digit only)
+        // 4) Validasi panjang telepon sebelum submit (digit only)
         var telEl = document.getElementById('telponInput');
         if (telEl) {
             var telDigits = telEl.value.replace(/\D/g, '');
@@ -243,7 +252,7 @@
             }
         }
 
-        // ✅ Tambahkan blok validasi emoji di sini
+        // 5) Validasi emoji
         const emojiRegex = /([\u203C-\u3299]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
 
         let hasEmoji = false;
