@@ -157,20 +157,19 @@ class RealisasiInvestasiController extends Controller
 
                 $dataLokasi = $dataLokasi->get();
         }
-            
 
         // Data untuk chart
         if ($jenisBagian1 === 'PMA') {
-            $chartLabels = $dataLokasi->pluck('kabupaten_kota');
-            $chartData   = $dataLokasi->pluck('total_investasi_rp_juta');
+            $chartLabels = $dataLokasi->pluck('kabupaten_kota')->toArray();
+            $chartData   = $dataLokasi->pluck('total_investasi_rp_juta')->toArray();
 
         } elseif ($jenisBagian1 === 'PMDN') {
-            $chartLabels = $dataLokasi->pluck('kabupaten_kota');
-            $chartData   = $dataLokasi->pluck('total_investasi_rp_juta');
+            $chartLabels = $dataLokasi->pluck('kabupaten_kota')->toArray();
+            $chartData   = $dataLokasi->pluck('total_investasi_rp_juta')->toArray();
 
         } elseif ($jenisBagian1 === 'PMA+PMDN') {
-            $chartLabels = $dataLokasi->pluck('kabupaten_kota');
-            $chartData   = $dataLokasi->pluck('total_investasi_rp_all'); 
+            $chartLabels = $dataLokasi->pluck('kabupaten_kota')->toArray();
+            $chartData   = $dataLokasi->pluck('total_investasi_rp_all')->toArray(); 
         } else {
             $chartLabels = [];
             $chartData   = [];
