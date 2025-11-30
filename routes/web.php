@@ -42,7 +42,7 @@ Route::get('/lokasi-investasi', [RealisasiInvestasiController::class, 'lokasi'])
     ->name('realisasi.lokasi');
 
 // Halaman utama Perbandingan Investasi
-Route::get('/perbandingan-investasi', [RealisasiInvestasiController::class, 'perbandingan'])
+Route::match(['get', 'post'], '/perbandingan-investasi', [RealisasiInvestasiController::class, 'perbandingan'])
     ->name('realisasi.perbandingan');
     
 //Halaman Pernandingan 2 Triwulan

@@ -20,4 +20,8 @@ class LogPengunduhan extends Model
         'keperluan',
         'waktu_download',
     ];
+
+    protected $casts = [
+        'waktu_download' => 'datetime',
+    ];
 }

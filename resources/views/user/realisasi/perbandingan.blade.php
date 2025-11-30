@@ -185,8 +185,8 @@
                 <input type="tel" name="telpon" placeholder="Telpon" pattern="[0-9]+" inputmode="numeric" required>
                 <textarea name="keperluan" placeholder="Keperluan" required></textarea>
                 <div class="checkbox-group">
-                    <label><input type="checkbox" required> Anda setuju bertanggung jawab atas data yang diunduh</label>
-                    <label><input type="checkbox" required> Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
+                    <label><input type="checkbox" name="persetujuan_tanggung_jawab" value="1" required > Anda setuju bertanggung jawab atas data yang diunduh</label>
+                    <label><input type="checkbox" name="persetujuan_dpmptsp" value="1" required > Pihak DPMPTSP tidak bertanggung jawab atas dampak penggunaan data</label>
                 </div>
                 <div class="popup-buttons">
                     <button type="submit" class="btn-blue">Unduh</button>

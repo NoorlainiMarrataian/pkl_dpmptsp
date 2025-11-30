@@ -297,26 +297,17 @@ class RealisasiInvestasiController extends Controller
 
     public function perbandingan(Request $request)
     {
-        // Validasi khusus AJAX (saat tombol Tampilkan ditekan)
+        // Validasi untuk request AJAX (GET atau POST)
         if ($request->ajax()) {
-
-            if (!$request->jenis) {
-                return response()->json([
-                    'error' => 'Harap pilih filter Jenis.'
-                ], 400);
-            }
-
-            if (!$request->tahun1) {
-                return response()->json([
-                    'error' => 'Harap pilih Tahun 1.'
-                ], 400);
-            }
-
-            if (!$request->tahun2) {
-                return response()->json([
-                    'error' => 'Harap pilih Tahun 2.'
-                ], 400);
-            }
+            $request->validate([
+                'jenis' => 'required',
+                'tahun1' => 'required',
+                'tahun2' => 'required',
+            ], [
+                'jenis.required' => 'Harap pilih filter Jenis.',
+                'tahun1.required' => 'Harap pilih Tahun 1.',
+                'tahun2.required' => 'Harap pilih Tahun 2.',
+            ]);
         }
 
         $tahun1 = $request->tahun1;
