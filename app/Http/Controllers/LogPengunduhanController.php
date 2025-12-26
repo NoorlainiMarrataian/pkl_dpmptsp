@@ -8,7 +8,6 @@ use Illuminate\Validation\ValidationException;
 
 class LogPengunduhanController extends Controller
 {
-    // Simpan data dari form user
     public function store(Request $request)
     {
         $request->validate([
@@ -44,7 +43,6 @@ class LogPengunduhanController extends Controller
             }
         }
 
-        // validasi tambahan: cek spasi di email
         $email = $request->input('email_pengunduh');
         if (strpos($email, ' ') !== false) {
             throw ValidationException::withMessages([
@@ -52,7 +50,6 @@ class LogPengunduhanController extends Controller
             ]);
         }
 
-        // ✅ Validasi tambahan: Cek apakah telpon hanya berisi angka
         $telpon = $request->input('telpon');
         if (!preg_match('/^[0-9]+$/', $telpon)) {
             throw ValidationException::withMessages([
@@ -60,7 +57,6 @@ class LogPengunduhanController extends Controller
             ]);
         }
 
-        // ✅ Validasi tambahan: Cek panjang telpon (5-20 digit)
         if (strlen($telpon) < 5 || strlen($telpon) > 20) {
             throw ValidationException::withMessages([
                 'telpon' => 'Nomor telepon harus antara 5-20 digit.',
@@ -76,11 +72,9 @@ class LogPengunduhanController extends Controller
             'waktu_download' => now(),
         ]);
 
-    // Setelah isi form, return JSON agar AJAX bisa lanjutkan download PDF di frontend
     return response()->json(['success' => true]);
     }
 
-    // Tampilkan data untuk admin
     public function index()
     {
         $logs = LogPengunduhan::latest()->get();

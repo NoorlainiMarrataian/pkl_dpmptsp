@@ -16,22 +16,16 @@ class DatainvestasiController extends Controller
     {
         $query = Datainvestasi::query();
 
-        // Jika ada input search
         if ($request->has('search') && $request->search != '') {
-
-            // Cek apakah isinya angka (id harus numeric)
             if (!ctype_digit($request->search)) {
                 return redirect()
                     ->route('data_investasi.index')
                     ->withErrors(['search' => 'Nomor ID harus berupa angka.'])
                     ->withInput();
             }
-
-            // Baru lakukan filter jika valid angka
             $query->where('id', $request->search);
         }
 
-        // Jika ada parameter 'all', tampilkan tanpa pagination
         if ($request->has('all')) {
             $data_investasi = $query->paginate(10000);
         } else {
@@ -45,7 +39,6 @@ class DatainvestasiController extends Controller
 
     public function store(Request $request)
     {
-        // di DataInvestasiController.php (store)
         $validated = $request->validate([
             'tahun'                     => ['required', 'digits:4', 'regex:/^\d{4}$/'],
             'periode'                   => 'required|string|max:50',
@@ -119,19 +112,15 @@ class DatainvestasiController extends Controller
 
     public function create()
     {
-        // ambil id terakhir dari tabel data_investasi
         $lastId = \DB::table('data_investasi')->max('id'); 
 
-        // kalau kosong, mulai dari 1
         $newId = $lastId ? $lastId + 1 : 1;
 
-        // kirim ke view
         return view('admin.data_investasi.create', compact('newId'));
     }
 
     public function edit($id)
     {
-        // Validasi ID harus berupa angka
         if (!ctype_digit($id)) {
             return redirect()
                 ->route('data_investasi.index')
@@ -151,7 +140,6 @@ class DatainvestasiController extends Controller
 
     public function check($id)
     {
-        // cek apakah data dengan ID tersebut ada
         $exists = Datainvestasi::where('id', $id)->exists();
 
         return response()->json([
@@ -159,10 +147,8 @@ class DatainvestasiController extends Controller
         ]);
     }
 
-    // DataInvestasiController.php
     public function uploadForm()
     {
-        // Menampilkan halaman upload
         return view('admin.data_investasi.upload');
     }
 
@@ -180,16 +166,14 @@ class DatainvestasiController extends Controller
         /** @var UploadedFile $file */
         $file = $request->file('file');
 
-        // BACA KE ARRAY dulu (tanpa melakukan import)
         try {
-            $sheets = Excel::toArray([], $file); // [] karena kita cuma mau array
+            $sheets = Excel::toArray([], $file);
         } catch (Throwable $e) {
             return redirect()
                 ->route('data_investasi.index')
                 ->with('error', 'Gagal membaca file Excel: '.$e->getMessage());
         }
 
-        // Ambil sheet pertama
         if (!isset($sheets[0]) || !is_array($sheets[0])) {
             return redirect()->route('data_investasi.index')
                 ->with('error', 'File Excel kosong atau tidak dapat dibaca.');
@@ -197,22 +181,15 @@ class DatainvestasiController extends Controller
 
         $sheet = $sheets[0];
 
-        // Jika file hanya ada header / kosong -> tolak
-        // Asumsi: header ada di baris 0, data mulai baris 1 (sesuaikan kalau berbeda)
         if (count($sheet) <= 1) {
             return redirect()->route('data_investasi.index')
                 ->with('error', 'Isi file Excel kosong. Pastikan file sesuai template dan memiliki data.');
         }
 
-        // Cek minimal satu baris data valid.
         $foundValidRow = false;
         foreach ($sheet as $index => $row) {
-            // lewati indeks header (biasanya 0)
             if ($index === 0) continue;
-
-            // Pastikan kolom pertama (tahun) ada dan numeric (ubah index jika struktur berbeda)
             if (isset($row[0]) && is_numeric($row[0]) && trim((string)$row[0]) !== '') {
-                // contoh tambahan: periksa 4 digit tahun
                 $tahun = (string)trim($row[0]);
                 if (preg_match('/^\d{4}$/', $tahun)) {
                     $foundValidRow = true;
@@ -225,8 +202,6 @@ class DatainvestasiController extends Controller
             return redirect()->route('data_investasi.index')
                 ->with('error', 'Tidak ditemukan baris data yang valid pada file. Pastikan template dan kolom Tahun terisi dengan benar (4 digit).');
         }
-
-        // Semua ok -> lakukan import menggunakan Import class kamu
         try {
             Excel::import(new DataInvestasiImport, $file);
 
@@ -234,7 +209,6 @@ class DatainvestasiController extends Controller
                 ->route('data_investasi.index')
                 ->with('success', 'Data Excel berhasil diimpor.');
         } catch (Throwable $e) {
-            // Bila import melempar error (format baris salah, exception), tolak dan tampilkan pesan
             return redirect()
                 ->route('data_investasi.index')
                 ->with('error', 'Gagal mengimpor: '.$e->getMessage());
