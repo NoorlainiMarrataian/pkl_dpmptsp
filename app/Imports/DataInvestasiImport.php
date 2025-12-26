@@ -21,12 +21,10 @@ class DataInvestasiImport implements ToModel, WithStartRow, SkipsEmptyRows, With
 
     public function model(array $row)
     {
-        // ❗ Validasi kolom sesuai template
         if (count($row) < 15) {
             throw new Exception("Format template tidak sesuai. Kolom tidak lengkap.");
         }
 
-        // ❗ Validasi minimal 1 baris bernilai
         if (isset($row[0]) && is_numeric($row[0])) {
             $this->hasValidData = true;
 

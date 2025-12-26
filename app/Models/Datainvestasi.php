@@ -9,7 +9,7 @@ class Datainvestasi extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_investasi'; // <- kasih nama tabel sesuai di DB
+    protected $table = 'data_investasi';
 
     protected $fillable = [  
         'tahun',
