@@ -101,7 +101,6 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest' 
         ]);
-
         $responsePMA->assertStatus(200);
         $responsePMA->assertJsonStructure([
             'html',
@@ -109,7 +108,6 @@ class PerbandinganTest extends TestCase
             'chartData1',
             'chartData2'
         ]);
-
         $jsonPMA = $responsePMA->json();
         $this->assertContains('2022', $jsonPMA['chartLabels']);
         $this->assertContains('2023', $jsonPMA['chartLabels']);
@@ -126,9 +124,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responsePMDN->assertStatus(200);
-        
         $jsonPMDN = $responsePMDN->json();
         $this->assertContains('2022', $jsonPMDN['chartLabels']);
         $this->assertContains('2023', $jsonPMDN['chartLabels']);
@@ -143,9 +139,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseCombined->assertStatus(200);
-        
         $jsonCombined = $responseCombined->json();
         $this->assertContains('2022', $jsonCombined['chartLabels']);
         $this->assertContains('2023', $jsonCombined['chartLabels']);
@@ -212,9 +206,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseData->assertStatus(200);
-        
         $jsonData = $responseData->json();
         $this->assertNotEmpty($jsonData['html']);
         $this->assertNotEmpty($jsonData['chartData1']);
@@ -227,7 +219,6 @@ class PerbandinganTest extends TestCase
         $response->assertSee('name="email_pengunduh"', false);
         $response->assertSee('name="telpon"', false);
         $response->assertSee('name="keperluan"', false);
-
         $downloadResponse = $this->post(route('log_pengunduhan.store'), [
             'kategori_pengunduh' => 'Individu',
             'nama_instansi' => 'PT Analisis Data Indonesia',
@@ -237,7 +228,6 @@ class PerbandinganTest extends TestCase
             'persetujuan_tanggung_jawab' => '1', 
             'persetujuan_dpmptsp' => '1',         
         ]);
-
         $downloadResponse->assertStatus(200);
         $downloadResponse->assertJson(['success' => true]);
 
@@ -300,9 +290,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responsePMDN->assertStatus(200);
-
         $downloadResponse2 = $this->post(route('log_pengunduhan.store'), [
             'kategori_pengunduh' => 'Perusahaan',
             'nama_instansi' => 'CV Riset PMDN',
@@ -312,7 +300,6 @@ class PerbandinganTest extends TestCase
             'persetujuan_tanggung_jawab' => '1',
             'persetujuan_dpmptsp' => '1',
         ]);
-
         $downloadResponse2->assertStatus(200);
         $downloadResponse2->assertJson(['success' => true]);
 
@@ -331,9 +318,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseCombined->assertStatus(200);
-
         $downloadResponse3 = $this->post(route('log_pengunduhan.store'), [
             'kategori_pengunduh' => 'Lainnya',
             'nama_instansi' => 'Universitas Lambung Mangkurat',
@@ -343,7 +328,6 @@ class PerbandinganTest extends TestCase
             'persetujuan_tanggung_jawab' => '1',
             'persetujuan_dpmptsp' => '1',
         ]);
-
         $downloadResponse3->assertStatus(200);
         $downloadResponse3->assertJson(['success' => true]);
 
@@ -352,7 +336,6 @@ class PerbandinganTest extends TestCase
             'nama_instansi' => 'Universitas Lambung Mangkurat',
             'email_pengunduh' => 'akademik@ulm.ac.id'
         ]);
-
         $this->assertDatabaseCount('log_pengunduhan', 3);
     }
 
@@ -449,7 +432,6 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest' 
         ]);
-
         $responsePMA->assertStatus(200);
         $responsePMA->assertJsonStructure([
             'html',
@@ -457,7 +439,6 @@ class PerbandinganTest extends TestCase
             'chartData1',
             'chartData2'
         ]);
-
         $jsonPMA = $responsePMA->json();
         $this->assertStringContainsString('Triwulan 1', implode(' ', $jsonPMA['chartLabels']));
         $this->assertStringContainsString('2022', implode(' ', $jsonPMA['chartLabels']));
@@ -478,9 +459,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responsePMDN->assertStatus(200);
-        
         $jsonPMDN = $responsePMDN->json();
         $this->assertStringContainsString('Triwulan 3', implode(' ', $jsonPMDN['chartLabels']));
         $this->assertStringContainsString('2022', implode(' ', $jsonPMDN['chartLabels']));
@@ -489,7 +468,6 @@ class PerbandinganTest extends TestCase
         $this->assertNotEmpty($jsonPMDN['chartData1']);
         $this->assertNotEmpty($jsonPMDN['chartData2']);
         $this->assertStringContainsString('PMDN', $jsonPMDN['html']);
-
         $responseCombined = $this->get(route('realisasi.perbandingan2', [
             'jenis' => 'PMA+PMDN',
             'tahun1' => 2022,
@@ -499,9 +477,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseCombined->assertStatus(200);
-        
         $jsonCombined = $responseCombined->json();
         $this->assertStringContainsString('Triwulan 1', implode(' ', $jsonCombined['chartLabels']));
         $this->assertStringContainsString('2022', implode(' ', $jsonCombined['chartLabels']));
@@ -520,7 +496,6 @@ class PerbandinganTest extends TestCase
             strpos($jsonCombined['html'], '2023') !== false,
             'HTML should contain data for year 2023'
         );
-
         $responseMultiPeriod = $this->get(route('realisasi.perbandingan2', [
             'jenis' => 'PMA+PMDN',
             'tahun1' => 2022,
@@ -530,9 +505,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseMultiPeriod->assertStatus(200);
-        
         $jsonMulti = $responseMultiPeriod->json();
         $this->assertStringContainsString('Triwulan 1', implode(' ', $jsonMulti['chartLabels']));
         $this->assertStringContainsString('Triwulan 4', implode(' ', $jsonMulti['chartLabels']));
@@ -543,8 +516,6 @@ class PerbandinganTest extends TestCase
     /** @test */
     public function PD_04()
     {
-        // PRE-CONDITION: Buat data investasi untuk testing perbandingan per triwulan
-        // Data untuk Tahun 2022 Triwulan 1 - PMA
         Datainvestasi::create([
             'tahun' => 2022,
             'periode' => 'Triwulan 1',
@@ -563,7 +534,6 @@ class PerbandinganTest extends TestCase
             'jumlah_tki' => 50,
         ]);
 
-        // Data untuk Tahun 2023 Triwulan 2 - PMA
         Datainvestasi::create([
             'tahun' => 2023,
             'periode' => 'Triwulan 2',
@@ -582,7 +552,6 @@ class PerbandinganTest extends TestCase
             'jumlah_tki' => 80,
         ]);
 
-        // Data untuk Tahun 2022 Triwulan 3 - PMDN
         Datainvestasi::create([
             'tahun' => 2022,
             'periode' => 'Triwulan 3',
@@ -601,7 +570,6 @@ class PerbandinganTest extends TestCase
             'jumlah_tki' => 30,
         ]);
 
-        // Data untuk Tahun 2023 Triwulan 4 - PMDN
         Datainvestasi::create([
             'tahun' => 2023,
             'periode' => 'Triwulan 4',
@@ -620,15 +588,8 @@ class PerbandinganTest extends TestCase
             'jumlah_tki' => 45,
         ]);
 
-        // ACTION STEP:
-        // 1. Akses halaman Bandingkan Data
         $response = $this->get(route('realisasi.perbandingan'));
         $response->assertStatus(200);
-
-        // 2. Pilih filter Jenis (PMA)
-        // 3. Pilih Tahun 1 (2022) dan Tahun 2 (2023)
-        // 4. Pilih Periode 1 (Triwulan 1) dan Periode 2 (Triwulan 2)
-        // 5. Klik tombol "Tampilkan"
         $responseData = $this->get(route('realisasi.perbandingan2', [
             'jenis' => 'PMA',
             'tahun1' => 2022,
@@ -638,44 +599,32 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseData->assertStatus(200);
-        
-        // Verifikasi data ditampilkan
         $jsonData = $responseData->json();
         $this->assertNotEmpty($jsonData['html']);
         $this->assertNotEmpty($jsonData['chartData1']);
         $this->assertNotEmpty($jsonData['chartData2']);
 
-        // 6. Klik tombol "Unduh"
-        // Verifikasi popup unduh Bagian 2 ada di halaman
         $response->assertSee('Data Diri - Bagian 2');
         $response->assertSee('Silahkan isi formulir untuk mengunduh Bagian 2');
-        
-        // Verifikasi form fields ada
         $response->assertSee('name="kategori_pengunduh"', false);
         $response->assertSee('name="nama_instansi"', false);
         $response->assertSee('name="email_pengunduh"', false);
         $response->assertSee('name="telpon"', false);
         $response->assertSee('name="keperluan"', false);
 
-        // 7. Isi semua form unduh dengan valid
-        // 8. Klik tombol "Unduh"
         $downloadResponse = $this->post(route('log_pengunduhan.store'), [
             'kategori_pengunduh' => 'Individu',
             'nama_instansi' => 'PT Analisis Triwulan Indonesia',
             'email_pengunduh' => 'triwulan@example.com',
             'telpon' => '081234567890',
             'keperluan' => 'Untuk keperluan analisis perbandingan investasi per triwulan',
-            'persetujuan_tanggung_jawab' => '1',  // ✅ Checkbox
-            'persetujuan_dpmptsp' => '1',         // ✅ Checkbox
+            'persetujuan_tanggung_jawab' => '1',
+            'persetujuan_dpmptsp' => '1',
         ]);
-
-        // EXPECTED RESULT: Sistem berhasil mengunduh file PDF sesuai data perbandingan yang difilter
         $downloadResponse->assertStatus(200);
         $downloadResponse->assertJson(['success' => true]);
 
-        // Verifikasi data log pengunduhan tersimpan di database
         $this->assertDatabaseHas('log_pengunduhan', [
             'kategori_pengunduh' => 'Individu',
             'nama_instansi' => 'PT Analisis Triwulan Indonesia',
@@ -683,11 +632,7 @@ class PerbandinganTest extends TestCase
             'telpon' => '081234567890',
             'keperluan' => 'Untuk keperluan analisis perbandingan investasi per triwulan'
         ]);
-
-        // Verifikasi jumlah data di database
         $this->assertDatabaseCount('log_pengunduhan', 1);
-
-        // Verifikasi waktu download tercatat
         $log = \App\Models\LogPengunduhan::first();
         $this->assertNotNull($log->waktu_download);
         $this->assertEquals('Individu', $log->kategori_pengunduh);
@@ -695,10 +640,6 @@ class PerbandinganTest extends TestCase
         $this->assertEquals('triwulan@example.com', $log->email_pengunduh);
         $this->assertEquals('081234567890', $log->telpon);
 
-        // BONUS: Test dengan filter PMDN dan periode berbeda
-        // 2. Pilih filter PMDN
-        // 3. Pilih Tahun 1 (2022) Periode 3 dan Tahun 2 (2023) Periode 4
-        // 4. Klik tombol "Tampilkan"
         $responsePMDN = $this->get(route('realisasi.perbandingan2', [
             'jenis' => 'PMDN',
             'tahun1' => 2022,
@@ -708,11 +649,8 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responsePMDN->assertStatus(200);
 
-        // 5. Klik tombol "Unduh"
-        // 6. Isi form unduh dengan valid
         $downloadResponse2 = $this->post(route('log_pengunduhan.store'), [
             'kategori_pengunduh' => 'Perusahaan',
             'nama_instansi' => 'CV Riset PMDN Triwulan',
@@ -722,23 +660,15 @@ class PerbandinganTest extends TestCase
             'persetujuan_tanggung_jawab' => '1',
             'persetujuan_dpmptsp' => '1',
         ]);
-
         $downloadResponse2->assertStatus(200);
         $downloadResponse2->assertJson(['success' => true]);
 
-        // Verifikasi data PMDN tersimpan
         $this->assertDatabaseHas('log_pengunduhan', [
             'kategori_pengunduh' => 'Perusahaan',
             'nama_instansi' => 'CV Riset PMDN Triwulan',
             'email_pengunduh' => 'riset.pmdn@example.com'
         ]);
-
-        // Total data harus 2 (PMA + PMDN)
         $this->assertDatabaseCount('log_pengunduhan', 2);
-
-        // BONUS: Test dengan filter PMA+PMDN
-        // 2. Pilih filter PMA+PMDN
-        // 3. Pilih Tahun 1 (2022) Periode 1 dan Tahun 2 (2023) Periode 4
         $responseCombined = $this->get(route('realisasi.perbandingan2', [
             'jenis' => 'PMA+PMDN',
             'tahun1' => 2022,
@@ -748,11 +678,8 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseCombined->assertStatus(200);
 
-        // 4. Klik tombol "Unduh"
-        // 5. Isi form unduh dengan valid
         $downloadResponse3 = $this->post(route('log_pengunduhan.store'), [
             'kategori_pengunduh' => 'Lainnya',
             'nama_instansi' => 'Universitas Lambung Mangkurat - Riset Triwulan',
@@ -762,21 +689,16 @@ class PerbandinganTest extends TestCase
             'persetujuan_tanggung_jawab' => '1',
             'persetujuan_dpmptsp' => '1',
         ]);
-
         $downloadResponse3->assertStatus(200);
         $downloadResponse3->assertJson(['success' => true]);
 
-        // Verifikasi data PMA+PMDN tersimpan
         $this->assertDatabaseHas('log_pengunduhan', [
             'kategori_pengunduh' => 'Lainnya',
             'nama_instansi' => 'Universitas Lambung Mangkurat - Riset Triwulan',
             'email_pengunduh' => 'akademik.triwulan@ulm.ac.id'
         ]);
 
-        // Total data harus 3 (PMA + PMDN + PMA+PMDN)
         $this->assertDatabaseCount('log_pengunduhan', 3);
-
-        // Verifikasi semua log memiliki waktu download
         $allLogs = \App\Models\LogPengunduhan::all();
         foreach ($allLogs as $logEntry) {
             $this->assertNotNull($logEntry->waktu_download);
@@ -787,7 +709,6 @@ class PerbandinganTest extends TestCase
     /** @test */
     public function PD_05()
     {
-        // PRE-CONDITION: Buat data investasi untuk tahun yang sama
         Datainvestasi::create([
             'tahun' => 2022,
             'periode' => 'Triwulan 1',
@@ -824,8 +745,6 @@ class PerbandinganTest extends TestCase
             'jumlah_tki' => 30,
         ]);
 
-        // ACTION STEP:
-        // 1. Akses halaman Bandingkan Data
         $response = $this->get(route('realisasi.perbandingan'));
         $response->assertStatus(200);
         $response->assertSee('PERBANDINGAN REALISASI INVESTASI');
@@ -835,9 +754,6 @@ class PerbandinganTest extends TestCase
         $response->assertSee('Tahun 2');
         $response->assertSee('Tampilkan');
 
-        // 2. Pilih filter Jenis (PMA)
-        // 3. Pilih Tahun 1 (2022) dan Tahun 2 (2022) - tahun yang sama
-        // 4. Klik tombol "Tampilkan"
         $responsePMA = $this->get(route('realisasi.perbandingan', [
             'jenis' => 'PMA',
             'tahun1' => 2022,
@@ -845,7 +761,6 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responsePMA->assertStatus(200);
         $responsePMA->assertJsonStructure([
             'html',
@@ -853,18 +768,14 @@ class PerbandinganTest extends TestCase
             'chartData1',
             'chartData2'
         ]);
-
         $jsonPMA = $responsePMA->json();
-        // Karena tahun sama, chartLabels harus berisi '2022' dua kali
         $this->assertEquals(['2022', '2022'], $jsonPMA['chartLabels']);
         $this->assertNotEmpty($jsonPMA['chartData1']);
         $this->assertNotEmpty($jsonPMA['chartData2']);
-        // Data harus sama karena tahun sama
         $this->assertEquals($jsonPMA['chartData1'], $jsonPMA['chartData2']);
         $this->assertStringContainsString('PMA', $jsonPMA['html']);
         $this->assertStringContainsString('Banjarmasin', $jsonPMA['html']);
 
-        // 5. Pilih filter Jenis (PMDN) dengan tahun sama
         $responsePMDN = $this->get(route('realisasi.perbandingan', [
             'jenis' => 'PMDN',
             'tahun1' => 2022,
@@ -872,9 +783,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responsePMDN->assertStatus(200);
-
         $jsonPMDN = $responsePMDN->json();
         $this->assertEquals(['2022', '2022'], $jsonPMDN['chartLabels']);
         $this->assertNotEmpty($jsonPMDN['chartData1']);
@@ -882,7 +791,6 @@ class PerbandinganTest extends TestCase
         $this->assertEquals($jsonPMDN['chartData1'], $jsonPMDN['chartData2']);
         $this->assertStringContainsString('PMDN', $jsonPMDN['html']);
 
-        // 6. Pilih filter Jenis (PMA+PMDN) dengan tahun sama
         $responseCombined = $this->get(route('realisasi.perbandingan', [
             'jenis' => 'PMA+PMDN',
             'tahun1' => 2022,
@@ -890,9 +798,7 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseCombined->assertStatus(200);
-
         $jsonCombined = $responseCombined->json();
         $this->assertEquals(['2022', '2022'], $jsonCombined['chartLabels']);
         $this->assertNotEmpty($jsonCombined['chartData1']);
@@ -903,14 +809,11 @@ class PerbandinganTest extends TestCase
             strpos($jsonCombined['html'], '2022') !== false,
             'HTML should contain data for year 2022'
         );
-
-        // EXPECTED RESULT: Sistem berhasil menampilkan perbandingan dengan tahun yang sama, data identik
     }
 
     /** @test */
     public function PD_06()
     {
-        // PRE-CONDITION: Buat data investasi untuk testing perbandingan
         Datainvestasi::create([
             'tahun' => 2022,
             'periode' => 'Triwulan 1',
@@ -947,8 +850,6 @@ class PerbandinganTest extends TestCase
             'jumlah_tki' => 80,
         ]);
 
-        // ACTION STEP:
-        // 1. Akses halaman Bandingkan Data
         $response = $this->get(route('realisasi.perbandingan'));
         $response->assertStatus(200);
         $response->assertSee('PERBANDINGAN REALISASI INVESTASI');
@@ -958,8 +859,6 @@ class PerbandinganTest extends TestCase
         $response->assertSee('Tahun 2');
         $response->assertSee('Tampilkan');
 
-        // 2. Pilih filter valid
-        // 3. Klik tombol "Tampilkan"
         $responseData = $this->get(route('realisasi.perbandingan', [
             'jenis' => 'PMA',
             'tahun1' => 2022,
@@ -967,17 +866,12 @@ class PerbandinganTest extends TestCase
         ]), [
             'X-Requested-With' => 'XMLHttpRequest'
         ]);
-
         $responseData->assertStatus(200);
-
-        // Verifikasi data ditampilkan
         $jsonData = $responseData->json();
         $this->assertNotEmpty($jsonData['html']);
         $this->assertNotEmpty($jsonData['chartData1']);
         $this->assertNotEmpty($jsonData['chartData2']);
 
-        // 4. Klik tombol "Unduh"
-        // Verifikasi popup unduh Bagian 1 ada di halaman
         $response->assertSee('Data Diri - Bagian 1');
         $response->assertSee('Silahkan isi formulir untuk mengunduh Bagian 1');
         $response->assertSee('name="kategori_pengunduh"', false);
@@ -986,10 +880,7 @@ class PerbandinganTest extends TestCase
         $response->assertSee('name="telpon"', false);
         $response->assertSee('name="keperluan"', false);
 
-        // 5. Isi form unduh tidak lengkap (misalnya kategori_pengunduh tidak dipilih)
-        // 6. Klik tombol "Unduh"
         $downloadResponse = $this->postJson(route('log_pengunduhan.store'), [
-            // kategori_pengunduh tidak diisi (required)
             'nama_instansi' => 'PT Test Incomplete',
             'email_pengunduh' => 'test@example.com',
             'telpon' => '081234567890',
@@ -997,8 +888,6 @@ class PerbandinganTest extends TestCase
             'persetujuan_tanggung_jawab' => '1',
             'persetujuan_dpmptsp' => '1',
         ]);
-
-        // EXPECTED RESULT: Sistem menampilkan peringatan (validation error)
         $downloadResponse->assertStatus(422);
         $downloadResponse->assertJsonValidationErrors(['kategori_pengunduh']);
     }
@@ -1006,7 +895,6 @@ class PerbandinganTest extends TestCase
     /** @test */
     public function PD_07()
     {
-        // PRE-CONDITION: User berada di halaman Bandingkan Data
         Datainvestasi::create([
             'tahun' => 2022,
             'periode' => 'Triwulan 1',
@@ -1025,7 +913,6 @@ class PerbandinganTest extends TestCase
             'jumlah_tki' => 50,
         ]);
 
-        // ACTION STEP 1: Akses halaman Bandingkan Data
         $response = $this->get(route('realisasi.perbandingan'));
         $response->assertStatus(200);
         $response->assertSee('PERBANDINGAN REALISASI INVESTASI');
@@ -1034,21 +921,10 @@ class PerbandinganTest extends TestCase
         $response->assertSee('Tahun 1');
         $response->assertSee('Tahun 2');
         $response->assertSee('Tampilkan');
-
-        // EXPECTED RESULT: Sistem menampilkan peringatan "Harap pilih filter Jenis."
-        // Karena validasi ada di client-side (JavaScript), verify bahwa:
-        
-        // 1. Validasi JavaScript ada di halaman
         $response->assertSee('if(jenis === ""){', false);
         $response->assertSee('alert("Harap pilih filter Jenis.");', false);
-        
-        // 2. Return statement untuk prevent form submission ada
         $response->assertSee('return;', false);
-        
-        // 3. Form submit handler ada
         $response->assertSee('$(\'#form-perbandingan1\').submit(function(e)', false);
-        
-        // Verify pesan validasi ada di halaman (untuk user)
         $response->assertSee('Harap pilih filter Jenis.', false);
     }
 

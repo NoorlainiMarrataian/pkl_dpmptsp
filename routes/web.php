@@ -13,69 +13,44 @@ use App\Http\Controllers\RealisasiInvestasiController;
 | Web Routes (Frontend / User)
 |--------------------------------------------------------------------------
 */
-
-// Cek ID data investasi (untuk AJAX delete/edit)
 Route::get('/data_investasi/check/{id}', [DataInvestasiController::class, 'check'])
     ->name('data_investasi.check');
 
-
-// ✅ resource otomatis sudah berisi index, create, store, show, edit, update, destroy
 Route::resource('data_investasi', DataInvestasiController::class);
 
-// Halaman utama (/) diarahkan ke dashboard user, dan diberi nama "home"
 Route::get('/', function () {
     return redirect()->route('user.dashboard');
 })->name('home');
 
-// Halaman dashboard user
 Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
-
-// Halaman realisasi investasi (user)
 Route::get('/realisasi-investasi', [UserController::class, 'realisasi'])->name('realisasi.realisasiinvestasi');
-
-// ✅ Halaman Negara Investor (user)
 Route::get('/negara-investor', [RealisasiInvestasiController::class, 'negaraInvestor'])
     ->name('realisasi.negara');
 
-// ✅ Halaman Lokasi (user)
 Route::get('/lokasi-investasi', [RealisasiInvestasiController::class, 'lokasi'])
     ->name('realisasi.lokasi');
 
-// Halaman utama Perbandingan Investasi
 Route::match(['get', 'post'], '/perbandingan-investasi', [RealisasiInvestasiController::class, 'perbandingan'])
     ->name('realisasi.perbandingan');
-    
-//Halaman Pernandingan 2 Triwulan
+
 Route::get('/perbandingan2-investasi', [RealisasiInvestasiController::class, 'perbandingan2'])
     ->name('realisasi.perbandingan2');
 
-// Download Excel Perbandingan Bagian 1
 Route::get('/perbandingan-investasi/download1', [RealisasiInvestasiController::class, 'downloadBagian1'])
     ->name('realisasi.perbandingan.download1');
 
-// Download Excel Perbandingan Bagian 2
 Route::get('/perbandingan-investasi/download2', [RealisasiInvestasiController::class, 'downloadBagian2'])
     ->name('realisasi.perbandingan.download2');
 
-
-// Route GET untuk menampilkan form upload
 Route::get('/data_investasi/upload', [DataInvestasiController::class, 'uploadForm'])->name('data_investasi.upload.form');
-
-// Route POST untuk memproses file upload
 Route::post('/data_investasi/upload', [DataInvestasiController::class, 'upload'])->name('data_investasi.upload');
-
-// Route untuk mengunduh data investasi dalam format Excel
 Route::post('/log-pengunduhan', [LogPengunduhanController::class, 'store'])->name('log_pengunduhan.store');
-
-
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes Admin
 |--------------------------------------------------------------------------
 */
-
-// halaman login admin
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminController::class, 'login']);
@@ -83,13 +58,8 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
-
-        // log pengunduhan
         Route::get('/log-pengunduhan', [LogPengunduhanController::class, 'index'])->name('admin.log_pengunduhan.index');
-
-        // ✅ Data Laporan: langsung arahkan ke data_investasi.index
         Route::get('/laporan', [DataInvestasiController::class, 'index'])->name('admin.laporan.index');
-
         Route::resource('data_investasi', DataInvestasiController::class);
     });
 });
