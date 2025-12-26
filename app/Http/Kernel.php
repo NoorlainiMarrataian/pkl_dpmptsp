@@ -38,7 +38,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
-            // 👉 Tambahkan ini agar setiap kunjungan web dihitung
             \App\Http\Middleware\CountVisitor::class,
         ],
 
