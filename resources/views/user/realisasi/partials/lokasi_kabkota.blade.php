@@ -1,225 +1,197 @@
-{{-- partial: lokasi_kabkota.blade.php --}}
-    <h2 class="judul-lokasi">Data Realisasi Investasi Berdasarkan Kabupaten/Kota</h2>
-
-    {{-- Filter Tahun, Jenis, dan Periode --}}
-    <form class="filter-bar" action="{{ route('realisasi.lokasi') }}" method="GET">
-        <select class="dropdown-tahun" name="tahun">
-            <option value="">Pilih Tahun</option>
-            @foreach(range(date('Y'), 2010) as $th)
-                <option value="{{ $th }}" {{ request('tahun') == $th ? 'selected' : '' }}>{{ $th }}</option>
-            @endforeach
-        </select>
-
-        <select class="dropdown-jenis" name="jenis">
-            <option value="">Pilih Status</option>
-            <option value="PMA" {{ request('jenis') == 'PMA' ? 'selected' : '' }}>PMA</option>
-            <option value="PMDN" {{ request('jenis') == 'PMDN' ? 'selected' : '' }}>PMDN</option>
-            <option value="PMA+PMDN" {{ request('jenis') == 'PMA+PMDN' ? 'selected' : '' }}>PMA + PMDN</option>
-        </select>
-
-        <button type="submit" name="triwulan" value="Tahun">1 Tahun</button>
-        <button type="submit" name="triwulan" value="Triwulan 1">Triwulan 1</button>
-        <button type="submit" name="triwulan" value="Triwulan 2">Triwulan 2</button>
-        <button type="submit" name="triwulan" value="Triwulan 3">Triwulan 3</button>
-        <button type="submit" name="triwulan" value="Triwulan 4">Triwulan 4</button>
-
-        {{-- Hidden input untuk Bagian 2 --}}
-        <input type="hidden" name="tahun2" value="{{ request('tahun2') }}">
-        <input type="hidden" name="triwulan2" value="{{ request('triwulan2') }}">
-        <input type="hidden" name="jenisBagian2" value="{{ request('jenisBagian2') }}">
-
-        {{-- Tombol Download dengan popup --}}
-        <a href="#" class="btn-download" id="openPopupLokasi">
-            <i class="fas fa-download"></i> Download
-        </a>
-    </form>
-
-    {{-- Modal Peringatan Validasi --}}
-    <div id="validationModal" class="validation-modal-overlay" style="display:none;">
-        <div class="validation-modal-content">
-            <div class="validation-warning-icon">
-                <i class="fas fa-exclamation"></i>
-            </div>
-            <h2 id="validationModalTitle">Harap pilih tahun</h2>
-            <button type="button" id="validationModalOkBtn" class="validation-modal-ok-btn">OK</button>
+<h2 class="judul-lokasi">Data Realisasi Investasi Berdasarkan Kabupaten/Kota</h2>
+<form class="filter-bar" action="{{ route('realisasi.lokasi') }}" method="GET">
+    <select class="dropdown-tahun" name="tahun">
+        <option value="">Pilih Tahun</option>
+        @foreach(range(date('Y'), 2010) as $th)
+            <option value="{{ $th }}" {{ request('tahun') == $th ? 'selected' : '' }}>{{ $th }}</option>
+        @endforeach
+    </select>
+    <select class="dropdown-jenis" name="jenis">
+        <option value="">Pilih Status</option>
+        <option value="PMA" {{ request('jenis') == 'PMA' ? 'selected' : '' }}>PMA</option>
+        <option value="PMDN" {{ request('jenis') == 'PMDN' ? 'selected' : '' }}>PMDN</option>
+        <option value="PMA+PMDN" {{ request('jenis') == 'PMA+PMDN' ? 'selected' : '' }}>PMA + PMDN</option>
+    </select>
+    <button type="submit" name="triwulan" value="Tahun">1 Tahun</button>
+    <button type="submit" name="triwulan" value="Triwulan 1">Triwulan 1</button>
+    <button type="submit" name="triwulan" value="Triwulan 2">Triwulan 2</button>
+    <button type="submit" name="triwulan" value="Triwulan 3">Triwulan 3</button>
+    <button type="submit" name="triwulan" value="Triwulan 4">Triwulan 4</button>
+    <input type="hidden" name="tahun2" value="{{ request('tahun2') }}">
+    <input type="hidden" name="triwulan2" value="{{ request('triwulan2') }}">
+    <input type="hidden" name="jenisBagian2" value="{{ request('jenisBagian2') }}">
+    <a href="#" class="btn-download" id="openPopupLokasi">
+        <i class="fas fa-download"></i> Download
+    </a>
+</form>
+<div id="validationModal" class="validation-modal-overlay" style="display:none;">
+    <div class="validation-modal-content">
+        <div class="validation-warning-icon">
+            <i class="fas fa-exclamation"></i>
         </div>
+        <h2 id="validationModalTitle">Harap pilih tahun</h2>
+        <button type="button" id="validationModalOkBtn" class="validation-modal-ok-btn">OK</button>
     </div>
-
-    {{-- === AREA UNTUK PDF: Grafik + Tabel === --}}
-    <div id="exportArea">
-        {{-- Grafik Lokasi --}}
-        <div class="grafik-card">
-            <h3 class="judul-grafik">GRAFIK DATA LOKASI</h3>
-            <div style="position: relative; height:400px; width:100%">
-            <canvas id="chartLokasi"></canvas>
-        </div>
-
-        {{-- Tabel Data Lokasi --}}
-        <div class="tabel-card">
-            <h3 class="judul-tabel">TABEL DATA LOKASI</h3>
-
-            @if($jenisBagian1 === 'PMA')
-                {{-- tabel PMA --}}
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Kabupaten/Kota</th>
-                            <th>Status</th>
-                            <th>Proyek</th>
-                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
-                                <th>Periode</th> 
-                            @endif
-                            <th>Total Investasi (USD Ribu)</th>
-                            <th>Total Investasi (Juta Rp)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($dataLokasi as $lokasi)
-                            <tr>
-                                <td>{{ $lokasi->kabupaten_kota }}</td>
-                                <td>{{ $lokasi->status_penanaman_modal }}</td>
-                                <td>{{ $lokasi->proyekpma }}</td>
-                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
-                                    <td>{{ $lokasi->periode }}</td> 
-                                @endif
-                                <td>{{ number_format($lokasi->total_investasi_us_ribu ?? 0, 0, ',', '.') }}</td>
-                                <td>{{ number_format($lokasi->total_investasi_rp_juta ?? 0, 0, ',', '.') }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 6 : 5 }}" class="text-center">Tidak ada data</td>
-                            </tr>
-                        @endforelse
-
-                        {{-- Baris Total untuk PMA --}}
-                        @if(count($dataLokasi) > 0 && $jenisBagian1 === 'PMA')
-                            <tr style="font-weight:bold; background:#f2f2f2;">
-                                <td colspan="2">Total</td>
-                                <td>{{ $dataLokasi->sum('proyekpma') }}</td>
-                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
-                                    <td></td>
-                                @endif
-                                <td>{{ number_format($dataLokasi->sum('total_investasi_us_ribu'), 0, ',', '.') }}</td>
-                                <td>{{ number_format($dataLokasi->sum('total_investasi_rp_juta'), 0, ',', '.') }}</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-
-            @elseif($jenisBagian1 === 'PMDN')
-                {{-- tabel PMDN --}}
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Kabupaten/Kota</th>
-                            <th>Status</th>
-                            <th>Proyek</th>
-                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
-                                <th>Periode</th> 
-                            @endif
-                            <th>Tambahan Investasi (Juta Rp)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($dataLokasi as $lokasi)
-                            <tr>
-                                <td>{{ $lokasi->kabupaten_kota }}</td>
-                                <td>{{ $lokasi->status_penanaman_modal }}</td>
-                                <td>{{ $lokasi->proyekpmdn }}</td>
-                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
-                                    <td>{{ $lokasi->periode }}</td> 
-                                @endif
-                                <td>{{ number_format($lokasi->total_investasi_rp_juta ?? 0, 0, ',', '.') }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 5 : 4 }}" class="text-center">Tidak ada data</td>
-                            </tr>
-                        @endforelse
-
-                        {{-- Baris Total untuk PMDN --}}
-                        @if(count($dataLokasi) > 0 && $jenisBagian1 === 'PMDN')
-                            <tr style="font-weight:bold; background:#f2f2f2;">
-                                <td colspan="2">Total</td>
-                                <td>{{ $dataLokasi->sum('proyekpmdn') }}</td>
-                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
-                                    <td></td>
-                                @endif
-                                <td>{{ number_format($dataLokasi->sum('total_investasi_rp_juta'), 0, ',', '.') }}</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-
-            @elseif($jenisBagian1 === 'PMA+PMDN')
-                {{-- tabel gabungan --}}
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Kabupaten/Kota</th>
-                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
-                                <th>Periode</th> 
-                            @endif
-                            <th>Proyek PMDN</th>
-                            <th>Total Investasi PMDN (Rp Juta)</th>
-                            <th>Proyek PMA</th>
-                            <th>Total Investasi PMA (Ribu US$)</th>
-                            <th>Total Investasi PMA (Rp Juta)</th>
-                            <th>Total Proyek (PMA + PMDN)</th>
-                            <th>Total Investasi (Rp Juta, PMA+PMDN)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($dataLokasi as $lokasi)
-                            <tr>
-                                <td>{{ $lokasi->kabupaten_kota }}</td>
-                                @if(request('triwulan') && request('triwulan') !== 'Tahun') 
-                                    <td>{{ $lokasi->periode ?? '-' }}</td> 
-                                @endif
-                                <td>{{ $lokasi->proyekpmdn ?? 0 }}</td>
-                                <td>{{ number_format($lokasi->total_investasi_pmdn_rp ?? 0, 0, ',', '.') }}</td>
-                                <td>{{ $lokasi->proyekpma ?? 0 }}</td>
-                                <td>{{ number_format($lokasi->total_investasi_pma_us ?? 0, 0, ',', '.') }}</td>
-                                <td>{{ number_format($lokasi->total_investasi_pma_rp ?? 0, 0, ',', '.') }}</td>
-                                <td>{{ ($lokasi->proyekpmdn ?? 0) + ($lokasi->proyekpma ?? 0) }}</td>
-                                <td>{{ number_format(($lokasi->total_investasi_pmdn_rp ?? 0) + ($lokasi->total_investasi_pma_rp ?? 0), 0, ',', '.') }}</td>
-                            </tr>
-                        @empty
-                            <tr><td colspan="9" class="text-center">Tidak ada data</td></tr>
-                        @endforelse
-
-                        {{-- Baris Total --}}
-                        @if(count($dataLokasi) > 0)
-                            <tr style="font-weight:bold; background:#f2f2f2;">
-                                <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 2 : 1 }}">Total</td>
-                                <td>
-                                    {{ $dataLokasi->sum('proyekpmdn') }}
-                                </td>
-                                <td>
-                                    {{ number_format($dataLokasi->sum('total_investasi_pmdn_rp'), 0, ',', '.') }}
-                                </td>
-                                <td>
-                                    {{ $dataLokasi->sum('proyekpma') }}
-                                </td>
-                                <td>
-                                    {{ number_format($dataLokasi->sum('total_investasi_pma_us'), 0, ',', '.') }}
-                                </td>
-                                <td>
-                                    {{ number_format($dataLokasi->sum('total_investasi_pma_rp'), 0, ',', '.') }}
-                                </td>
-                                <td>
-                                    {{ $dataLokasi->sum('proyekpmdn') + $dataLokasi->sum('proyekpma') }}
-                                </td>
-                                <td>
-                                    {{ number_format($dataLokasi->sum('total_investasi_pmdn_rp') + $dataLokasi->sum('total_investasi_pma_rp'), 0, ',', '.') }}
-                                </td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            @endif
-        </div>
+</div>
+<div id="exportArea">
+    <div class="grafik-card">
+        <h3 class="judul-grafik">GRAFIK DATA LOKASI</h3>
+        <div style="position: relative; height:400px; width:100%">
+        <canvas id="chartLokasi"></canvas>
     </div>
+    <div class="tabel-card">
+        <h3 class="judul-tabel">TABEL DATA LOKASI</h3>
+        @if($jenisBagian1 === 'PMA')
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Kabupaten/Kota</th>
+                        <th>Status</th>
+                        <th>Proyek</th>
+                        @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                            <th>Periode</th> 
+                        @endif
+                        <th>Total Investasi (USD Ribu)</th>
+                        <th>Total Investasi (Juta Rp)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($dataLokasi as $lokasi)
+                        <tr>
+                            <td>{{ $lokasi->kabupaten_kota }}</td>
+                            <td>{{ $lokasi->status_penanaman_modal }}</td>
+                            <td>{{ $lokasi->proyekpma }}</td>
+                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                <td>{{ $lokasi->periode }}</td> 
+                            @endif
+                            <td>{{ number_format($lokasi->total_investasi_us_ribu ?? 0, 0, ',', '.') }}</td>
+                            <td>{{ number_format($lokasi->total_investasi_rp_juta ?? 0, 0, ',', '.') }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 6 : 5 }}" class="text-center">Tidak ada data</td>
+                        </tr>
+                    @endforelse
+                    @if(count($dataLokasi) > 0 && $jenisBagian1 === 'PMA')
+                        <tr style="font-weight:bold; background:#f2f2f2;">
+                            <td colspan="2">Total</td>
+                            <td>{{ $dataLokasi->sum('proyekpma') }}</td>
+                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                <td></td>
+                            @endif
+                            <td>{{ number_format($dataLokasi->sum('total_investasi_us_ribu'), 0, ',', '.') }}</td>
+                            <td>{{ number_format($dataLokasi->sum('total_investasi_rp_juta'), 0, ',', '.') }}</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        @elseif($jenisBagian1 === 'PMDN')
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Kabupaten/Kota</th>
+                        <th>Status</th>
+                        <th>Proyek</th>
+                        @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                            <th>Periode</th> 
+                        @endif
+                        <th>Tambahan Investasi (Juta Rp)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($dataLokasi as $lokasi)
+                        <tr>
+                            <td>{{ $lokasi->kabupaten_kota }}</td>
+                            <td>{{ $lokasi->status_penanaman_modal }}</td>
+                            <td>{{ $lokasi->proyekpmdn }}</td>
+                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                <td>{{ $lokasi->periode }}</td> 
+                            @endif
+                            <td>{{ number_format($lokasi->total_investasi_rp_juta ?? 0, 0, ',', '.') }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 5 : 4 }}" class="text-center">Tidak ada data</td>
+                        </tr>
+                    @endforelse
+                    @if(count($dataLokasi) > 0 && $jenisBagian1 === 'PMDN')
+                        <tr style="font-weight:bold; background:#f2f2f2;">
+                            <td colspan="2">Total</td>
+                            <td>{{ $dataLokasi->sum('proyekpmdn') }}</td>
+                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                <td></td>
+                            @endif
+                            <td>{{ number_format($dataLokasi->sum('total_investasi_rp_juta'), 0, ',', '.') }}</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        @elseif($jenisBagian1 === 'PMA+PMDN')
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Kabupaten/Kota</th>
+                        @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                            <th>Periode</th> 
+                        @endif
+                        <th>Proyek PMDN</th>
+                        <th>Total Investasi PMDN (Rp Juta)</th>
+                        <th>Proyek PMA</th>
+                        <th>Total Investasi PMA (Ribu US$)</th>
+                        <th>Total Investasi PMA (Rp Juta)</th>
+                        <th>Total Proyek (PMA + PMDN)</th>
+                        <th>Total Investasi (Rp Juta, PMA+PMDN)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($dataLokasi as $lokasi)
+                        <tr>
+                            <td>{{ $lokasi->kabupaten_kota }}</td>
+                            @if(request('triwulan') && request('triwulan') !== 'Tahun') 
+                                <td>{{ $lokasi->periode ?? '-' }}</td> 
+                            @endif
+                            <td>{{ $lokasi->proyekpmdn ?? 0 }}</td>
+                            <td>{{ number_format($lokasi->total_investasi_pmdn_rp ?? 0, 0, ',', '.') }}</td>
+                            <td>{{ $lokasi->proyekpma ?? 0 }}</td>
+                            <td>{{ number_format($lokasi->total_investasi_pma_us ?? 0, 0, ',', '.') }}</td>
+                            <td>{{ number_format($lokasi->total_investasi_pma_rp ?? 0, 0, ',', '.') }}</td>
+                            <td>{{ ($lokasi->proyekpmdn ?? 0) + ($lokasi->proyekpma ?? 0) }}</td>
+                            <td>{{ number_format(($lokasi->total_investasi_pmdn_rp ?? 0) + ($lokasi->total_investasi_pma_rp ?? 0), 0, ',', '.') }}</td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="9" class="text-center">Tidak ada data</td></tr>
+                    @endforelse
+                    @if(count($dataLokasi) > 0)
+                        <tr style="font-weight:bold; background:#f2f2f2;">
+                            <td colspan="{{ request('triwulan') && request('triwulan') !== 'Tahun' ? 2 : 1 }}">Total</td>
+                            <td>
+                                {{ $dataLokasi->sum('proyekpmdn') }}
+                            </td>
+                            <td>
+                                {{ number_format($dataLokasi->sum('total_investasi_pmdn_rp'), 0, ',', '.') }}
+                            </td>
+                            <td>
+                                {{ $dataLokasi->sum('proyekpma') }}
+                            </td>
+                            <td>
+                                {{ number_format($dataLokasi->sum('total_investasi_pma_us'), 0, ',', '.') }}
+                            </td>
+                            <td>
+                                {{ number_format($dataLokasi->sum('total_investasi_pma_rp'), 0, ',', '.') }}
+                            </td>
+                            <td>
+                                {{ $dataLokasi->sum('proyekpmdn') + $dataLokasi->sum('proyekpma') }}
+                            </td>
+                            <td>
+                                {{ number_format($dataLokasi->sum('total_investasi_pmdn_rp') + $dataLokasi->sum('total_investasi_pma_rp'), 0, ',', '.') }}
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        @endif
+    </div>
+</div>
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/lokasi.css') }}">
@@ -245,8 +217,8 @@
             },
             options: {
             responsive: true,
-            maintainAspectRatio: false, // biar fleksibel
-            aspectRatio: 2,             // lebar : tinggi
+            maintainAspectRatio: false,
+            aspectRatio: 2,
             plugins: { 
                 legend: { display: false } 
             },
@@ -260,11 +232,9 @@
 @endif
 
 <script>
-// Validasi klik tombol periode: pastikan Tahun dan Jenis sudah dipilih
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form.filter-bar');
     if (!form) return;
-
     const yearSelect = form.querySelector('select.dropdown-tahun');
     const jenisSelect = form.querySelector('select.dropdown-jenis');
     const periodButtons = form.querySelectorAll('button[name="triwulan"]');
@@ -273,14 +243,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalOkBtn = document.getElementById('validationModalOkBtn');
     let focusElement = null;
 
-    // Fungsi untuk tampilkan modal
     function showValidationModal(message, focusEl) {
         modalTitle.textContent = message;
         focusElement = focusEl;
         modal.style.display = 'flex';
     }
 
-    // Close modal saat klik OK
     if (modalOkBtn) {
         modalOkBtn.addEventListener('click', function() {
             modal.style.display = 'none';
@@ -288,7 +256,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Close modal saat klik di luar modal
     if (modal) {
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
@@ -314,11 +281,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 showValidationModal('Harap Pilih Status', jenisSelect);
                 return;
             }
-            // jika valid, biarkan submit normal
         });
     });
 });
 </script>
 @endpush
-
-{{-- endpartial --}}

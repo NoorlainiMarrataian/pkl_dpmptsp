@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title', 'Dashboard')
-
 @section('content')
     {{-- Judul Utama --}}
     <h2>Selamat datang, {{ Auth::guard('admin')->user()->username }}</h2>
@@ -10,8 +8,7 @@
     </p>
 
     {{-- ✅ Statistik Ringkas + Pengantar --}}
-    <div class="dashboard-stats">
-        
+    <div class="dashboard-stats">        
         {{-- Card Total Kunjungan Website --}}
         <div class="stat-card stat-visit">
             <h3>Total Kunjungan Website</h3>
@@ -20,14 +17,12 @@
                 <i class="fa fa-users stat-icon"></i>
             </div>
         </div>
-
         {{-- Pengantar Data Pengunduh --}}
         <div class="stat-card stat-info">
             <h3>📊 Data Pengunduh</h3>
             <p>Gunakan informasi ini untuk melihat siapa saja yang telah mengunduh data investasi.</p>
         </div>
     </div>
-
     {{-- ✅ Tabel Data Pengunduh --}}
     <div style="overflow-x: auto; margin-top: 10px;">
         <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">

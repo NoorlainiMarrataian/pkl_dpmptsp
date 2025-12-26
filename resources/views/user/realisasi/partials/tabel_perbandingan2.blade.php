@@ -1,7 +1,4 @@
-{{-- resources/views/user/realisasi/partials/tabel_perbandingan2.blade.php --}}
-
 @php
-    // kasih default biar tidak error saat pertama kali load halaman
     $dataTriwulan1 = $dataTriwulan1 ?? collect();
     $dataTriwulan2 = $dataTriwulan2 ?? collect();
     $tahun1 = $tahun1 ?? '';
@@ -14,7 +11,6 @@
     $chartData2 = $chartData2 ?? [];
 @endphp
 
-{{-- Chart --}}
 @if(($jenis === 'PMA' || $jenis === 'PMDN' || $jenis === 'PMA+PMDN') 
     && (!empty($chartData1) || !empty($chartData2)))
     <div class="mb-4" style="width: 100%; height: 400px;">
@@ -55,8 +51,6 @@
     </script>
 @endif
 
-
-
 @if($jenis)
     @foreach([1,2] as $i)
         @php
@@ -64,10 +58,7 @@
             $tahun = $i === 1 ? $tahun1 : $tahun2;
             $periode = $i === 1 ? $periode1 : $periode2;
         @endphp
-
         <h5 class="mt-4">Tahun {{ $tahun }} - {{ $periode }}</h5>
-
-        {{-- ======== PMA atau PMDN ======== --}}
         @if($jenis === 'PMA' || $jenis === 'PMDN')
             <table class="table table-bordered">
                 <thead>
@@ -118,8 +109,6 @@
                     @endif
                 </tbody>
             </table>
-
-        {{-- ======== PMA+PMDN ======== --}}
         @elseif($jenis === 'PMA+PMDN')
             <table class="table table-bordered">
                 <thead>

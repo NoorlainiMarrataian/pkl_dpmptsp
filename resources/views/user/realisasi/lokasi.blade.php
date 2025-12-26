@@ -1,27 +1,18 @@
 @extends('layouts.app')
-
 @section('content')
 <section class="lokasi-investasi container mt-4">
-
     <h2 class="mb-4">LOKASI</h2>
-
-    {{-- ===== BAGIAN 1: Kab/Kota (grafik + tabel) ===== --}}
     <div class="card mb-5">
         <div class="card-body">
             @include('user.realisasi.partials.lokasi_kabkota')
         </div>
-    </div>  
-
-    {{-- ===== BAGIAN 2: Sektor, dll ===== --}}
+    </div>
     <div class="card" id="bagian2-content">
         <div class="card-body">
             @include('user.realisasi.partials.lokasi_sektor')
         </div>
     </div>
-
 </section>
-
-{{-- Popup Modal --}}
 <div id="popupForm" class="popup-overlay" aria-hidden="true">
     <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
         <h2 id="popupTitle">Data Diri</h2>
@@ -29,7 +20,6 @@
             <i class="fas fa-exclamation"></i>
         </div>
         <p>Silahkan isi formulir untuk mengunduh file ini</p>
-
         <form id="downloadForm" method="POST" action="{{ route('log_pengunduhan.store') }}">
             @csrf
             <div class="checkbox-group horizontal">
@@ -102,11 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (downloadForm) {
         downloadForm.addEventListener('submit', function (e) {
             e.preventDefault();
-
             var form = this;
-
-
-            // ✅ Tambahan: deteksi emoji di semua input
             const emojiRegex = /([\u203C-\u3299]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
             let hasEmoji = false;
 
@@ -118,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (hasEmoji) {
                 alert("Input tidak boleh mengandung emoji.");
-                return; // 🚫 hentikan submit
+                return;
             }
 
             var formData = new FormData(form);
@@ -149,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         hidePopup();
                         return;
                     }
-
                     try {
                         var opt = {
                             margin: [10,10,10,10],
@@ -159,9 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
                             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
                         };
-
                         var pdfTask = html2pdf().set(opt).from(element).save();
-
                         if (pdfTask && typeof pdfTask.then === 'function') {
                             pdfTask.then(function(){ hidePopup(); }).catch(function(err){
                                 console.error('html2pdf error:', err);

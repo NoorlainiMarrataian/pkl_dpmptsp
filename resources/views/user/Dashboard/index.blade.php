@@ -1,10 +1,8 @@
 @extends('layouts.app')
-
 @section('content')
 <section class="hero">
     <img src="{{ asset('images/gedung.jpg') }}" alt="Gedung" class="hero-img">
 </section>
-
 <section class="realisasi">
     <div class="realisasi-content">
         <div class="realisasi-text">
@@ -15,11 +13,7 @@
                     Website ini dikelola oleh Dinas Penanaman <br> Modal dan Pelayanan Terpadu Satu Pintu (DPMPTSP) 
                     Provinsi <br> Kalimantan Selatan sebagai wadah resmi untuk menyajikan data <br> dan informasi terkini terkait perkembangan realisasi investasi di <br>daerah.
                 </p>
-                
-                <!-- Tombol -->
                 <a href="javascript:void(0)" class="btn-info" onclick="toggleInfo()">Info selengkapnya</a>
-
-                <!-- Konten tambahan -->
                 <div id="more-info">
                     <p>
                         Data realisasi investasi ini meliputi perkembangan dari berbagai sektor usaha, baik Penanaman Modal Asing (PMA) 
@@ -50,7 +44,6 @@
     </div>
 </section>
 
-{{-- Script toggle --}}
 <script>
 function toggleInfo() {
     const moreInfo = document.getElementById("more-info");

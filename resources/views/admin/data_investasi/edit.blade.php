@@ -1,7 +1,5 @@
 @extends('layouts.admin')
-
 @section('title', 'Data Laporan')
-
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/edit.css') }}">
 @endpush
@@ -24,7 +22,6 @@
     <form action="{{ route('data_investasi.update', $data_investasi->id) }}" method="post">
         @csrf
         @method('PUT')
-
         <div class="form-group">
           <label for="id">Nomor ID</label>
           <input type="text" class="form-control" value="{{ $data_investasi->id }}" readonly>
@@ -130,7 +127,6 @@
                  value="{{ $data_investasi->jumlah_tki }}" required>
         </div>
 
-        <!-- Tombol Aksi -->
         <div class="mt-4 d-flex justify-content-end">
             <a href="{{ route('admin.laporan.index') }}" class="btn btn-secondary mr-2">Batal</a>
             <button type="submit" class="btn btn-primary">Simpan</button>

@@ -5,10 +5,8 @@
   <div class="row h-100 justify-content-center align-items-center">
     <div class="col-10 col-md-8 col-lg-6">
       <h4 class="mb-4">Tambah Data Realisasi Investasi</h4>
-      
       <form action="{{ route('data_investasi.store') }}" method="post">
         @csrf
-
         <div class="form-group">
           <label for="id">Nomor ID</label>
           <input type="text" class="form-control" value="{{ $newId }}" disabled>
@@ -27,7 +25,6 @@
             </div>
           @enderror
         </div>
-
 
         <div class="form-group">
           <label for="periode">Periode</label>
@@ -114,12 +111,10 @@
           <input type="text" class="form-control" id="jumlah_tki" name="jumlah_tki" inputmode="numeric" pattern="[0-9]*"  required>
         </div>
 
-        <!-- Tombol Aksi -->
         <div class="mt-4 d-flex justify-content-end">
             <a href="{{ route('admin.laporan.index') }}" class="btn btn-secondary mr-2">Batal</a>
             <button type="submit" class="btn btn-success">Simpan Data</button>
         </div>
-
       </form>
     </div>
   </div>

@@ -1,26 +1,15 @@
-{{-- resources/views/user/realisasi/partials/tabel_perbandingan1.blade.php --}}
-
-{{-- Chart --}}
 @if(($jenis === 'PMA' || $jenis === 'PMDN' || $jenis === 'PMA+PMDN') && ($dataTahun1->isNotEmpty() || $dataTahun2->isNotEmpty()))
-
-    {{-- Pesan peringatan --}}
     <div class="alert alert-warning text-center mb-3">
         Klik <strong>Tampilan</strong> sekali lagi untuk memunculkan grafik
     </div>
-
-    {{-- Canvas grafik --}}
     <div class="mb-4" style="width: 100%; height: 400px;">
         <canvas id="chartPerbandingan1"></canvas>
     </div>
-
-    {{-- Script Chart.js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // hancurkan chart lama kalau ada
         if (window.chart1) {
             window.chart1.destroy();
         }
-
         let ctx = document.getElementById('chartPerbandingan1');
         if (ctx) {
             window.chart1 = new Chart(ctx, {
@@ -53,10 +42,6 @@
     </script>
 @endif
 
-
-{{-- ============================ --}}
-{{-- TABEL PMA --}}
-{{-- ============================ --}}
 @if($jenis === 'PMA')
     <h5 class="mt-4">Tahun {{ $tahun1 }}</h5>
     <table class="table table-bordered">
@@ -126,9 +111,6 @@
         </tbody>
     </table>
 
-{{-- ============================ --}}
-{{-- TABEL PMDN --}}
-{{-- ============================ --}}
 @elseif($jenis === 'PMDN')
     <h5 class="mt-4">Tahun {{ $tahun1 }}</h5>
     <table class="table table-bordered">
@@ -192,9 +174,6 @@
         </tbody>
     </table>
 
-{{-- ============================ --}}
-{{-- TABEL PMA+PMDN --}}
-{{-- ============================ --}}
 @elseif($jenis === 'PMA+PMDN')
     <h5 class="mt-4">Tahun {{ $tahun1 }}</h5>
     <table class="table table-bordered">

@@ -1,23 +1,16 @@
 @extends('layouts.app')
-
 @section('title', 'Realisasi Investasi')
-
 @section('content')
 <div class="realisasi-container">
-
-    {{-- Section Grafik --}}
     <section class="grafik-section">
         <h2>TREN REALISASI INVESTASI</h2>
         <div class="grafik-card">
             <canvas id="chartRealisasi" width="1000" height="400"></canvas>
         </div>
     </section>
-
-    {{-- Section Realisasi Card --}}
     <section class="realisasi-section">
         <h2>Realisasi Investasi</h2>
         <div class="realisasi-card-container">
-
             <div class="realisasi-card">
                 <a href="{{ route('realisasi.negara') }}">
                     <div class="icon-wrapper">
@@ -26,7 +19,6 @@
                     <h4>NEGARA INVESTOR</h4>
                 </a>
             </div>
-
             <div class="realisasi-card">
                 <a href="{{ route('realisasi.lokasi') }}">
                     <div class="icon-wrapper">
@@ -35,7 +27,6 @@
                     <h4>LOKASI</h4>
                 </a>
             </div>
-
             <div class="realisasi-card">
                 <a href="{{ route('realisasi.perbandingan') }}">
                     <div class="icon-wrapper">
@@ -44,8 +35,6 @@
                     <h4>Bandingkan Data</h4>
                 </a>
             </div>
-
-
         </div>
     </section>
 </div>
@@ -56,12 +45,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/realisasi.css') }}">
 @endpush
+
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     let ctx = document.getElementById('chartRealisasi').getContext('2d');
-
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -82,17 +71,13 @@ document.addEventListener("DOMContentLoaded", function () {
             scales: {
                 y: { beginAtZero: true },
                 x: {
-                grid: {
-                    display: false 
+                    grid: {
+                        display: false 
+                    }
                 }
-            }
             }
         }
     });
 });
 </script>
-
 @endpush
-
-
-

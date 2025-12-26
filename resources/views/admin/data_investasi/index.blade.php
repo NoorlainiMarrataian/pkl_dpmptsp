@@ -24,6 +24,7 @@
                 </div>
             @endif
         </div>
+
         <div class="investasi-actions">
             <button type="button" class="btn investasi-btn-round investasi-btn-plus" data-toggle="modal" data-target="#tambahDataModal">
                 <i class="fa fa-plus"></i>
@@ -45,6 +46,7 @@
             </div>
         </div>
     </div>
+
     <div class="custom-pagination">
     @if ($data_investasi->onFirstPage())
         <button disabled class="pagination-btn prev disabled">
@@ -72,7 +74,7 @@
     </div>
 
     {{-- Table --}}
-   <div class="table-responsive mt-1">
+    <div class="table-responsive mt-1">
         <table class="table table-bordered table-striped investasi-table mb-0 text-center align-middle">
             <thead class="thead-dark">
                 <tr>
@@ -139,28 +141,28 @@
 {{-- Modal Popup Pesan --}}
 @if(session('error') || session('success'))
 <div class="modal fade" id="popupMessage" tabindex="-1" role="dialog" aria-labelledby="popupMessageLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content shadow-lg rounded">
-      <div class="modal-header {{ session('error') ? 'bg-danger text-white' : 'bg-success text-white' }}">
-        <h5 class="modal-title" id="popupMessageLabel">
-            @if(session('error'))
-                <i class="fas fa-exclamation-circle"></i> Terjadi Kesalahan
-            @else
-                <i class="fas fa-check-circle"></i> Berhasil
-            @endif
-        </h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{ session('error') ?? session('success') }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-      </div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content shadow-lg rounded">
+            <div class="modal-header {{ session('error') ? 'bg-danger text-white' : 'bg-success text-white' }}">
+                <h5 class="modal-title" id="popupMessageLabel">
+                    @if(session('error'))
+                        <i class="fas fa-exclamation-circle"></i> Terjadi Kesalahan
+                    @else
+                        <i class="fas fa-check-circle"></i> Berhasil
+                    @endif
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>      
+            <div class="modal-body">
+                {{ session('error') ?? session('success') }}
+            </div>        
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 @endif
 
@@ -177,7 +179,6 @@
 </script>
 @endif
 
-<!-- Modal Tambah Data -->
 <div class="modal fade" id="tambahDataModal" tabindex="-1" role="dialog" aria-labelledby="tambahDataModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content investasi-modal-content">
@@ -191,7 +192,6 @@
     </div>
 </div>
 
-<!-- Modal Edit Data -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.10); padding:32px 24px;">
@@ -211,7 +211,6 @@
     </div>
 </div>
 
-<!-- Modal Delete Data -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
@@ -231,7 +230,6 @@
     </div>
 </div>
 
-<!-- Modal Konfirmasi Hapus Data -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content modal-custom">
@@ -248,67 +246,56 @@
     </div>
 </div>
 
-<!-- Modal Upload Excel -->
 <div class="modal fade" id="uploadExcelModal" tabindex="-1" role="dialog" aria-labelledby="uploadExcelModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content investasi-modal-content">
-
-      <h5 class="investasi-modal-title">Proses Unggah Dokumen</h5>
-
-      {{-- Alert error/success --}}
-      <div id="uploadErrorAlert" class="alert alert-danger" style="display:none;"></div>
-      <div id="uploadSuccessAlert" class="alert alert-success" style="display:none;"></div>
-
-      <div class="mb-3 fw-bold text-center">
-        Unggah Data Dari Komputer / Tarik Dan Letakkan
-      </div>
-
-      <form action="{{ route('data_investasi.upload') }}" method="POST" enctype="multipart/form-data" id="uploadExcelForm">
-        @csrf
-        <div class="investasi-modal-file">
-          <span class="investasi-modal-file-icon"><i class="fa fa-file"></i></span>
-          <input type="text" id="fileNameDisplayExcel" class="form-control investasi-modal-file-input" placeholder="namadokumen.xlsx" readonly>
-          <label for="excelFileInput" class="investasi-modal-file-label">Telusuri</label>
-          <input type="file" id="excelFileInput" name="file" accept=".xlsx" style="display:none;" required>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content investasi-modal-content">
+            <h5 class="investasi-modal-title">Proses Unggah Dokumen</h5>
+            {{-- Alert error/success --}}
+            <div id="uploadErrorAlert" class="alert alert-danger" style="display:none;"></div>
+            <div id="uploadSuccessAlert" class="alert alert-success" style="display:none;"></div>
+            <div class="mb-3 fw-bold text-center">
+                Unggah Data Dari Komputer / Tarik Dan Letakkan
+            </div>
+            <form action="{{ route('data_investasi.upload') }}" method="POST" enctype="multipart/form-data" id="uploadExcelForm">
+                @csrf
+                <div class="investasi-modal-file">
+                    <span class="investasi-modal-file-icon"><i class="fa fa-file"></i></span>
+                    <input type="text" id="fileNameDisplayExcel" class="form-control investasi-modal-file-input" placeholder="namadokumen.xlsx" readonly>
+                    <label for="excelFileInput" class="investasi-modal-file-label">Telusuri</label>
+                    <input type="file" id="excelFileInput" name="file" accept=".xlsx" style="display:none;" required>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <div class="col-6 col-md-5 mb-2">
+                        <button type="button" class="btn btn-danger w-100"
+                            style="height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;"
+                            data-dismiss="modal">
+                            Batalkan
+                        </button>
+                    </div>
+                    <div class="col-6 col-md-5">
+                        <button type="submit" class="btn w-100"
+                            style="background:#07486a; color:#fff; height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;">
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var fileInput = document.getElementById('excelFileInput');
+                    var fileNameDisplay = document.getElementById('fileNameDisplayExcel');
+                    fileInput.addEventListener('change', function() {
+                        fileNameDisplay.value = fileInput.files.length ? fileInput.files[0].name : '';
+                    });
+                });
+            </script>
         </div>
-
-        <div class="row justify-content-center mt-3">
-          <div class="col-6 col-md-5 mb-2">
-            <button type="button" class="btn btn-danger w-100"
-              style="height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;"
-              data-dismiss="modal">
-              Batalkan
-            </button>
-          </div>
-          <div class="col-6 col-md-5">
-            <button type="submit" class="btn w-100"
-              style="background:#07486a; color:#fff; height:48px; font-size:1.08rem; font-weight:500; border-radius:8px;">
-              Simpan
-            </button>
-          </div>
-        </div>
-      </form>
-
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          var fileInput = document.getElementById('excelFileInput');
-          var fileNameDisplay = document.getElementById('fileNameDisplayExcel');
-          
-          // update nama file ketika dipilih
-          fileInput.addEventListener('change', function() {
-            fileNameDisplay.value = fileInput.files.length ? fileInput.files[0].name : '';
-          });
-        });
-      </script>
-
     </div>
-  </div>
 </div>
 
 <script>
     let deleteId = null;
     document.addEventListener('DOMContentLoaded', function() {
-        // edit cari ID
         document.getElementById('editDataForm').addEventListener('submit', function(e) {
             e.preventDefault();
             var id = document.getElementById('editDataInput').value.trim();
@@ -323,23 +310,18 @@
                 return;
             }
 
-            // Cek apakah ID ada dengan HEAD request
             fetch("/data_investasi/" + id + "/edit", {
                 method: "HEAD"
             })
             .then(response => {
                 if (response.status === 200) {
-                    // Jika ID ditemukan → redirect
                     window.location.href = "/data_investasi/" + id + "/edit";
                 } else {
-                    // Jika ID tidak ada
                     alert("Data dengan Nomor ID tersebut tidak ada di sistem!");
                 }
             })
         });
 
-
-        // hapus via tombol table
         document.querySelectorAll('.btn-table-delete').forEach(function(btn) {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -348,7 +330,6 @@
             });
         });
 
-        // konfirmasi hapus
         document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
             if (deleteId) {
                 var form = document.createElement('form');
@@ -369,7 +350,6 @@
             }
         });
 
-        // pindah Delete → ConfirmDelete mulus
         const deleteModal = $('#deleteModal');
         const confirmDeleteModal = $('#confirmDeleteModal');
         document.getElementById('showConfirmDelete').addEventListener('click', function(e) {
@@ -377,45 +357,30 @@
 
             let id = document.getElementById('deleteDataInput').value.trim();
 
-            // Validasi: kosong
             if (!id) {
                 alert("Nomor ID harus diisi!");
                 return;
             }
 
-            // Validasi: hanya angka
             if (!/^\d+$/.test(id)) {
                 alert("Nomor ID hanya boleh berisi angka!");
                 return;
             }
 
-            // 🔍 Cek ID ke database
             fetch(`/data_investasi/check/${id}`)
                 .then(response => response.json())
                 .then(data => {
-
-                    // ❌ ID tidak ada → tampilkan alert
                     if (!data.exists) {
                         alert("Nomor ID tidak ditemukan di database!");
                         return;
                     }
-
-                    // ⭐ ID ADA → tampilkan modal konfirmasi hapus
                     deleteId = id;
-
-                    // Update isi modal
                     const title = document.querySelector('#confirmDeleteModal h5');
                     if (title) {
                         title.innerText = `Data dengan Nomor ID ${id} akan dihapus`;
                     }
-
-                    // Tutup modal input → buka modal konfirmasi
                     deleteModal.modal('hide');
-
-                    // Hapus event sebelumnya agar tidak dobel
                     deleteModal.off('hidden.bs.modal');
-
-                    // Setelah modal input tertutup → buka modal konfirmasi
                     deleteModal.on('hidden.bs.modal', function() {
                         confirmDeleteModal.modal('show');
                     });
@@ -426,7 +391,6 @@
                 });
         });
 
-        // pindah Tambah Data → Upload Excel mulus
         const tambahDataModal = $('#tambahDataModal');
         const uploadExcelModal = $('#uploadExcelModal');
         const btnUploadExcel = document.querySelector('#tambahDataModal .investasi-btn-upload');
@@ -443,4 +407,3 @@
     });
 </script>
 @endsection
-

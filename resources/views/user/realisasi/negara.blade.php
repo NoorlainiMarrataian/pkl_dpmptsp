@@ -1,10 +1,7 @@
 @extends('layouts.app')
-
 @section('content')
 <section class="negara-investor">
     <h2>NEGARA INVESTOR</h2>
-
-    {{-- Filter Tahun & Periode --}}
     <form class="filter-bar" action="{{ route('realisasi.negara') }}" method="GET">
         <select class="dropdown-tahun" name="tahun" id="tahunSelect">
             <option value="">Pilih Tahun</option>
@@ -17,20 +14,15 @@
         <button type="submit" name="triwulan" value="Triwulan 2" class="btn-periode" disabled>Triwulan 2</button>
         <button type="submit" name="triwulan" value="Triwulan 3" class="btn-periode" disabled>Triwulan 3</button>
         <button type="submit" name="triwulan" value="Triwulan 4" class="btn-periode" disabled>Triwulan 4</button>
-
         <a href="#" class="btn-download" id="openPopup">
             <i class="bi bi-download"></i>
         </a>
     </form>
-
-    {{-- Grafik --}}
     @if($data_investasi->isNotEmpty())
         <div class="grafik-card">
             <canvas id="chartNegara" width="1000" height="400"></canvas>
         </div>
     @endif
-
-    {{-- Tabel --}}
     @if($data_investasi->isNotEmpty())
         <div class="tabel-card">
             <h3 class="judul-tabel">PMA - {{ $tahun }}</h3>
@@ -65,7 +57,6 @@
         </div>
     @endif
 
-    {{-- Pesan kosong --}}
     @if($data_investasi->isEmpty())
         @if(!request('tahun') || !request('triwulan'))
             <p class="text-center" style="margin-top:20px; font-style:italic; color:#777;">
@@ -79,7 +70,6 @@
     @endif
 </section>
 
-{{-- Popup Modal --}}
 <div id="popupForm" class="popup-overlay">
     <div class="popup-content">
         <h2>Data Diri</h2>
@@ -87,7 +77,6 @@
             <i class="fas fa-exclamation"></i>
         </div>
         <p>Silahkan isi formulir untuk mengunduh file ini</p>
-
         <form id="downloadForm" method="POST" action="{{ route('log_pengunduhan.store') }}">
             @csrf
             <div class="checkbox-group horizontal">
@@ -131,7 +120,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Enable tombol periode setelah pilih tahun
     const tahunSelect = document.getElementById("tahunSelect");
     const periodeButtons = document.querySelectorAll(".btn-periode");
     tahunSelect.addEventListener("change", function(){
@@ -139,12 +127,9 @@
             btn.disabled = (this.value === "");
         });
     });
-    // Jalankan sekali saat load halaman
     periodeButtons.forEach(btn => {
         btn.disabled = (tahunSelect.value === "");
     });
-
-    // Popup
     document.getElementById("openPopup").addEventListener("click", function(e){
         e.preventDefault();
         document.getElementById("popupForm").style.display = "flex";
@@ -152,8 +137,6 @@
     document.getElementById("closePopup").addEventListener("click", function(){
         document.getElementById("popupForm").style.display = "none";
     });
-
-    // Validasi karakter input nama_instansi
     const namaInstansiInput = document.getElementById('namaInstansi');
     const charCount = document.getElementById('charCount');
     const charWarning = document.getElementById('charWarning');
@@ -170,21 +153,15 @@
             }
         });
     }
-
-    // Validasi input telpon (real-time) - hanya angka, dengan satu peringatan
     const telInput = document.getElementById('telponInput');
     const telWarning = document.getElementById('telWarning');
     if (telInput && telWarning) {
-        // Prevent non-digit key presses (allow control/navigation keys)
         telInput.addEventListener('keydown', function(e) {
-            const allowedKeys = [8,9,13,27,35,36,37,38,39,40,46]; // backspace, tab, enter, esc, home,end,arrows,delete
+            const allowedKeys = [8,9,13,27,35,36,37,38,39,40,46];
             if (allowedKeys.includes(e.keyCode) || e.ctrlKey || e.metaKey) return;
-            // Allow digits only
             if (/^[0-9]$/.test(e.key)) return;
             e.preventDefault();
         });
-
-        // On input: sanitize (remove non-digits) and show/hide warning
         telInput.addEventListener('input', function() {
             const onlyDigits = this.value.replace(/\D/g, '');
             if (this.value !== onlyDigits) this.value = onlyDigits;
@@ -194,67 +171,51 @@
                 telWarning.style.display = 'none';
             }
         });
-
-        // On paste: sanitize pasted content to digits only
         telInput.addEventListener('paste', function(e) {
             e.preventDefault();
             const paste = (e.clipboardData || window.clipboardData).getData('text');
             const digits = paste.replace(/\D/g, '');
-            // Insert digits at cursor position
             const start = this.selectionStart || 0;
             const end = this.selectionEnd || 0;
             const before = this.value.slice(0, start);
             const after = this.value.slice(end);
             let newVal = before + digits + after;
-            newVal = newVal.replace(/\D/g, '').slice(0, 20); // enforce maxlength
+            newVal = newVal.replace(/\D/g, '').slice(0, 20);
             this.value = newVal;
             if (newVal.length < 5 || newVal.length > 20) telWarning.style.display = 'inline-block'; else telWarning.style.display = 'none';
         });
     }
 
-    // Download
     document.getElementById('downloadForm').addEventListener('submit', function(e){
         e.preventDefault();
         var form = this;
-
-        // 1) Validasi checkbox persetujuan
         var checkbox1 = form.querySelector('input[name="persetujuan_tanggung_jawab"]');
-        var checkbox2 = form.querySelector('input[name="persetujuan_dpmptsp"]');
-        
+        var checkbox2 = form.querySelector('input[name="persetujuan_dpmptsp"]');        
         if (!checkbox1.checked || !checkbox2.checked) {
             alert('Anda harus mencentang kedua checkbox persetujuan sebelum mengunduh.');
             return;
         }
-
-        // 2) Pastikan user sudah memilih Tahun dan Periode sebelum mengunduh
         var tahunVal = document.getElementById('tahunSelect') ? document.getElementById('tahunSelect').value : '';
         var selectedTriwulanBtn = document.querySelector('.btn-periode.active');
         if (!tahunVal || !selectedTriwulanBtn) {
             alert('Silakan pilih tahun dan periode terlebih dahulu sebelum mengunduh data.');
             return;
         }
-
-        // 3) Jika sudah memilih tetapi tidak ada data, tampilkan pesan "Data belum ada"
         var tabelCard = document.querySelector('.tabel-card');
         if (!tabelCard) {
             alert('Tidak ada data yang diunduh. Silahkan pilih tahun dan periode valid');
             return;
         }
-
-        // 4) Validasi panjang telepon sebelum submit (digit only)
         var telEl = document.getElementById('telponInput');
         if (telEl) {
             var telDigits = telEl.value.replace(/\D/g, '');
             if (telDigits.length < 5 || telDigits.length > 20) {
                 document.getElementById('telWarning').style.display = 'inline-block';
                 telEl.focus();
-                return; // hentikan submit
+                return;
             }
         }
-
-        // 5) Validasi emoji
         const emojiRegex = /([\u203C-\u3299]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
-
         let hasEmoji = false;
         form.querySelectorAll('input[type=text], input[type=email], input[type=tel], textarea').forEach(el => {
             if (emojiRegex.test(el.value)) {
@@ -264,9 +225,8 @@
 
         if (hasEmoji) {
             alert("Input tidak boleh mengandung emoji.");
-            return; // 🚫 hentikan proses unduh
+            return;
         }
-
         var formData = new FormData(form);
         fetch(form.action, {
             method: 'POST',
@@ -297,7 +257,6 @@
     });
 
     @if($data_investasi->isNotEmpty())
-    // Grafik Chart.js
     const ctx = document.getElementById('chartNegara');
     const chart = new Chart(ctx, {
         type: 'bar',
@@ -321,27 +280,21 @@
     @endif
 
     document.addEventListener("DOMContentLoaded", function () {
-    const periodeButtons = document.querySelectorAll(".btn-periode");
-
-    // Klik tombol: hanya set class active — biarkan form submit secara normal
-    periodeButtons.forEach(btn => {
-        btn.addEventListener("click", function () {
-            periodeButtons.forEach(b => b.classList.remove("active"));
-            this.classList.add("active");
-            // jangan call e.preventDefault() => biarkan form submit
+        const periodeButtons = document.querySelectorAll(".btn-periode");
+        periodeButtons.forEach(btn => {
+            btn.addEventListener("click", function () {
+                periodeButtons.forEach(b => b.classList.remove("active"));
+                this.classList.add("active");
+            });
         });
-    });
-
-    // (Opsional) Kalau mau tombol tetap tampak active setelah reload,
-    // tambahkan class berdasarkan request param (blade)
-    const selectedTriwulan = @json(request('triwulan'));
-    if (selectedTriwulan) {
-        const activeBtn = Array.from(periodeButtons).find(b => b.value === selectedTriwulan);
-        if (activeBtn) {
-            periodeButtons.forEach(b => b.classList.remove("active"));
-            activeBtn.classList.add("active");
+        const selectedTriwulan = @json(request('triwulan'));
+        if (selectedTriwulan) {
+            const activeBtn = Array.from(periodeButtons).find(b => b.value === selectedTriwulan);
+            if (activeBtn) {
+                periodeButtons.forEach(b => b.classList.remove("active"));
+                activeBtn.classList.add("active");
+            }
         }
-    }
-});
+    });
 </script>
 @endpush
