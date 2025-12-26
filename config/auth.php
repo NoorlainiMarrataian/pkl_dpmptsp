@@ -24,7 +24,6 @@ return [
             'hash' => false,
         ],
 
-        // Tambahkan guard untuk admin
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -42,7 +41,6 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // Provider untuk admin
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,

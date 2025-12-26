@@ -14,7 +14,7 @@ class CreateLogPengunduhanTable extends Migration
     public function up()
     {
         Schema::create('log_pengunduhan', function (Blueprint $table) {
-            $table->id('id_download'); // Primary key
+            $table->id('id_download');
             $table->string('kategori_pengunduh', 50);
             $table->string('nama_instansi', 100);
             $table->string('email_pengunduh', 100);
