@@ -25,6 +25,7 @@ body {
     margin: 25px auto;
     position: relative;
 }
+
 .perbandingan-investasi h2::after {
     content: "";
     width: 110px;
@@ -51,6 +52,7 @@ body {
     margin-top: 2rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
+
 .card h2, .card h3 {
     text-align: center;
     font-weight: 600;
@@ -98,27 +100,26 @@ body {
     justify-content: center; 
 }
 
-/* Tombol Biru */
 .filter-bar .btn-primary {
     background: #e6efff;
     border: none;
     color: #0040a0;
 }
+
 .filter-bar .btn-primary:hover {
     background: #d0e2ff;
 }
 
-/* Tombol Hijau */
 .filter-bar .btn-success {
     background: #0d6392;
     border: none;
     color: #fff;
 }
+
 .filter-bar .btn-success:hover {
     background: #083b57;
 }
 
-/* Supaya col-md-2 ikut sejajar */
 .filter-bar .col-md-2 {
     flex: 0 0 auto;
     padding: 0;
@@ -195,11 +196,9 @@ body {
     position: relative;
     box-shadow: 0 8px 25px rgba(0,0,0,0.25);
     animation: popupShow 0.3s ease;
-    /* Tambahan agar selalu di tengah jika overlay tidak flex */
     margin: auto;
 }
 
-/* Close button */
 .popup-content .close-btn {
     position: absolute;
     top: 12px;
@@ -215,6 +214,7 @@ body {
     cursor: pointer;
     transition: background 0.25s ease;
 }
+
 .popup-content .close-btn:hover {
     background: #c0392b;
 }
@@ -234,7 +234,7 @@ body {
         page-break-after: auto;
     }
 }
-/* ===== Paksa semua tombol center ===== */
+
 .perbandingan-investasi .filter-bar {
     display: flex;
     flex-wrap: wrap;
@@ -256,17 +256,17 @@ body {
     justify-content: center;
     width: 35px;
     height: 35px;
-    background-color: #27A9F7; /* biru normal */
+    background-color: #27A9F7;
     border-radius: 10px;
     text-decoration: none;
-    transition: background-color 0.3s ease; /* animasi halus */
+    transition: background-color 0.3s ease;
 }
 
 .download-btn:hover {
-    background-color: #0040a0; /* biru lebih gelap saat hover */
+    background-color: #0040a0;
 }
 
 .download-btn i {
-    font-size: 22px;     /* ukuran ikon */
-    color: white;        /* warna ikon */
+    font-size: 22px;
+    color: white;
 }

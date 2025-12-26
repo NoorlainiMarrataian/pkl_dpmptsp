@@ -24,8 +24,8 @@ main {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 30px; /* jarak antar kolom */
-    padding: 0 30px; /* biar gak nempel banget ke tepi */
+    gap: 30px;
+    padding: 0 30px;
 }
 
 .footer-col {
@@ -63,7 +63,7 @@ main {
 .footer-maps-wrapper {
     display: flex;
     align-items: flex-start;
-    gap: 12px; /* lebih rapat */
+    gap: 12px;
 }
 
 .footer-maps-wrapper .contact-info {

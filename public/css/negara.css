@@ -1,6 +1,4 @@
-/* ================================
-   NEGARA INVESTOR PAGE STYLING
-   ================================ */
+/* NEGARA INVESTOR PAGE STYLING */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;600&display=swap');
 
 body {
@@ -13,7 +11,7 @@ body {
 
 /* ===== Section Utama ===== */
 .negara-investor {
-    padding: 40px 12px; /* kiri-kanan lebih kecil */
+    padding: 40px 12px;
     min-height: 100vh;
     background: linear-gradient(135deg, #f9fafc 0%, #e9f1ff 100%);
 }
@@ -57,6 +55,7 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
 }
+
 .filter-bar select:hover {
     border-color: #0d6392;
 }
@@ -72,10 +71,12 @@ body {
     transition: 0.3s;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
+
 .filter-bar button:hover {
     background: #d0e2ff;
     transform: translateY(-2px);
 }
+
 .filter-bar button.active {
     background: linear-gradient(135deg, #0A4C70, #0d6392);
     color: white;
@@ -95,13 +96,14 @@ body {
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     transition: 0.3s;
 }
+
 .filter-bar .btn-download:hover {
     background: linear-gradient(135deg, #0A4C70, #0d6392);
     transform: translateY(-2px);
 }
 
 .filter-bar .btn-download i {
-    font-size: 16px; /* ukuran icon Bootstrap pas */
+    font-size: 16px;
 }
 
 /* ===== Card (Grafik & Tabel) ===== */
@@ -111,11 +113,12 @@ body {
     border-radius: 12px;
     padding: 20px;
     margin: 0 auto 30px auto;
-    width: 95%;             /* rapat kiri-kanan */
-    max-width: 1200px;      /* lebih besar biar nggak sempit */
+    width: 95%;
+    max-width: 1200px;
     box-shadow: 0 5px 14px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
 }
+
 .grafik-card:hover,
 .tabel-card:hover {
     transform: translateY(-3px);
@@ -142,19 +145,23 @@ body {
     background: linear-gradient(90deg, #003580, #0d6392);
     color: white;
 }
+
 .tabel-negara th,
 .tabel-negara td {
     padding: 12px 14px;
     border: 1px solid #e3e9f0;
     text-align: center;
 }
+
 .tabel-negara tbody tr:nth-child(even) {
     background: #f5faff;
 }
+
 .tabel-negara tbody tr:hover {
     background: #e2f0ff;
     transition: 0.25s;
 }
+
 .tabel-negara .text-center {
     text-align: center;
     font-style: italic;
@@ -192,7 +199,7 @@ body {
     padding: 10px 18px;
     border-radius: 10px;
     border: none;
-    background: #e6efff; /* biru muda */
+    background: #e6efff;
     color: #0040a0;
     font-weight: 600;
     cursor: pointer;
@@ -205,7 +212,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* Aktif = biru malam */
 .btn-periode.active {
     background: linear-gradient(135deg, #0A4C70, #0d6392);
     color: white;

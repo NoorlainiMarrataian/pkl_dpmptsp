@@ -1,8 +1,6 @@
-/* Custom CSS untuk edit.blade.php */
-
 /* === Base Layout === */
 body {
-  background-color: #f8f9fa; /* Abu muda Bootstrap */
+  background-color: #f8f9fa;
   font-family: Arial, sans-serif;
   color: #2c3e50;
 }

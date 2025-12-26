@@ -6,57 +6,52 @@
     margin: 14px 0;
 }
 
-/* Base style tombol */
 .pagination-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 3px 8px;    /* lebih kecil lagi */
-    font-size: 13px;      /* teks tetap enak dibaca */
+    padding: 3px 8px;
+    font-size: 13px;
     font-weight: 600;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     color: #fff;
     transition: 0.3s ease;
-    min-width: 85px;      /* diperkecil dari 100px */
-    height: 32px;         /* lebih ramping lagi */
+    min-width: 85px;
+    height: 32px;
     line-height: 1;
 }
 
-/* Style tombol PREV */
 .pagination-btn.prev {
-    background: #e74c3c; /* merah */
+    background: #e74c3c;
     box-shadow: 0 1px 3px rgba(231, 76, 60, 0.3);
 }
 .pagination-btn.prev:hover {
     background: #c0392b;
 }
 
-/* Style tombol NEXT */
 .pagination-btn.next {
-    background: #3498db; /* biru */
+    background: #3498db;
     box-shadow: 0 1px 3px rgba(52, 152, 219, 0.3);
 }
+
 .pagination-btn.next:hover {
     background: #2980b9;
 }
 
-/* Disabled state */
 .pagination-btn.disabled {
     background: #bdc3c7;
     cursor: not-allowed;
     box-shadow: none;
 }
 
-/* Icon panah */
 .pagination-btn .arrow {
-    font-size: 12px; /* ikut diperkecil */
+    font-size: 12px;
     font-weight: bold;
 }
 
-/* Container & Header */
 .investasi-container {
     background: #EBE8E8;
     border-radius: 12px;
@@ -72,13 +67,12 @@
     gap: 16px;
 }
 
-/* Animasi kelap-kelip lambat */
 @keyframes kelapkelip {
-  0%   { color: #2c3e50; }   /* abu gelap */
-  25%  { color: #2980b9; }   /* biru */
-  50%  { color: #5c87c7; }   /* hijau */
-  75%  { color: #e67e22; }   /* oranye */
-  100% { color: #c0392b; }   /* merah */
+  0%   { color: #2c3e50; }
+  25%  { color: #2980b9; }
+  50%  { color: #5c87c7; }
+  75%  { color: #e67e22; }
+  100% { color: #c0392b; }
 }
 
 .investasi-title {
@@ -91,9 +85,9 @@
     position: relative;
     padding-bottom: 8px;
     margin-right: 30px;
-    animation: kelapkelip 5s infinite; /* 5s biar lambat */
+    animation: kelapkelip 5s infinite;
 }
-/* Garis bawah aksen */
+
 .investasi-title::after {
     content: "";
     position: absolute;
@@ -105,16 +99,14 @@
     border-radius: 4px;
 }
 
-/* Tambahkan ikon di depan teks */
 .investasi-title::before {
-    content: "\f201"; /* Font Awesome chart-line */
+    content: "\f201";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     color: #0066cc;
     font-size: 28px;
 }
 
-/* Efek animasi hover */
 .investasi-title:hover {
     color: #0066cc;
     transition: color 0.3s ease-in-out;
@@ -125,30 +117,34 @@
     width: 300px;
     margin: 5px 0 0 25px;
 }
+
 .investasi-search-input {
   width: 100%;
   height: 35px;
   border: 1px solid #ccc;
-  border-radius: 25px;  /* biar rounded */
-  padding: 8px 40px 8px 15px; /* kasih ruang kanan buat icon */
+  border-radius: 25px;
+  padding: 8px 40px 8px 15px;
   font-size: 14px;
 }
+
 .investasi-search-btn {
   position: absolute;
   top: 60%;
-  right: 12px;  /* posisi icon di dalam input */
+  right: 12px;
   transform: translateY(-60%);
   border: none;
   background: transparent;
   cursor: pointer;
-  color: #333; /* warna icon */
+  color: #333;
   font-size: 16px;
 }
+
 .investasi-actions {
     display: flex;
     align-items: center;
     gap: 18px;
 }
+
 .investasi-btn-round {
     padding: 0;
     border-radius: 50% !important;;
@@ -160,11 +156,11 @@
     font-size: 1.5rem;
     border: none;
 }
+
 .investasi-btn-plus { background: #3498db !important; color: #fff !important; margin-right: 8px; }
 .investasi-btn-edit { background: #3498db !important; color: #fff !important; margin-right: 8px; }
 .investasi-btn-delete { background: #ef5350 !important; color: #fff !important; margin-right: 18px; }
 
-/* === Custom Dropdown untuk Investasi === */
 .investasi-dropdown {
     min-width: 160px;
     border-radius: 8px;
@@ -176,14 +172,12 @@
     transition: 0.2s ease;
 }
 
-/* Hover & focus pada tombol dropdown */
 .investasi-dropdown:hover,
 .investasi-dropdown:focus {
     background: #f1f5f9;
     border-color: #0A4C70;
 }
 
-/* Menu dropdown */
 .dropdown-menu {
     border-radius: 8px;
     padding: 5px 0;
@@ -193,7 +187,6 @@
     border: 1px solid #ddd;
 }
 
-/* Item di dalam dropdown */
 .dropdown-item {
     padding: 8px 16px;
     color: #333;
@@ -205,19 +198,17 @@
     color: #0A4C70;
 }
 
-
 .table-wrapper {
     width: 100%;
-    overflow-x: auto;   /* biar bisa geser kanan-kiri */
+    overflow-x: auto;
     overflow-y: hidden;
 }
-/* Table */
-/* === Table Investasi === */
+
 .investasi-table {
-    width: max-content;   /* biar tabel bisa melar sesuai isi */
-    min-width: 100%;      /* tetap full lebar container */
-    border-collapse: separate;  /* jangan collapse, biar sticky header stabil */
-    border-spacing: 0;          /* reset spacing */
+    width: max-content;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
     background: #fff;
     font-size: 0.95rem;
 }
@@ -233,7 +224,7 @@
     padding: 12px 10px;
     border: 1px solid #ddd;
     white-space: nowrap;
-    background-clip: padding-box;  /* penting biar warna solid */
+    background-clip: padding-box;
 }
 
 .investasi-table td {
@@ -244,14 +235,12 @@
     vertical-align: middle;
 }
 
-/* Deskripsi biar rapi */
 .investasi-table td:nth-child(9) {
     white-space: normal;
     text-align: left;
     min-width: 300px;
 }
 
-/* Kolom aksi */
 .table-actions {
     display: flex;
     gap: 8px;
@@ -288,9 +277,6 @@
     background: #c62828;
 }
 
-
-/* Tombol transparan dengan shadow */
-/* === Tombol Aksi Tabel === */
 .btn-table {
   display: inline-block;
   padding: 6px 14px;
@@ -304,28 +290,26 @@
   margin-right: 6px;
 }
 
-/* Edit (biru) */
 .btn-table.edit {
   background: #2196f3;
 }
+
 .btn-table.edit:hover {
   background: #07486a;
   color: #fff !important;
   text-decoration: none !important;
 }
 
-/* Delete (merah) */
 .btn-table.delete {
   background: #f44336;
 }
+
 .btn-table.delete:hover {
   background: #b42727;
   color: #fff !important;
   text-decoration: none !important;
 }
 
-
-/* Modal Unggah Excel */
 .investasi-modal-content {
     border-radius: 16px;
     padding: 2rem 1.5rem;
@@ -334,16 +318,14 @@
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* Title */
 .investasi-modal-title {
     font-weight: 700;
     font-size: 1.4rem;
     margin-bottom: 1.5rem;
     text-align: center;
-    color: #07486a; /* biru elegan */
+    color: #07486a;
 }
 
-/* Tombol Upload */
 .investasi-modal-btn {
     background: #07486a;
     color: #fff;
@@ -355,11 +337,11 @@
     font-size: 1rem;
     transition: 0.3s;
 }
+
 .investasi-modal-btn:hover {
     background: #07486a;
 }
 
-/* Tombol Batal */
 .investasi-modal-btn-cancel {
     background: #f44336;
     color: #fff;
@@ -370,53 +352,50 @@
     padding: 0.75rem 1rem;
     transition: 0.3s;
 }
+
 .investasi-modal-btn-cancel:hover {
     background: #d32f2f;
 }
 
-/* File Input Wrapper */
 .investasi-modal-file {
     background: #f9fafc;
     border: 2px dashed #07486a;
     border-radius: 10px;
     padding: 0.8rem 1rem;
     display: flex;
-    align-items: stretch;   /* samakan tinggi semua child */
+    align-items: stretch;
     gap: 0.5rem;
     margin-bottom: 1.2rem;
 }
+
 .investasi-modal-file:hover {
     background: #e8f4fb;
 }
 
-/* Ikon Upload */
 .investasi-modal-file-icon {
     background: #07486a;
     color: #fff;
     border-radius: 6px;
-    padding: 0 1.2rem;     /* biar tinggi sama */
+    padding: 0 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    height: 35px;     /* samakan dengan input (misal 44px) */
+    height: 35px;
     line-height: 35px;
 }
 
-
-/* Input File */
 .investasi-modal-file-input {
     flex: 1;
     border: none;
     background: #f1f5f9;
     font-size: 0.95rem;
-    padding: 0 1.2rem;     /* padding kiri kanan saja */
+    padding: 0 1.2rem;
     border-radius: 6px;
     display: flex;
     align-items: center;
 }
 
-/* Label Pilih File */
 .investasi-modal-file-label {
     background: #07486a;
     color: #fff;
@@ -428,8 +407,7 @@
     justify-content: center;
     cursor: pointer;
     white-space: nowrap;
-
-    height: 35px;     /* samakan dengan input (misal 44px) */
+    height: 35px;
     line-height: 35px;
 }
 

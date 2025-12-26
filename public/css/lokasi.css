@@ -1,6 +1,4 @@
-/* ================================
-   LOKASI INVESTASI PAGE STYLING
-   ================================ */
+/* LOKASI INVESTASI PAGE STYLING */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Inter:wght@400;600&display=swap');
 
 body {
@@ -58,12 +56,11 @@ body {
 /* ===== Filter Bar ===== */
 .filter-bar {
     display: flex;
-    flex-wrap: wrap;   /* tetap bisa turun kalau layar kecil banget */
+    flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
     margin: 25px auto;
 }
-
 
 .filter-bar select {
     padding: 10px 16px;
@@ -75,6 +72,7 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
 }
+
 .filter-bar select:hover {
     border-color: #0d6392;
 }
@@ -89,12 +87,14 @@ body {
     cursor: pointer;
     transition: 0.3s;
     box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-    white-space: nowrap;  /* cegah teks pecah baris */
+    white-space: nowrap;
 }
+
 .filter-bar button:hover {
     background: #d0e2ff;
     transform: translateY(-2px);
 }
+
 .filter-bar button.active {
     background: linear-gradient(135deg, #0A4C70, #0d6392);
     color: white;
@@ -114,6 +114,7 @@ body {
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     transition: 0.3s;
 }
+
 .filter-bar .btn-download:hover {
     background: linear-gradient(135deg, #083b57, #0b5278);
     transform: translateY(-2px);
@@ -166,14 +167,17 @@ table thead {
     background: linear-gradient(90deg, #003580, #0d6392);
     color: white;
 }
+
 table th, table td {
     padding: 12px 14px;
     border: 1px solid #e3e9f0;
     text-align: center;
 }
+
 table tbody tr:nth-child(even) {
     background: #f5faff;
 }
+
 table tbody tr:hover {
     background: #e2f0ff;
     transition: 0.25s;
@@ -188,7 +192,7 @@ table td.text-center,
 
 .grafik-card canvas {
     width: 100% !important;
-    max-height: 400px; /* atau 450px sesuai kebutuhan */
+    max-height: 400px;
     height: auto !important;
 }
 
@@ -196,6 +200,7 @@ table td.text-center,
   width: 100%;
   padding: 15px;
 }
+
 #exportArea canvas {
   max-width: 100% !important;
   height: auto !important;

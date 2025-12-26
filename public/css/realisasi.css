@@ -3,10 +3,9 @@
     background: #f8f9fa;
 }
 
-/* Section Grafik */
 .grafik-section {
     text-align: center;
-    margin-top: 60px;   /* 🔥 tambah jarak dari atas */
+    margin-top: 60px;
     margin-bottom: 50px;
 }
 
@@ -24,7 +23,6 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* Section Realisasi Card */
 .realisasi-section {
     background: #0b3d5c;
     padding: 50px 30px;

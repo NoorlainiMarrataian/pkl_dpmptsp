@@ -1,6 +1,4 @@
-/* =========================
-   HEADER / NAVBAR
-   ========================= */
+/* HEADER / NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -23,7 +21,6 @@
     box-sizing: border-box;
 }
 
-/* sembunyikan navbar saat scroll */
 .navbar.hidden {
     transform: translateY(-100%);
 }
@@ -34,8 +31,8 @@
     align-items: flex-start;
     margin: 0;
     padding: 0;
-    top: 0;               /* paling atas */
-    z-index: 2000;        /* biar di atas navbar */
+    top: 0;
+    z-index: 2000;
     background: transparent;
 }
 
@@ -47,23 +44,20 @@
 }
 
 /* MENU */
-
 .navbar nav {
     display: flex;
-    justify-content: center; /* menu ke tengah */
-    flex: 1;                 /* biar ambil ruang penuh di tengah */
-    margin-left: 0;          /* hapus margin kiri negatif */
+    justify-content: center;
+    flex: 1;
+    margin-left: 0;
 }
-
 
 .navbar nav ul {
     display: flex;
     list-style: none;
     gap: 40px;
-    margin: 0 auto;   /* auto agar posisinya rata tengah */
+    margin: 0 auto;
     padding: 0;
 }
-
 
 .navbar nav ul li a {
     color: #fff;

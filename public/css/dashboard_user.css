@@ -120,7 +120,7 @@ body {
 }
 
 #more-info.show {
-    max-height: 1000px; /* cukup besar biar muat semua konten */
+    max-height: 1000px;
     opacity: 1;
     margin-top: 15px;
 }

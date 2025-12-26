@@ -1,8 +1,6 @@
 /* ==================== POPUP MODAL ==================== */
-
-/* Overlay */
 .popup-overlay {
-    display: none; /* default sembunyi */
+    display: none;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.6);
@@ -11,12 +9,10 @@
     z-index: 1000;
 }
 
-/* Kalau aktif, baru muncul */
 .popup-overlay.active {
     display: flex;
 }
 
-/* Box */
 .popup-overlay .popup-content {
     background: #fff;
     padding: 20px;
@@ -43,7 +39,6 @@
     padding: 10px;
 }
 
-/* Form Input */
 .popup-overlay .popup-content input[type="text"],
 .popup-overlay .popup-content input[type="email"],
 .popup-overlay .popup-content input[type="tel"],
@@ -61,7 +56,6 @@
     resize: vertical;
 }
 
-/* Checkbox */
 .popup-overlay .checkbox-group {
     display: flex;
     flex-direction: column;
@@ -77,7 +71,6 @@
     gap: 6px;
 }
 
-/* Buttons */
 .popup-overlay .popup-buttons {
     margin-top: 15px;
     display: flex;
